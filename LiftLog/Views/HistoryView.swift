@@ -2,6 +2,7 @@ import SwiftUI
 import Charts
 
 struct HistoryView: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @State private var pendingDelete: SessionRecord?
     @State private var filter = HistoryFilter()
@@ -16,9 +17,9 @@ struct HistoryView: View {
                 }
                 if filtering {
                     Section {
-                        Text("\(matches.count) matching workouts").font(.subheadline).foregroundStyle(.secondary)
+                        Text("\(matches.count) matching workouts").font(.subheadline).foregroundStyle(theme.secondary)
                         Button("Clear search & filters") { filter = HistoryFilter() }
-                    }
+                    }.listRowBackground(theme.surface)
                 }
                 if matches.isEmpty && !store.finished.isEmpty {
                     ContentUnavailableView("No matching workouts", systemImage: "magnifyingglass", description: Text("Try another name, date range, or exercise."))
@@ -28,12 +29,12 @@ struct HistoryView: View {
                         SessionDetail(sessionID: session.id)
                     } label: {
                         HStack(spacing: 14) {
-                            RoundedRectangle(cornerRadius: 3).fill(session.dayType.color).frame(width: 5)
+                            Circle().fill(session.dayType.color).frame(width: 8, height: 8)
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(session.title + (session.isSample ? " · Sample" : "")).font(.headline)
-                                Text(session.start.formatted(date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(.secondary)
+                                Text(session.start.formatted(date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(theme.secondary)
                                 Text("\(session.completedSets) \(session.completedSets == 1 ? "set" : "sets") · \(store.unit.text(session.volume)) \(store.unit.rawValue) volume")
-                                    .font(.caption).foregroundStyle(.secondary)
+                                    .font(.caption).foregroundStyle(theme.secondary)
                             }
                             Spacer()
                             if !WorkoutLogic.records(in: session, history: store.finished).isEmpty {
@@ -41,9 +42,9 @@ struct HistoryView: View {
                             }
                             if session.health != nil { Image(systemName: "heart.fill").foregroundStyle(.pink).accessibilityLabel("Health data attached") }
                         }.padding(.vertical, 6)
-                    }.swipeActions { Button("Delete", role: .destructive) { pendingDelete = session } }
+                    }.listRowBackground(theme.surface).swipeActions { Button("Delete", role: .destructive) { pendingDelete = session } }
                 }
-            }.navigationTitle("History")
+            }.studioScreen().navigationTitle("History")
                 .searchable(text: $filter.search, prompt: "Routine, exercise, or notes")
                 .toolbar { Button("Filters", systemImage: filtering ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle") { filters = true } }
                 .sheet(isPresented: $filters) { HistoryFilterSheet(filter: $filter) }
@@ -56,6 +57,7 @@ struct HistoryView: View {
 }
 
 struct SessionDetail: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     let sessionID: UUID
     @State private var editing = false
@@ -66,37 +68,37 @@ struct SessionDetail: View {
             VStack(spacing: 16) {
                 if let session = store.session(sessionID) {
                     if editing {
-                        Text("Edits save immediately.").font(.caption).foregroundStyle(.secondary)
+                        Text("Edits save immediately.").font(.caption).foregroundStyle(theme.secondary)
                         SessionEditor(sessionID: sessionID)
                     } else {
                         Panel {
                             if store.completedSessionID == session.id, let message = store.celebration {
                                 Label(message, systemImage: "checkmark.circle.fill").font(.subheadline).foregroundStyle(.green)
                             }
-                            Text(session.title).font(.largeTitle.bold())
-                            Text(session.start.formatted(date: .long, time: .shortened)).foregroundStyle(.secondary)
+                            Text(session.title).font(theme.heading)
+                            Text(session.start.formatted(date: .long, time: .shortened)).foregroundStyle(theme.secondary)
                             Text("\(session.completedSets) \(session.completedSets == 1 ? "set" : "sets") · \(store.unit.text(session.volume)) \(store.unit.rawValue) volume").font(.headline).padding(.top, 6)
-                            if let note = session.notes { Text(note).font(.subheadline).foregroundStyle(.secondary).padding(.top, 8) }
+                            if let note = session.notes { Text(note).font(.subheadline).foregroundStyle(theme.secondary).padding(.top, 8) }
                             if session.isSample { Text("SAMPLE WORKOUT").font(.caption.bold()).foregroundStyle(.orange) }
                         }
                         if session.watchTracking != nil && !store.isDemo { WatchWorkoutCard(session: session) }
                         ForEach(session.logs) { log in
                             Panel {
                                 Text(log.exercise.name).font(.headline)
-                                Text(log.exercise.muscle).font(.caption).foregroundStyle(.secondary)
+                                Text(log.exercise.muscle).font(.caption).foregroundStyle(theme.secondary)
                                 if let target = log.target { Text("Target: \(target.text)").font(.caption).foregroundStyle(.teal) }
                                 if let partner = session.supersets?.first(where: { $0.contains(log.id) })?.partner(of: log.id),
                                    let other = session.logs.first(where: { $0.id == partner }) { Label("Superset with \(other.exercise.name)", systemImage: "link").font(.caption).foregroundStyle(.teal) }
-                                if let note = log.notes { Text(note).font(.subheadline).foregroundStyle(.secondary) }
+                                if let note = log.notes { Text(note).font(.subheadline).foregroundStyle(theme.secondary) }
                                 ForEach(Array(log.sets.enumerated()), id: \.element.id) { index, set in
                                     HStack {
-                                        Text("Set \(index + 1)").foregroundStyle(.secondary)
+                                        Text("Set \(index + 1)").foregroundStyle(theme.secondary)
                                         Spacer()
                                         Text("\(store.unit.text(set.weightKg)) \(store.unit.rawValue) × \(set.reps)").monospacedDigit()
                                         Image(systemName: set.completed ? "checkmark.circle.fill" : "circle.dashed").foregroundStyle(set.completed ? session.dayType.color : .secondary)
                                     }.font(.subheadline).padding(.top, 4)
                                     if let reserve = set.repsInReserve {
-                                        Text("Set \(index + 1): \(reserve == 10 ? "10+" : String(reserve)) reps left").font(.caption).foregroundStyle(.secondary)
+                                        Text("Set \(index + 1): \(reserve == 10 ? "10+" : String(reserve)) reps left").font(.caption).foregroundStyle(theme.secondary)
                                     }
                                 }
                             }
@@ -119,12 +121,12 @@ struct SessionDetail: View {
                                     .frame(minHeight: 44)
                             }.disabled(matching || store.matchingSessions.contains(sessionID) || !store.health.enabled)
                             Text("For automatic recording on future routines, enable Use Apple Watch for workouts in Settings. This older session can still be matched to an existing Watch workout.")
-                                .font(.caption).foregroundStyle(.secondary)
+                                .font(.caption).foregroundStyle(theme.secondary)
                         }
                     }
                 } else { ContentUnavailableView("Workout removed", systemImage: "trash") }
             }.padding()
-        }.background(Color(uiColor: .systemGroupedBackground)).navigationTitle("Workout").navigationBarTitleDisplayMode(.inline)
+        }.background(theme.canvas).studioScreen().navigationTitle("Workout").navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $notes) { WorkoutNotesEditor(sessionID: sessionID) }
             .toolbar {
                 Button("Notes", systemImage: "note.text") { notes = true }
@@ -134,6 +136,7 @@ struct SessionDetail: View {
 }
 
 struct HealthSummaryView: View {
+    @Environment(\.appTheme) private var theme
     let summary: HealthSummary
     var body: some View {
         Panel {
@@ -141,20 +144,21 @@ struct HealthSummaryView: View {
             Text("\(Int(summary.duration / 60)) min · \(summary.calories.map { String(Int($0.rounded())) } ?? "—") active kcal")
                 .font(.headline).padding(.top, 4)
             Text("Average \(summary.averageHeartRate.map { String(Int($0.rounded())) } ?? "—") · Max \(summary.maxHeartRate.map { String(Int($0.rounded())) } ?? "—") bpm")
-                .font(.subheadline).foregroundStyle(.secondary)
+                .font(.subheadline).foregroundStyle(theme.secondary)
             if summary.heartRate.isEmpty {
                 Text("Heart-rate samples are missing or not shared with Gym Log.").font(.caption).padding(.top, 8)
             } else {
                 Chart(summary.heartRate) { point in
                     LineMark(x: .value("Time", point.date), y: .value("bpm", point.value)).foregroundStyle(.pink)
                 }.frame(height: 150).padding(.top, 12)
-                Text("Heart rate is the sample average across the matched Watch workout.").font(.caption2).foregroundStyle(.secondary)
+                Text("Heart rate is the sample average across the matched Watch workout.").font(.caption2).foregroundStyle(theme.secondary)
             }
         }
     }
 }
 
 struct HistoryFilterSheet: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
     @Binding var filter: HistoryFilter
@@ -186,9 +190,9 @@ struct HistoryFilterSheet: View {
                             Text("Choose an end date on or after the start date.").foregroundStyle(.red)
                         }
                     }
-                } footer: { Text("Dates include both selected days, using the workout’s start date. Routine names are the names saved with each workout.") }
+                } footer: { Text("Dates include both selected days, using the workout’s start date. Routine names are the names saved with each workout.") }.listRowBackground(theme.surface)
                 Button("Clear all filters and search") { filter = HistoryFilter() }
-            }.navigationTitle("Filter history").navigationBarTitleDisplayMode(.inline)
+            }.studioScreen().navigationTitle("Filter history").navigationBarTitleDisplayMode(.inline)
                 .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
         }
     }

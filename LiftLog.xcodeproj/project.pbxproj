@@ -79,6 +79,12 @@
 			"lastKnownFileType" = "folder.assetcatalog";
 			"sourceTree" = "SOURCE_ROOT";
 		};
+		"BB501BE30A7DE25F323A56F5" = {
+			"path" = "LiftLog/Core/ExerciseSearch.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
 		"D5B39C818ECAA32CAE1D01A7" = {
 			"isa" = "PBXBuildFile";
 			"fileRef" = "B642823BEA57B7EAB0E2CB14";
@@ -259,6 +265,10 @@
 				"EC5AE56F4A1662DE0E4776EF",
 				"DA218D9573BF22863527A3E7",
 				"BB501BE30A7DE25F323A56F5",
+				"58948E410284232C7B3BA5EB",
+				"DDB458183C92B5E504AED2FC",
+				"593886B74A60C83E7EEC6E11",
+				"7F924FE2490DF303C58D60D1",
 			);
 		};
 		"95172A69F0EE285E4989EB3D" = {
@@ -313,9 +323,9 @@
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
 				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
-				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
 				"CLANG_ENABLE_OBJC_ARC" = "YES";
-				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
 				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
 				"CLANG_WARN_INFINITE_RECURSION" = "YES";
 				"SDKROOT" = "iphoneos";
@@ -347,9 +357,9 @@
 				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
 				"GCC_WARN_UNUSED_FUNCTION" = "YES";
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "$(inherited) DEBUG";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
 				"DEBUG_INFORMATION_FORMAT" = "dwarf";
-				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
-				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
 			};
 			"name" = "DebugLocal";
 		};
@@ -479,9 +489,9 @@
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
 				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
-				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
 				"CLANG_ENABLE_OBJC_ARC" = "YES";
-				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
 				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
 				"CLANG_WARN_INFINITE_RECURSION" = "YES";
 				"SDKROOT" = "iphoneos";
@@ -513,9 +523,9 @@
 				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
 				"GCC_WARN_UNUSED_FUNCTION" = "YES";
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "$(inherited) DEBUG HEALTHKIT_ENABLED";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
 				"DEBUG_INFORMATION_FORMAT" = "dwarf";
-				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
-				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
 			};
 			"name" = "Debug";
 		};
@@ -813,9 +823,9 @@
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
 				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
-				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
 				"CLANG_ENABLE_OBJC_ARC" = "YES";
-				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
 				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
 				"SWIFT_COMPILATION_MODE" = "wholemodule";
 				"CLANG_WARN_INFINITE_RECURSION" = "YES";
@@ -847,9 +857,9 @@
 				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
 				"GCC_WARN_UNUSED_FUNCTION" = "YES";
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "$(inherited)";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
 				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
-				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
-				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
 			};
 			"name" = "ReleaseLocal";
 		};
@@ -888,6 +898,10 @@
 				);
 			};
 		};
+		"DEABAE2A71826972D67872EC" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "BB501BE30A7DE25F323A56F5";
+		};
 		"DB2C2CEF23642AE176D9ADDA" = {
 			"isa" = "PBXBuildFile";
 			"fileRef" = "BFC783409C0A557E72F2992D";
@@ -900,9 +914,9 @@
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
 				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
-				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
 				"CLANG_ENABLE_OBJC_ARC" = "YES";
-				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
 				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
 				"SWIFT_COMPILATION_MODE" = "wholemodule";
 				"CLANG_WARN_INFINITE_RECURSION" = "YES";
@@ -934,9 +948,9 @@
 				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
 				"GCC_WARN_UNUSED_FUNCTION" = "YES";
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "$(inherited) HEALTHKIT_ENABLED";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
 				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
-				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
-				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
 			};
 			"name" = "Release";
 		};
@@ -1029,6 +1043,10 @@
 				"3F96C87C9777CAA5A9207138",
 				"222D87C61C8E033A301D3401",
 				"DEABAE2A71826972D67872EC",
+				"8821B34F2AD9426C58783C62",
+				"05E275A7DF2AD1ED88C7D015",
+				"F7EAFA50934866AFCE67AFFB",
+				"73BE63E2A2971F224CFF64D3",
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -1042,15 +1060,45 @@
 			"lastKnownFileType" = "sourcecode.swift";
 			"sourceTree" = "SOURCE_ROOT";
 		};
-		"BB501BE30A7DE25F323A56F5" = {
+		"58948E410284232C7B3BA5EB" = {
 			"isa" = "PBXFileReference";
 			"lastKnownFileType" = "sourcecode.swift";
-			"path" = "LiftLog/Core/ExerciseSearch.swift";
+			"path" = "LiftLog/Core/StudioPreferences.swift";
 			"sourceTree" = "SOURCE_ROOT";
 		};
-		"DEABAE2A71826972D67872EC" = {
+		"8821B34F2AD9426C58783C62" = {
 			"isa" = "PBXBuildFile";
-			"fileRef" = "BB501BE30A7DE25F323A56F5";
+			"fileRef" = "58948E410284232C7B3BA5EB";
+		};
+		"DDB458183C92B5E504AED2FC" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "LiftLog/Core/WorkoutLineup.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"05E275A7DF2AD1ED88C7D015" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "DDB458183C92B5E504AED2FC";
+		};
+		"593886B74A60C83E7EEC6E11" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "LiftLog/Views/AppTheme.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"F7EAFA50934866AFCE67AFFB" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "593886B74A60C83E7EEC6E11";
+		};
+		"7F924FE2490DF303C58D60D1" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "LiftLog/Views/WorkoutLineupView.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"73BE63E2A2971F224CFF64D3" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "7F924FE2490DF303C58D60D1";
 		};
 	};
 	"rootObject" = "98F54143AB4E86B28C3AFEE0";

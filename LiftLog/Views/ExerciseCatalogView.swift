@@ -67,6 +67,7 @@ import Observation
 
 /// Shared browser for adding exercises and replacing one during a workout.
 struct ExerciseCatalogBrowser: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     var unavailable: Set<UUID>
     var selected: Set<UUID>
@@ -100,17 +101,17 @@ struct ExerciseCatalogBrowser: View {
         return VStack(spacing: 0) {
             VStack(spacing: 12) {
                 HStack(spacing: 8) {
-                    Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
+                    Image(systemName: "magnifyingglass").foregroundStyle(theme.secondary)
                     TextField(savedOnly ? "Search saved exercises" : "Search, e.g. dumbbell row", text: $search)
                         .textInputAutocapitalization(.never).autocorrectionDisabled()
                         .focused($searching).submitLabel(.search).onSubmit { searching = false }
                         .accessibilityLabel("Search exercise names")
                     if !search.isEmpty {
                         Button { search = "" } label: { Image(systemName: "xmark.circle.fill").frame(width: 44, height: 44) }
-                            .foregroundStyle(.secondary).accessibilityLabel("Clear search")
+                            .foregroundStyle(theme.secondary).accessibilityLabel("Clear search")
                     }
                 }.padding(.leading, 14).padding(.trailing, 4).frame(minHeight: 52)
-                    .background(Color(uiColor: .secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 14))
+                    .background(theme.surface, in: RoundedRectangle(cornerRadius: 14))
                 HStack(spacing: 12) {
                     Picker("Browse", selection: $savedOnly) {
                         Text("All exercises").tag(false)
@@ -126,7 +127,7 @@ struct ExerciseCatalogBrowser: View {
                 if !savedOnly && filterCount > 0 {
                     HStack {
                         Text([muscle, bodyPart, equipment].filter { !$0.isEmpty }.map { $0.capitalized }.joined(separator: " · "))
-                            .font(.caption).foregroundStyle(.secondary)
+                            .font(.caption).foregroundStyle(theme.secondary)
                         Spacer()
                         Button("Clear filters") { muscle = ""; bodyPart = ""; equipment = "" }.font(.caption).frame(minHeight: 44)
                     }
@@ -136,8 +137,8 @@ struct ExerciseCatalogBrowser: View {
                 if savedOnly {
                     Section("Your saved exercises") {
                         ForEach(savedRecords) { row($0) }
-                        if savedRecords.isEmpty { Text("Exercises you add or log will appear here. Saved exercises work offline.").foregroundStyle(.secondary) }
-                    }
+                        if savedRecords.isEmpty { Text("Exercises you add or log will appear here. Saved exercises work offline.").foregroundStyle(theme.secondary) }
+                    }.listRowBackground(theme.surface)
                 } else {
                     Section {
                         ForEach(model.rows) { entry in
@@ -145,7 +146,7 @@ struct ExerciseCatalogBrowser: View {
                         }
                         if model.loading { ProgressView("Loading exercises…") }
                         if let error = model.error {
-                            Text(error).foregroundStyle(.secondary)
+                            Text(error).foregroundStyle(theme.secondary)
                             Button("Retry") { Task { await model.search(query, append: !model.rows.isEmpty) } }.disabled(model.loading)
                         } else if model.rows.isEmpty && !model.loading {
                             ContentUnavailableView(model.cursor == nil ? "No matching exercises" : "No matches in these results",
@@ -155,18 +156,18 @@ struct ExerciseCatalogBrowser: View {
                         if model.cursor != nil {
                             Button("Load more exercises") { Task { await model.search(query, append: true) } }.disabled(model.loading)
                         }
-                    } header: { Text(ExerciseSearch.words(search).isEmpty ? "\(model.rows.count) of \(model.total) exercises" : "\(model.rows.count) matching exercises\(model.cursor == nil ? "" : " · more available")") }
+                    } header: { Text(ExerciseSearch.words(search).isEmpty ? "\(model.rows.count) of \(model.total) exercises" : "\(model.rows.count) matching exercises\(model.cursor == nil ? "" : " · more available")") }.listRowBackground(theme.surface)
                     Section {
                         Link("Exercise data & animations by AscendAPI", destination: URL(string: "https://ascendapi.com")!)
                             .font(.footnote)
-                        Text("Recent results are kept for one hour. Saved exercises stay available for logging offline.").font(.caption).foregroundStyle(.secondary)
-                    }
+                        Text("Recent results are kept for one hour. Saved exercises stay available for logging offline.").font(.caption).foregroundStyle(theme.secondary)
+                    }.listRowBackground(theme.surface)
                 }
             }
             .listStyle(.insetGrouped)
             .scrollDismissesKeyboard(.interactively)
             .refreshable { if !savedOnly { await model.search(query) } }
-        }.background(Color(uiColor: .systemGroupedBackground))
+        }.background(theme.canvas)
         .sheet(isPresented: $showingFilters) {
             CatalogFiltersView(muscles: model.muscles, bodyParts: model.bodyParts, equipments: model.equipments,
                                error: model.filterError, muscle: muscle, bodyPart: bodyPart, equipment: equipment,
@@ -194,7 +195,7 @@ struct ExerciseCatalogBrowser: View {
                         Image(systemName: used ? "checkmark.circle.fill" : picked ? "checkmark.circle.fill" : "plus.circle")
                             .font(.title2)
                         Text(used ? "Added" : picked ? "Selected" : "Select").font(.caption2.weight(.semibold))
-                    }.foregroundStyle(used ? Color(uiColor: .secondaryLabel) : AppColors.action)
+                    }.foregroundStyle(used ? Color(uiColor: .secondaryLabel) : theme.action)
                         .frame(minWidth: 54, minHeight: 52)
                 }.padding(.vertical, 6).contentShape(Rectangle())
             }.buttonStyle(.plain).disabled(used || (selectionFull && !picked))
@@ -213,6 +214,7 @@ struct ExerciseCatalogBrowser: View {
 }
 
 private struct CatalogFiltersView: View {
+    @Environment(\.appTheme) private var theme
     @Environment(\.dismiss) private var dismiss
     let muscles: [String]
     let bodyParts: [String]
@@ -233,12 +235,12 @@ private struct CatalogFiltersView: View {
                     facet("Muscle", selection: $muscle, values: muscles)
                     facet("Body part", selection: $bodyPart, values: bodyParts)
                     facet("Equipment", selection: $equipment, values: equipments)
-                } footer: { Text("Combine filters to narrow your exercise search.") }
+                } footer: { Text("Combine filters to narrow your exercise search.") }.listRowBackground(theme.surface)
                 if let error {
-                    Section { Text(error); Button("Retry loading filters", action: retry) }
+                    Section { Text(error); Button("Retry loading filters", action: retry) }.listRowBackground(theme.surface)
                 }
                 Button("Reset filters") { muscle = ""; bodyPart = ""; equipment = "" }
-            }.navigationTitle("Filter exercises").navigationBarTitleDisplayMode(.inline)
+            }.studioScreen().navigationTitle("Filter exercises").navigationBarTitleDisplayMode(.inline)
                 .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } } }
                 .safeAreaInset(edge: .bottom) {
                     Button { apply(muscle, bodyPart, equipment); dismiss() } label: {

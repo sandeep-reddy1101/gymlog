@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct TodayView: View {
+    @ScaledMetric(relativeTo: .caption) private var ordinalWidth = 25.0
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dynamicTypeSize) private var typeSize
     @State private var selectedID: UUID?
@@ -15,30 +17,27 @@ struct TodayView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
-                    if store.active == nil {
-                        SectionIntro(eyebrow: Date.now.formatted(.dateTime.weekday(.wide)).uppercased(), title: "Make time for stronger.", detail: "Your exercises. Your pace.")
-                    }
-                    dayPicker
+                VStack(spacing: 14) {
+                    if store.active == nil || !showingActive { dayPicker }
                     if let active = store.active, showingActive {
-                        SessionEditor(sessionID: active.id)
+                        WorkoutLineupView(sessionID: active.id)
                         Button("Discard unfinished workout", role: .destructive) { discard = true }.font(.footnote).padding()
                     } else {
                         if let active = store.active {
                             Panel {
                                 Label("\(active.title) is in progress", systemImage: "pause.circle.fill").font(.headline)
                                 Button("Resume workout") { showingActive = true }.buttonStyle(ActionButtonStyle())
-                                Text("Finish or discard it before starting another routine.").font(.caption).foregroundStyle(.secondary)
+                                Text("Finish or discard it before starting another routine.").font(.caption).foregroundStyle(theme.secondary)
                             }
                         }
                         if let selected { workoutOverview(selected) }
                         else if store.days.isEmpty {
                             Panel {
                                 Image(systemName: "dumbbell.fill")
-                                    .font(.largeTitle).foregroundStyle(AppColors.action)
+                                    .font(.largeTitle).foregroundStyle(theme.action)
                                 Text("Build your first routine").font(.title2.bold())
                                 Text("Choose your exercises, give your routine a name, and set the days that work for you.")
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(theme.secondary)
                                 Button("Create routine") { creatingRoutine = true }
                                     .buttonStyle(ActionButtonStyle()).padding(.top, 8)
                             }
@@ -52,12 +51,16 @@ struct TodayView: View {
                     }
                 }.padding()
             }
-            .background(Color(uiColor: .systemGroupedBackground))
-            .navigationTitle("Gym Log")
+            .studioScreen().navigationTitle("Gym Log")
             .safeAreaInset(edge: .bottom, spacing: 0) {
-                if store.active != nil && showingActive && store.editingSets.isEmpty { WorkoutDock() }
+                if store.active?.restTimer != nil && showingActive && store.editingSets.isEmpty { WorkoutDock() }
             }
-            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Routines", systemImage: "slider.horizontal.3") { editingPlan = true } } }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) { Button("Routines", systemImage: "slider.horizontal.3") { editingPlan = true } }
+                ToolbarItem(placement: .topBarLeading) {
+                    if store.active != nil && showingActive { Button("Plan") { showingActive = false } }
+                }
+            }
             .sheet(isPresented: $editingPlan) { PlanEditor() }
             .sheet(isPresented: $creatingRoutine) { RoutineForm(day: DayRecord(type: .push, exerciseIDs: [], name: "", weekdays: [])) }
             .sheet(item: $browsing) { AddExerciseView(dayID: $0.id) }
@@ -95,18 +98,18 @@ struct TodayView: View {
                         selectedID = day.id
                         showingActive = store.active?.routineID == day.id
                     } label: {
-                        VStack(spacing: 5) {
+                        VStack(spacing: 3) {
                             Text(day.scheduleDescription).font(.caption.weight(.medium))
                             Text(day.title).font(.subheadline.bold())
-                        }.frame(minWidth: 80, minHeight: 52).padding(10)
-                            .foregroundStyle(selectedID == day.id ? Color.black : Color.primary)
-                            .background(selectedID == day.id ? day.type.color : day.type.color.opacity(0.12), in: RoundedRectangle(cornerRadius: 16))
+                        }.frame(minWidth: 74, minHeight: 44).padding(.horizontal, 12).padding(.vertical, 4)
+                            .foregroundStyle(theme.text)
+                            .background(selectedID == day.id ? theme.selected : theme.surface, in: RoundedRectangle(cornerRadius: 12))
                     }.buttonStyle(.plain)
                         .accessibilityLabel("\(day.title), \(day.scheduleDescription)")
                         .accessibilityAddTraits(selectedID == day.id ? .isSelected : [])
                 }
                 if !store.days.isEmpty {
-                    Button { creatingRoutine = true } label: { Label("New", systemImage: "plus").frame(minHeight: 52).padding(10) }
+                    Button { creatingRoutine = true } label: { Label("New", systemImage: "plus").frame(minHeight: 44).padding(.horizontal, 10) }
                         .disabled(store.days.count >= 100)
                 }
             }
@@ -115,34 +118,43 @@ struct TodayView: View {
     private func workoutOverview(_ day: DayRecord) -> some View {
         VStack(spacing: 16) {
             Panel {
-                let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: 18)) : AnyLayout(HStackLayout(spacing: 22))
-                layout {
-                    SetProgress(completed: 0, total: day.exerciseIDs.count * store.data.preferences.defaultSets, color: day.type.color)
-                    VStack(alignment: .leading, spacing: 7) {
-                        Text(day.title).font(.largeTitle.bold())
-                        Text("\(day.exerciseIDs.count) exercises · \(day.scheduleDescription)").foregroundStyle(.secondary)
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(day.title).font(theme.heading)
+                        Text("\(day.exerciseIDs.count) exercises · \(day.scheduleDescription)").font(.subheadline).foregroundStyle(theme.secondary)
                     }
+                    Spacer()
+                    Circle().fill(day.type.color).frame(width: 9, height: 9).padding(.top, 9)
                 }
                 if day.exerciseIDs.isEmpty {
-                    Text("Make this routine yours. Choose exercises from the library to get started.").foregroundStyle(.secondary).padding(.top, 12)
+                    Text("Make this routine yours. Choose exercises from the library to get started.").foregroundStyle(theme.secondary).padding(.top, 12)
                 } else {
                     Button { store.start(day); showingActive = true } label: {
                         Text("Start workout")
-                    }.buttonStyle(ActionButtonStyle(fill: day.type.color)).padding(.top, 15).disabled(store.active != nil)
+                    }.buttonStyle(ActionButtonStyle()).padding(.top, 6).disabled(store.active != nil)
                 }
                 Button { browsing = day } label: {
                     Label(day.exerciseIDs.isEmpty ? "Choose exercises" : "Add exercises", systemImage: "magnifyingglass")
                         .frame(maxWidth: .infinity, minHeight: 44)
-                }.buttonStyle(.bordered).padding(.top, 8)
+                }.buttonStyle(SecondaryButtonStyle())
             }
-            ForEach(day.exerciseIDs, id: \.self) { id in
-                if let exercise = store.exercises.first(where: { $0.id == id }) {
-                    Panel {
-                        Text(exercise.name).font(.headline)
-                        Text("\(exercise.muscle) · \(exercise.equipmentLabel)").font(.subheadline).foregroundStyle(.secondary)
-                        Text(lastTime(exercise.id)).font(.caption).foregroundStyle(.secondary).padding(.top, 4)
+            if !day.exerciseIDs.isEmpty {
+                VStack(spacing: 0) {
+                    ForEach(Array(day.exerciseIDs.enumerated()), id: \.element) { index, id in
+                        if let exercise = store.exercises.first(where: { $0.id == id }) {
+                            HStack(alignment: .top, spacing: 12) {
+                                Text(String(format: "%02d", index + 1)).font(.caption.monospacedDigit()).foregroundStyle(theme.secondary).frame(width: ordinalWidth).padding(.top, 3)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(exercise.name).font(.subheadline.weight(.semibold))
+                                    Text(lastTime(exercise.id)).font(.caption).foregroundStyle(theme.secondary)
+                                }
+                                Spacer(minLength: 0)
+                            }.padding(14).frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
+                            if index < day.exerciseIDs.count - 1 { Divider().padding(.leading, 51) }
+                        }
                     }
-                }
+                }.background(theme.surface, in: RoundedRectangle(cornerRadius: AppTheme.panelRadius))
+                Text("Open Routines to edit targets, supersets or the order for future workouts.").font(.caption).foregroundStyle(theme.secondary)
             }
         }
     }
@@ -155,6 +167,7 @@ struct TodayView: View {
 }
 
 struct SessionEditor: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dynamicTypeSize) private var typeSize
     let sessionID: UUID
@@ -167,21 +180,15 @@ struct SessionEditor: View {
             VStack(spacing: 16) {
                 if session.watchTracking != nil && !store.isDemo { WatchWorkoutCard(session: session) }
                 Panel {
-                    let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: 18)) : AnyLayout(HStackLayout(spacing: 22))
-                    layout {
-                        SetProgress(completed: session.completedSets, total: session.totalSets, color: session.dayType.color)
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(session.title).font(.largeTitle.bold())
-                            Text(session.end == nil ? "In progress · Saved as you go" : session.start.formatted(date: .abbreviated, time: .shortened))
-                                .font(.subheadline).foregroundStyle(.secondary)
-                            if session.isSample { Text("Sample workout").font(.caption.bold()).foregroundStyle(.orange) }
-                        }
-                    }
+                    Text(session.title).font(theme.heading)
+                    Text("\(session.completedSets) of \(session.totalSets) sets · " + session.start.formatted(date: .abbreviated, time: .shortened))
+                        .font(.subheadline).foregroundStyle(theme.secondary)
+                    if session.isSample { Text("Sample workout").font(.caption.bold()).foregroundStyle(.orange) }
                 }
                 Panel {
                     Button(session.notes == nil ? "Add workout notes" : "Edit workout notes", systemImage: "note.text") { notes = true }
                         .frame(minHeight: 44)
-                    if let text = session.notes { Text(text).font(.subheadline).foregroundStyle(.secondary) }
+                    if let text = session.notes { Text(text).font(.subheadline).foregroundStyle(theme.secondary) }
                 }
                 ForEach(session.logs) { log in
                     ExerciseCard(sessionID: sessionID, exerciseID: log.id)
@@ -195,8 +202,8 @@ struct SessionEditor: View {
                     } label: {
                         Label("Finish workout", systemImage: "checkmark.flag.fill")
                             .font(.headline)
-                    }.buttonStyle(ActionButtonStyle(fill: session.dayType.color)).disabled(session.completedSets == 0)
-                    Text("Entries save as you type. Tap Complete for each finished set; only completed sets count toward progress.").font(.caption).foregroundStyle(.secondary)
+                    }.buttonStyle(ActionButtonStyle()).disabled(session.completedSets == 0)
+                    Text("Entries save as you type. Tap Complete for each finished set; only completed sets count toward progress.").font(.caption).foregroundStyle(theme.secondary)
                 }
             }
             .sheet(isPresented: $notes) { WorkoutNotesEditor(sessionID: sessionID) }
@@ -208,6 +215,7 @@ struct SessionEditor: View {
 }
 
 struct ExerciseCard: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     var sessionID: UUID
     var exerciseID: UUID
@@ -242,10 +250,10 @@ struct ExerciseCard: View {
                     }
                     HStack(alignment: .top) {
                         Text(log.exercise.muscle.capitalized + (log.exercise.isBodyweight ? " · Added weight only" : ""))
-                            .font(.caption).foregroundStyle(.secondary)
+                            .font(.caption).foregroundStyle(theme.secondary)
                         Spacer()
                         Text("\(log.sets.filter(\.completed).count)/\(log.sets.count) sets")
-                            .font(.caption.weight(.semibold).monospacedDigit()).foregroundStyle(.secondary)
+                            .font(.caption.weight(.semibold).monospacedDigit()).foregroundStyle(theme.secondary)
                     }
                     if log.exercise.exerciseDBID != nil {
                         Button("View form guide", systemImage: "figure.strengthtraining.traditional") { guiding = true }
@@ -256,11 +264,11 @@ struct ExerciseCard: View {
                        let other = session.logs.first(where: { $0.id == partner }) {
                         Label("Superset with \(other.exercise.name)", systemImage: "link").font(.caption).foregroundStyle(.teal)
                     }
-                    if let text = log.notes { Text(text).font(.subheadline).foregroundStyle(.secondary) }
+                    if let text = log.notes { Text(text).font(.subheadline).foregroundStyle(theme.secondary) }
                     if let previous = store.finished.filter({ $0.start < session.start }).compactMap({ $0.logs.first { $0.id == exerciseID && $0.sets.contains(where: \.completed) } }).first {
                         Text("Last time: " + previous.sets.filter(\.completed).map { "\(store.unit.text($0.weightKg))×\($0.reps)" }.joined(separator: ", ") + " \(store.unit.rawValue)")
-                            .font(.caption).foregroundStyle(.secondary)
-                        if let note = previous.notes { Text("Previous note: \(note)").font(.caption).foregroundStyle(.secondary) }
+                            .font(.caption).foregroundStyle(theme.secondary)
+                        if let note = previous.notes { Text("Previous note: \(note)").font(.caption).foregroundStyle(theme.secondary) }
                     }
                     ForEach(Array(log.sets.enumerated()), id: \.element.id) { index, set in
                         SetRow(number: index + 1, value: set, unit: store.unit, color: session.dayType.color) { updated in
@@ -294,6 +302,7 @@ struct ExerciseCard: View {
 }
 
 struct SetRow: View {
+    @Environment(\.appTheme) private var theme
     var number: Int
     var value: LoggedSet
     var unit: WeightUnit
@@ -326,9 +335,9 @@ struct SetRow: View {
                 Spacer()
                 if value.completed {
                     Label("Completed", systemImage: "checkmark.circle.fill")
-                        .font(.caption.weight(.semibold)).foregroundStyle(Color(uiColor: .label))
+                        .font(.caption.weight(.semibold)).foregroundStyle(theme.text)
                 } else {
-                    Text("Not completed").font(.caption).foregroundStyle(.secondary)
+                    Text("Ready to log").font(.caption).foregroundStyle(theme.secondary)
                 }
                 Menu {
                     Button("Remove set", systemImage: "trash", role: .destructive) { deleting = true }
@@ -338,37 +347,38 @@ struct SetRow: View {
             let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: 12)) : AnyLayout(HStackLayout(alignment: .bottom, spacing: 10))
             layout {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Weight · \(unit.rawValue)").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                    Text("Weight · \(unit.rawValue)").font(.caption.weight(.semibold)).foregroundStyle(theme.secondary)
                     TextField("Weight", text: $weightText).keyboardType(.decimalPad).focused($focus, equals: .weight)
                         .font(.title2.weight(.semibold).monospacedDigit())
                         .padding(.horizontal, 10).frame(minHeight: 52)
-                        .background(Color(uiColor: .tertiarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 10))
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(focus == .weight ? AppColors.action : Color(uiColor: .separator), lineWidth: focus == .weight ? 2 : 0.5))
+                        .background(theme.canvas, in: RoundedRectangle(cornerRadius: 10))
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(focus == .weight ? theme.action : theme.divider, lineWidth: focus == .weight ? 2 : 0.5))
                         .accessibilityLabel("Set \(number) weight in \(unit.rawValue)")
                         .onChange(of: weightText) { _, _ in saveNumbers() }
                 }.frame(maxWidth: .infinity)
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Reps").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                    Text("Reps").font(.caption.weight(.semibold)).foregroundStyle(theme.secondary)
                     TextField("Reps", text: $repsText).keyboardType(.numberPad).focused($focus, equals: .reps)
                         .font(.title2.weight(.semibold).monospacedDigit())
                         .padding(.horizontal, 10).frame(minHeight: 52)
-                        .background(Color(uiColor: .tertiarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 10))
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(focus == .reps ? AppColors.action : Color(uiColor: .separator), lineWidth: focus == .reps ? 2 : 0.5))
+                        .background(theme.canvas, in: RoundedRectangle(cornerRadius: 10))
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(focus == .reps ? theme.action : theme.divider, lineWidth: focus == .reps ? 2 : 0.5))
                         .accessibilityLabel("Set \(number) reps")
                         .onChange(of: repsText) { _, _ in saveNumbers() }
                 }.frame(maxWidth: .infinity)
                 Button {
                     guard let weight = parsedWeight, let reps = parsedReps else { return }
                     var next = value; next.weightKg = weight; next.reps = reps; next.completed.toggle()
+                    store.entryDrafts.removeValue(forKey: value.id)
                     update(next); focus = nil
                 } label: {
                     VStack(spacing: 3) {
                         Image(systemName: value.completed ? "arrow.uturn.backward" : "checkmark").font(.headline)
                         Text(value.completed ? "Undo" : "Complete").font(.caption.weight(.semibold))
-                    }.foregroundStyle(parsedWeight == nil || parsedReps == nil ? Color(uiColor: .secondaryLabel) : value.completed ? Color(uiColor: .label) : AppColors.buttonInk)
+                    }.foregroundStyle(parsedWeight == nil || parsedReps == nil ? Color(uiColor: .secondaryLabel) : value.completed ? theme.text : theme.onAction)
                         .frame(width: typeSize.isAccessibilitySize ? nil : 84)
                         .frame(maxWidth: typeSize.isAccessibilitySize ? .infinity : nil, minHeight: 52)
-                        .background(parsedWeight == nil || parsedReps == nil || value.completed ? Color(uiColor: .tertiarySystemFill) : AppColors.coral, in: RoundedRectangle(cornerRadius: 10))
+                        .background(parsedWeight == nil || parsedReps == nil || value.completed ? Color(uiColor: .tertiarySystemFill) : theme.action, in: RoundedRectangle(cornerRadius: 10))
                 }.buttonStyle(.plain).disabled(parsedWeight == nil || parsedReps == nil)
                     .accessibilityLabel("Set \(number), \(value.completed ? "undo completion" : "complete set")")
             }
@@ -376,7 +386,7 @@ struct SetRow: View {
                 DisclosureGroup(isExpanded: $showingEffort) {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("How many more reps could you have done? This is optional; your weight and reps are already entered.")
-                            .font(.caption).foregroundStyle(.secondary)
+                            .font(.caption).foregroundStyle(theme.secondary)
                         Picker("Reps left", selection: Binding(get: { value.repsInReserve }, set: { reserve in
                             var next = value; next.repsInReserve = reserve; update(next)
                         })) {
@@ -386,16 +396,15 @@ struct SetRow: View {
                     }.padding(.top, 6)
                 } label: {
                     Text(value.repsInReserve.map { "Effort · \($0 == 10 ? "10+" : String($0)) reps left" } ?? "Add effort · optional")
-                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                        .font(.caption.weight(.medium)).foregroundStyle(theme.secondary)
                 }
             }
             if parsedWeight == nil || parsedReps == nil {
-                Text("Enter a valid weight and 1–1,000 reps.").font(.caption).foregroundStyle(.red)
+                Text("Enter a valid weight and 1–1,000 reps.").font(.caption).foregroundStyle(theme.error)
             }
         }
         .padding(12)
-        .background(value.completed ? color.opacity(0.07) : Color(uiColor: .systemGroupedBackground), in: RoundedRectangle(cornerRadius: 14))
-        .overlay(RoundedRectangle(cornerRadius: 14).stroke(value.completed ? color.opacity(0.35) : Color.clear, lineWidth: 1))
+        .background(value.completed ? theme.selected : theme.canvas, in: RoundedRectangle(cornerRadius: 12))
         .onAppear { reload() }
         .onChange(of: focus) { _, field in
             if field == nil { store.editingSets.remove(value.id) }
@@ -418,10 +427,22 @@ struct SetRow: View {
             Button("Remove set", role: .destructive, action: remove)
         }
     }
-    private func reload() { weightText = unit.text(value.weightKg); repsText = String(value.reps) }
+    private func reload() {
+        if let draft = store.entryDrafts[value.id], draft.applies(to: value, unit: unit) {
+            weightText = draft.weight; repsText = draft.reps
+        } else {
+            weightText = unit.text(value.weightKg); repsText = String(value.reps)
+            store.entryDrafts.removeValue(forKey: value.id)
+        }
+    }
     private func saveNumbers() {
-        guard focus != nil, let weight = parsedWeight, let reps = parsedReps else { return }
-        var next = value; next.weightKg = weight; next.reps = reps
-        update(next)
+        guard focus != nil else { return }
+        var baseline = value
+        let valid = parsedWeight != nil && parsedReps != nil
+        if let weight = parsedWeight, let reps = parsedReps {
+            baseline.weightKg = weight; baseline.reps = reps
+            update(baseline)
+        }
+        store.entryDrafts[value.id] = SetEntryDraft(weight: weightText, reps: repsText, baseline: baseline, unit: unit, isValid: valid)
     }
 }

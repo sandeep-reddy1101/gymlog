@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct WorkoutNotesEditor: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
     var sessionID: UUID
@@ -15,8 +16,8 @@ struct WorkoutNotesEditor: View {
                     Text("\(text.count) / \(limit)").font(.caption).foregroundStyle(text.count > limit ? .red : .secondary)
                 } header: { Text(exerciseID == nil ? "How did the workout go?" : "Technique, equipment, or adjustments") } footer: {
                     Text("Notes belong to this workout. Exercise notes also appear as a reference next time you log that exercise.")
-                }
-            }.navigationTitle(exerciseID == nil ? "Workout notes" : "Exercise notes").navigationBarTitleDisplayMode(.inline)
+                }.listRowBackground(theme.surface)
+            }.studioScreen().navigationTitle(exerciseID == nil ? "Workout notes" : "Exercise notes").navigationBarTitleDisplayMode(.inline)
                 .onAppear {
                     if let session = store.session(sessionID) {
                         text = exerciseID.map { id in session.logs.first { $0.id == id }?.notes ?? "" } ?? session.notes ?? ""
@@ -41,6 +42,7 @@ struct WorkoutNotesEditor: View {
 }
 
 struct RoutineExerciseOptions: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
     var dayID: UUID
@@ -62,7 +64,7 @@ struct RoutineExerciseOptions: View {
                         Stepper("Maximum: \(upper) reps", value: $upper, in: 1...1000)
                         if lower > upper { Text("Maximum must be at least the minimum.").foregroundStyle(.red) }
                     }
-                } header: { Text("Rep range") } footer: { Text("A target for this exercise in this routine. Actual reps are logged separately and may be outside the range.") }
+                } header: { Text("Rep range") } footer: { Text("A target for this exercise in this routine. Actual reps are logged separately and may be outside the range.") }.listRowBackground(theme.surface)
                 Section {
                     Picker("Pair with", selection: $partnerID) {
                         Text("No superset").tag(Optional<UUID>.none)
@@ -77,11 +79,11 @@ struct RoutineExerciseOptions: View {
                     }
                 } header: { Text("Superset") } footer: {
                     Text("Alternate one set of each exercise, then rest. Each exercise can belong to one pair. Different set counts are supported; remaining sets are logged on their own. Changes apply to your next workout.")
-                }
+                }.listRowBackground(theme.surface)
                 Section {
                     Button("Edit shared exercise details") { editingShared = true }
-                } footer: { Text("Names and equipment are shared across routines. Targets and pairs are specific to this routine.") }
-            }.navigationTitle(exercise.name).navigationBarTitleDisplayMode(.inline)
+                } footer: { Text("Names and equipment are shared across routines. Targets and pairs are specific to this routine.") }.listRowBackground(theme.surface)
+            }.studioScreen().navigationTitle(exercise.name).navigationBarTitleDisplayMode(.inline)
                 .onAppear {
                     guard !loaded else { return }; loaded = true
                     if let range = day?.targets?.first(where: { $0.exerciseID == exercise.id })?.range {
@@ -119,6 +121,7 @@ struct RoutineExerciseOptions: View {
 }
 
 struct PlateCalculatorView: View {
+    @Environment(\.appTheme) private var theme
     @Environment(\.dismiss) private var dismiss
     @State private var unit: WeightUnit
     @State private var target: String
@@ -143,12 +146,12 @@ struct PlateCalculatorView: View {
                     Picker("Units", selection: $unit) { ForEach(WeightUnit.allCases) { Text($0.rawValue).tag($0) } }.pickerStyle(.segmented)
                     HStack { Text("Target total"); TextField("Total", text: $target).multilineTextAlignment(.trailing).keyboardType(.decimalPad); Text(unit.rawValue) }
                     HStack { Text("Bar weight"); TextField("Bar", text: $bar).multilineTextAlignment(.trailing).keyboardType(.decimalPad); Text(unit.rawValue) }
-                } footer: { Text("Target includes the bar. Set the actual bar weight; collars are excluded. Changing units resets the example and plate inventory.") }
+                } footer: { Text("Target includes the bar. Set the actual bar weight; collars are excluded. Changing units resets the example and plate inventory.") }.listRowBackground(theme.surface)
                 Section {
                     ForEach($stock) { $plate in
                         Stepper("\(plate.weight.formatted()) \(unit.rawValue): \(plate.pairs) pairs", value: $plate.pairs, in: 0...12)
                     }
-                } header: { Text("Available plates") } footer: { Text("One pair means one matching plate for each side. Set unavailable sizes to zero.") }
+                } header: { Text("Available plates") } footer: { Text("One pair means one matching plate for each side. Set unavailable sizes to zero.") }.listRowBackground(theme.surface)
                 Button("Calculate plates", systemImage: "equal.circle") {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     guard let targetValue = number(target), let barValue = number(bar) else { error = "Enter numeric target and bar weights."; return }
@@ -161,15 +164,15 @@ struct PlateCalculatorView: View {
                         if result.perSide.isEmpty { Text("Bar only") }
                         else {
                             Text(result.perSide.map { $0.formatted() }.joined(separator: " + ") + " \(unit.rawValue)").font(.title3.bold())
-                            Text("Largest plates first. Mirror the same plates on the other side.").font(.caption).foregroundStyle(.secondary)
+                            Text("Largest plates first. Mirror the same plates on the other side.").font(.caption).foregroundStyle(theme.secondary)
                         }
                         LabeledContent("Total including bar", value: "\(result.total.formatted()) \(unit.rawValue)")
                         if result.shortfall > 0.00001 {
-                            Text("Closest available load below your target: \(result.shortfall.formatted()) \(unit.rawValue) short. It does not round up.").foregroundStyle(.secondary)
+                            Text("Closest available load below your target: \(result.shortfall.formatted()) \(unit.rawValue) short. It does not round up.").foregroundStyle(theme.secondary)
                         } else { Label("Exact target", systemImage: "checkmark.circle").foregroundStyle(.green) }
-                    }
+                    }.listRowBackground(theme.surface)
                 }
-            }.navigationTitle("Plate calculator").navigationBarTitleDisplayMode(.inline)
+            }.studioScreen().navigationTitle("Plate calculator").navigationBarTitleDisplayMode(.inline)
                 .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
                 .onChange(of: unit) { _, unit in
                     bar = unit == .kg ? "20" : "45"; target = unit == .kg ? "60" : "135"

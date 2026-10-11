@@ -13,6 +13,7 @@ import Observation
     var completedSessionID: UUID?
     var isDemo: Bool
     var editingSets: Set<UUID> = []
+    var entryDrafts: [UUID: SetEntryDraft] = [:]
     var matchingSessions: Set<UUID> = []
     private var dataGeneration = UUID()
 
@@ -66,6 +67,31 @@ import Observation
         return commit { backup in
             if let index = backup.sessions.firstIndex(where: { $0.id == value.id }) { backup.sessions[index] = value }
         }
+    }
+    @discardableResult func reorderLineup(_ id: UUID, exerciseIDs: [UUID]) -> Bool {
+        guard let session = session(id) else { return false }
+        do { return updateSession(try WorkoutLogic.reordering(session, exerciseIDs: exerciseIDs)) }
+        catch { errorMessage = error.localizedDescription; return false }
+    }
+    @discardableResult func saveLineup(_ id: UUID) -> Bool {
+        guard let session = session(id) else { return false }
+        do {
+            let next = try WorkoutLogic.savingLineup(session, in: data)
+            return commit { $0 = next }
+        } catch { errorMessage = error.localizedDescription; return false }
+    }
+    @discardableResult func addExercises(_ exercises: [ExerciseRecord], dayID: UUID? = nil, sessionID: UUID? = nil) -> Bool {
+        do {
+            var next = data
+            if let sessionID, let index = next.sessions.firstIndex(where: { $0.id == sessionID }) {
+                next.sessions[index] = try WorkoutLogic.adding(exercises, to: next.sessions[index], history: finished, count: next.preferences.defaultSets)
+            } else if let dayID, let index = next.days.firstIndex(where: { $0.id == dayID }) {
+                next.days[index] = ExerciseLibrary.adding(exercises.map(\.id), to: next.days[index])
+            } else { throw BackupError.invalid("This routine or workout is no longer available.") }
+            for exercise in exercises where !next.exercises.contains(where: { $0.id == exercise.id }) { next.exercises.append(exercise) }
+            _ = try next.validated()
+            return commit { $0 = next }
+        } catch { errorMessage = error.localizedDescription; return false }
     }
     func start(_ day: DayRecord) {
         guard active == nil else { return }
@@ -174,6 +200,7 @@ import Observation
             data = checked
             dataGeneration = UUID()
             editingSets.removeAll()
+            entryDrafts.removeAll()
             pendingUndo = nil
             syncRestAlerts()
         } catch { errorMessage = "Import failed; your existing data was kept. \(error.localizedDescription)" }
@@ -184,6 +211,7 @@ import Observation
         if commit({ $0 = Backup(exercises: plan.exercises, days: plan.days, sessions: [], preferences: Preferences()) }) {
             dataGeneration = UUID()
             editingSets.removeAll()
+            entryDrafts.removeAll()
             pendingUndo = nil
         }
     }

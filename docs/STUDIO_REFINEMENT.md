@@ -1,6 +1,6 @@
 # Studio refinement — approved direction and requested behavior
 
-October 10, 2026. The user selected **Studio** as the design direction. The changes below refine the interactive preview; the Swift app has not adopted the redesign yet. This supersedes the earlier recommendation of Velocity and the oversized editorial headings.
+October 10, 2026: the user selected **Studio** as the design direction. October 11: the user approved native implementation, now recorded in [Studio implementation](STUDIO_IMPLEMENTATION.md). The original preview contract follows. This supersedes the earlier recommendation of Velocity and the oversized editorial headings.
 
 ## User feedback captured
 

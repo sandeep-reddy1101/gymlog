@@ -10,15 +10,17 @@ Open **LiftLog.xcodeproj**, then follow [SETUP.md](SETUP.md) for signing, simula
 
 ## Included
 
-- Today: weekday/rest-day selection, progress ring, previous sets, quick-fill, large numeric controls, haptics, add/remove sets, resumable draft, finish confirmation.
+- Train: compact Studio design, routine selection, full workout lineup, choose any exercise, session reorder with explicit save-to-routine, previous sets, quick-fill, numeric entry, haptics, add/remove sets, retained drafts and finish confirmation.
 - Progress: total/weekly workouts, volume, four-week heat map, eight-week volume chart, exercise trends, PR badges, resting heart rate and HRV.
 - History: full set details, immediate editing, confirmed deletion, Watch matching/retry and heart-rate chart.
-- Routines: create, rename, reorder, delete, assign any weekdays or leave unscheduled, and choose a color. Add exercises without leaving search; tab/routine/search context stays in place across ordinary backgrounding. Fresh launches open Today.
+- Routines: create, rename, reorder, delete, assign any weekdays or leave unscheduled, and choose a color. Add exercises without leaving search; tab/routine/search context stays in place across ordinary backgrounding. Fresh launches open Train.
 - Library: live ExerciseDB search requiring all name words, with exact names ranked first among loaded matches, muscle/body-part/equipment filters, 25-item pages, multi-select, custom entries, instructions and GIF demonstrations with half-speed default, tap-to-play, pause and frame stepping. Fresh/reset installs have no saved exercises or routines. Selected exercise records remain usable offline.
 - Caching: one-hour disk cache (32 MB / 250 files), 500 ms search debounce, shared requests and persisted rate-limit cooldowns. Expired/uncached searches need internet. Settings can clear downloads without deleting workouts.
 - Provider: free V1 is for non-commercial use, with AscendAPI attribution. Review licensing and a commercial plan before release; see [requirements](REQUIREMENTS.md#october-6--exercisedb-replaces-the-static-exercise-browser).
-- Settings: pounds/kilograms, default set count, version-2 JSON share-sheet backup, validated version-1/2 replacement import, confirmed reset, isolated sample mode.
+- Settings: Studio/Velocity themes, System/Light/Dark appearance, pounds/kilograms, default set count, version-2 JSON share-sheet backup, validated version-1/2 replacement import, confirmed reset, isolated sample mode.
 - Apple Watch: opt-in Start/Finish from iPhone, a Gym Log Watch companion, live heart rate and estimated active energy, automatic summary and Health workout saving. Older logs retain manual matching; missing measurements stay unavailable.
+
+Studio implementation and feature-preservation walkthrough: [docs/STUDIO_IMPLEMENTATION.md](docs/STUDIO_IMPLEMENTATION.md).
 
 ## Project structure
 

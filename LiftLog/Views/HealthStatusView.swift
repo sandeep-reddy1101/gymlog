@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct HealthConnectionStatus: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -20,11 +21,12 @@ struct HealthConnectionStatus: View {
                 }
                 Text("These times describe what Gym Log could read. Apple Health does not expose your Watch’s last sync time.").font(.caption)
             }
-        }.font(.subheadline).foregroundStyle(.secondary)
+        }.font(.subheadline).foregroundStyle(theme.secondary)
     }
 }
 
 struct WorkoutHealthStatus: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     var session: SessionRecord
     var body: some View {
@@ -51,6 +53,6 @@ struct WorkoutHealthStatus: View {
                 Text(session.health == nil ? "Ready to check Apple Health" : "Saved Watch summary available").font(.headline)
                 Text("Connect Health and check for an overlapping Watch strength workout.")
             }
-        }.font(.subheadline).foregroundStyle(.secondary)
+        }.font(.subheadline).foregroundStyle(theme.secondary)
     }
 }

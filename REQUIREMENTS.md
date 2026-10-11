@@ -1,6 +1,21 @@
 # Gym Log requirements
 
-Last updated: October 10, 2026. This is the current product agreement. [Original build requirements](docs/ORIGINAL_REQUIREMENTS.md) are preserved verbatim for context. Later confirmed changes in this document take precedence.
+Last updated: October 11, 2026. This is the current product agreement. [Original build requirements](docs/ORIGINAL_REQUIREMENTS.md) are preserved verbatim for context. Later confirmed changes in this document take precedence.
+
+## October 11 — Studio implementation approved
+
+The user approved implementing the refined Studio design in the native app, preserving existing features, testing it and pushing it to GitHub. Studio is now the default; Settings → Appearance offers Studio / Velocity and independent System / Light / Dark choices. This supersedes the preview-only status below.
+
+- Train keeps access to all routines, and Start / Resume opens the complete session lineup. Tap any row to log that exercise. All exercises and Choose another exercise return to the lineup; completion never navigates automatically. The bottom quick-complete action only applies to the chosen exercise.
+- Reorder offers native drag handles, a Move up/down menu, and VoiceOver actions. Changes affect this session only and preserve exercise/set IDs, values, notes, rep targets, supersets, rest and Watch tracking. Pair members may be separated in the visual lineup; pairing and rest-after-both behavior remain intact.
+- Workout options → Save lineup to routine explicitly saves order, added/swapped exercise membership and current session pairings. Preserve the routine's latest name, schedule, color and retained exercise targets. Disable saving if the original routine was deleted. Routine editing continues to affect future sessions only.
+- Add exercises from a workout targets that session, including custom exercises. Add from a routine targets that routine. Both keep the browser, query, filters and selection workflow open after adding. API search, cache, attribution and playback remain unchanged.
+- Stable set IDs retain partially typed input across navigation and ordinary backgrounding. Valid entries persist as before; unfinished/invalid text stays in memory for this app run and cannot be quick-completed. Undo, changed units and replaced data invalidate stale drafts. Cold launches still open Train fresh and retain persisted workout values.
+- Use compact, Dynamic Type headings and controls; primary actions remain at least 48 pt, secondary/reorder actions at least 44 pt. Remove the oversized introductions, decorative progress ring from the workout header, colored card borders and History side stripes. Preserve routine colors as small metadata indicators.
+- Optional string preferences preserve version-1/2 backup compatibility; unknown/missing design values resolve to Studio/System. Theme changes do not replace navigation trees. Preserve app icon, signing settings and bundle IDs.
+- Retain Progress, History, Settings, routine management, targets/supersets, notes, optional effort, set add/remove, quick-fill, swapping/undo, rest/alerts, calculators, backups, sample mode and Health/Watch workflows. Whole-exercise removal during a workout is not introduced; existing confirmed set removal and uncompleted-exercise swapping remain available.
+
+See [Studio implementation and acceptance checks](docs/STUDIO_IMPLEMENTATION.md) and [validation results](docs/VALIDATION.md). Native visual/touch and real-device Health/Watch checks remain distinct from automated tests and builds.
 
 ## October 10 — Studio selected; compact screens and user-controlled lineup
 

@@ -8,4 +8,4 @@ These are proposals and sample-data prototypes, separate from the Swift app. Dow
 
 The corresponding `.fragment.html` files are editable sources. Standalone previews include their renderer and use local browser state. They do not call ExerciseDB, connect to Apple Health, or edit app data. Interface icon/helper resources may require internet. Review browser state is disposable.
 
-Preview approval is distinct from implementation approval. The source app has not adopted the selected Studio direction yet.
+The user approved native implementation on October 11. The source app now uses Studio; see [implementation and acceptance checks](../STUDIO_IMPLEMENTATION.md). These HTML files remain historical interactive previews.

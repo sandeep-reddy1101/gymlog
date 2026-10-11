@@ -2,6 +2,7 @@ import SwiftUI
 import Charts
 
 struct ProgressScreen: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @State private var exerciseID: UUID?
     @State private var metric: StrengthMetric = .estimatedMax
@@ -33,18 +34,17 @@ struct ProgressScreen: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 18) {
-                    SectionIntro(eyebrow: "YOUR PROGRESS", title: "Small steps add up.", detail: "See the work you’ve put in, one session at a time.")
                     stats
                     consistency
                     heatmap
                     Panel {
                         Text("Weekly volume").font(.title3.bold())
-                        Text("Last 8 weeks · \(store.unit.rawValue) × reps").font(.caption).foregroundStyle(.secondary)
+                        Text("Last 8 weeks · \(store.unit.rawValue) × reps").font(.caption).foregroundStyle(theme.secondary)
                         Chart(WorkoutLogic.weeklyVolumes(store.finished)) { point in
                             BarMark(x: .value("Week", point.date, unit: .weekOfYear), y: .value("Volume", store.unit.display(point.value)))
                                 .foregroundStyle(DayType.pull.color.gradient).cornerRadius(5)
                         }.frame(height: 180).chartXAxis { AxisMarks(values: .stride(by: .weekOfYear, count: 2)) { _ in AxisValueLabel(format: .dateTime.month(.abbreviated).day(), anchor: .center) } }
-                        if store.finished.isEmpty { Text("Finish a workout to start your chart.").font(.caption).foregroundStyle(.secondary) }
+                        if store.finished.isEmpty { Text("Finish a workout to start your chart.").font(.caption).foregroundStyle(theme.secondary) }
                     }
                     strengthPanel
                     records
@@ -55,11 +55,11 @@ struct ProgressScreen: View {
                         HealthTrend(title: "Heart rate variability", unit: "ms · SDNN", points: store.health.variability, color: .teal)
                         if store.health.restingHeartRate.isEmpty && store.health.variability.isEmpty {
                             Text("No readable data. Connect Apple Health in Settings; permission may be off or your Watch may not have synced.")
-                                .font(.subheadline).foregroundStyle(.secondary)
+                                .font(.subheadline).foregroundStyle(theme.secondary)
                         }
                     }
                 }.padding()
-            }.background(Color(uiColor: .systemGroupedBackground)).navigationTitle("Progress")
+            }.background(theme.canvas).studioScreen().navigationTitle("Progress")
                 .task {
                     if !store.isDemo && store.health.hasRequestedAccess {
                         do { try await store.health.loadTrends() }
@@ -78,19 +78,19 @@ struct ProgressScreen: View {
             Text("\(current) of \(goal) workouts this week").font(.title2.bold()).monospacedDigit()
             SwiftUI.ProgressView(value: Double(min(current, goal)), total: Double(goal)).tint(.teal)
             Text(current >= goal ? "You’ve reached your weekly goal." : "\(goal - current) more to reach your goal.")
-                .font(.subheadline).foregroundStyle(.secondary)
+                .font(.subheadline).foregroundStyle(theme.secondary)
             Text("\(streak) consecutive goal \(streak == 1 ? "week" : "weeks") · Monday–Sunday")
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.caption).foregroundStyle(theme.secondary)
             Chart {
                 ForEach(counts) { point in
                     BarMark(x: .value("Week", point.date, unit: .weekOfYear), y: .value("Workouts", point.value))
                         .foregroundStyle(.teal.gradient).cornerRadius(4)
                 }
-                RuleMark(y: .value("Goal", goal)).lineStyle(StrokeStyle(lineWidth: 1, dash: [4])).foregroundStyle(.secondary)
+                RuleMark(y: .value("Goal", goal)).lineStyle(StrokeStyle(lineWidth: 1, dash: [4])).foregroundStyle(theme.secondary)
             }.frame(height: 130)
                 .chartXAxis { AxisMarks(values: .stride(by: .weekOfYear, count: 2)) { _ in AxisValueLabel(format: .dateTime.month(.abbreviated).day(), anchor: .center) } }
                 .chartYAxis { AxisMarks(values: .stride(by: 1)) }
-            Text("Dashed line: your current goal. Change it in Settings. An unfinished current week does not break your streak.").font(.caption).foregroundStyle(.secondary)
+            Text("Dashed line: your current goal. Change it in Settings. An unfinished current week does not break your streak.").font(.caption).foregroundStyle(theme.secondary)
         }
     }
     private var strengthPanel: some View {
@@ -106,7 +106,7 @@ struct ProgressScreen: View {
                 ForEach(StrengthMetric.allCases.filter { chosen?.isBodyweight != true || $0 != .estimatedMax }) { Text($0.rawValue).tag($0) }
             }.pickerStyle(.menu)
             Text(resolvedMetric == .estimatedMax ? "Estimated 1-rep max · Epley · \(store.unit.rawValue)" : resolvedMetric == .weight ? "Heaviest completed set · \(store.unit.rawValue) of added load" : "Most reps in a completed set · Weight may differ between sessions")
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.caption).foregroundStyle(theme.secondary)
             if trend.isEmpty {
                 ContentUnavailableView("No sets yet", systemImage: "chart.xyaxis.line", description: Text("Complete a set of this exercise to see your trend."))
             } else {
@@ -126,7 +126,7 @@ struct ProgressScreen: View {
                 Text("Recent sets").font(.headline)
                 ForEach(Array(performances.suffix(3).reversed())) { performance in
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(performance.date, format: .dateTime.month(.abbreviated).day()).font(.caption).foregroundStyle(.secondary)
+                        Text(performance.date, format: .dateTime.month(.abbreviated).day()).font(.caption).foregroundStyle(theme.secondary)
                         Text(performance.sets.map { "\(store.unit.text($0.weightKg)) × \($0.reps)" }.joined(separator: "  ·  ") + " \(store.unit.rawValue)")
                             .font(.subheadline.monospacedDigit())
                     }.padding(.vertical, 4)
@@ -151,7 +151,7 @@ struct ProgressScreen: View {
     private func stat(_ label: String, value: String) -> some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(value).font(.title.bold()).monospacedDigit()
-            Text(label).font(.caption).foregroundStyle(.secondary)
+            Text(label).font(.caption).foregroundStyle(theme.secondary)
         }.frame(maxWidth: .infinity, alignment: .leading)
     }
     private var heatmap: some View {
@@ -160,9 +160,9 @@ struct ProgressScreen: View {
         let start = cal.date(byAdding: .day, value: -21, to: weekStart)!
         return Panel {
             Text("Show up. Build momentum.").font(.title3.bold())
-            Text("4 weeks · Monday–Sunday").font(.caption).foregroundStyle(.secondary)
+            Text("4 weeks · Monday–Sunday").font(.caption).foregroundStyle(theme.secondary)
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 7), count: 7), spacing: 7) {
-                ForEach(0..<7) { offset in Text(["M","T","W","T","F","S","S"][offset]).font(.caption2).foregroundStyle(.secondary) }
+                ForEach(0..<7) { offset in Text(["M","T","W","T","F","S","S"][offset]).font(.caption2).foregroundStyle(theme.secondary) }
                 ForEach(0..<28) { index in
                     let date = cal.date(byAdding: .day, value: index, to: start)!
                     let workouts = store.finished.filter { cal.isDate($0.start, inSameDayAs: date) }
@@ -201,7 +201,7 @@ struct ProgressScreen: View {
         return Panel {
             Label("Personal records", systemImage: "trophy.fill").font(.title3.bold()).foregroundStyle(.orange)
             if recent.isEmpty {
-                Text("Your first session sets the baseline. Beat it to earn a badge.").font(.subheadline).foregroundStyle(.secondary)
+                Text("Your first session sets the baseline. Beat it to earn a badge.").font(.subheadline).foregroundStyle(theme.secondary)
             }
             ForEach(Array(recent.prefix(5)), id: \.id) { entry in
                 HStack(alignment: .top, spacing: 12) {
@@ -209,8 +209,8 @@ struct ProgressScreen: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(entry.log.exercise.name).font(.subheadline.bold())
                         Text(entry.log.exercise.isBodyweight ? "\(Int(entry.log.score)) reps · Best completed reps" : "\(store.unit.text(entry.log.score)) \(store.unit.rawValue) · Estimated 1RM")
-                            .font(.caption).foregroundStyle(.secondary)
-                        Text(entry.date, format: .dateTime.month(.abbreviated).day()).font(.caption).foregroundStyle(.secondary)
+                            .font(.caption).foregroundStyle(theme.secondary)
+                        Text(entry.date, format: .dateTime.month(.abbreviated).day()).font(.caption).foregroundStyle(theme.secondary)
                     }
                 }.padding(.top, 8)
             }
@@ -219,6 +219,7 @@ struct ProgressScreen: View {
 }
 
 struct HealthTrend: View {
+    @Environment(\.appTheme) private var theme
     var title: String
     var unit: String
     var points: [HealthPoint]
