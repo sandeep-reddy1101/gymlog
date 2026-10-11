@@ -2,6 +2,23 @@
 
 Last updated: October 11, 2026. This is the current product agreement. [Original build requirements](docs/ORIGINAL_REQUIREMENTS.md) are preserved verbatim for context. Later confirmed changes in this document take precedence.
 
+## October 11 — opt-in recommended routines
+
+The user requested their original Push / Pull / Legs / Upper / Lower plan in a Recommended section of exercise search, with whole-routine creation and correct AscendAPI exercises. This permits curated routine references; it does not restore automatic seeding or a static exercise catalog.
+
+| ID | Requirement |
+| --- | --- |
+| REC01 | Add a compact Recommended entry to Add exercises, plus access from Routines and the first-routine screen. Preview one routine or all remaining routines before saving. Stay in the existing navigation/search experience. |
+| REC02 | Preserve the original exercise order, Monday/Tuesday/Wednesday/Friday/Saturday suggestions, Thursday/Sunday rest days, and optional Pull-day shrug (off by default). Allow names to change and suggested scheduling to be disabled before creation; existing routine editing handles arbitrary days/order afterward. |
+| REC03 | Resolve pinned, audited provider IDs through the existing detail client. Verify expected name, exact equipment and nonempty instructions. Fetch names, muscles, instructions and media from the API; no bundled guide/image fallbacks or fuzzy first-result selection. Shared exercises use the same provider ID across days. |
+| REC04 | Show requested movement and actual provider exercise together, including variant notes. Missing/changed records block creation until the user explicitly chooses an API exercise or excludes the movement. The free catalog currently has no verified exact DB hip thrust or DB walking-lunge match; never relabel a bodyweight/band/machine movement as that exercise. The implemented default is explicit choice/omission; custom fallbacks were offered as an optional preference, not assumed approved. |
+| REC05 | Create routines and library records in one validated persistence transaction. Preserve existing routines, active sessions, logged data and settings; reuse existing exercise IDs by provider ID, including historical snapshots, without merging unrelated exercises by name. New sessions use normal default sets and quick-fill. |
+| REC06 | Keep provenance in optional backup-compatible routine metadata. Block accidental re-creation of an installed recommendation, offer remaining routines in the full-plan preview, allow re-add after deletion, and retain existing deliberate Duplicate behavior. |
+| REC07 | From a single-routine preview opened through Add exercises, also offer to append its exercises to the current routine/session. Deduplicate and retain existing order, names, schedules and logs; do not create another routine for this action. |
+| REC08 | Reuse the shared one-hour TTL, request pacing/coalescing, shorter provider cache lifetime and persisted rate-limit cooldown. Load only opened previews and included slots. Recheck selected details before saving, refetching only expired entries. No eager full-catalog/media download, background polling or Health/workout-data transmission. Errors retain choices and prevent partial saves. |
+
+See [mapping audit and behavior](docs/RECOMMENDED_ROUTINES.md) and [validation](docs/VALIDATION.md). Native touch/visual acceptance for these new screens remains separate from passing core tests/builds.
+
 ## October 11 — Studio implementation approved
 
 The user approved implementing the refined Studio design in the native app, preserving existing features, testing it and pushing it to GitHub. Studio is now the default; Settings → Appearance offers Studio / Velocity and independent System / Light / Dark choices. This supersedes the preview-only status below.

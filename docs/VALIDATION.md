@@ -1,5 +1,16 @@
 # Validation log
 
+## October 11, 2026 — recommended routines
+
+- Core suite: **81 tests passed**, including 11 new tests for the original five-day plan, exact provider matching, shared provider identities, historical quick-fill, transactional batch rejection, duplicate/re-add behavior, legacy backups, explicit preview omissions/replacements, optional shrug, cached detail reuse and rate-limit cooldown. Preview readiness is tested directly; unresolved, changed or repeated movements cannot be silently saved.
+- Live mapping audit: inspected AscendAPI catalog names, equipment and instructions for all 20 pinned movements. Explicitly differentiated the three row variants and rear-foot-elevated split squat. Free V1 returned no verified exact dumbbell hip-thrust or dumbbell walking-lunge match; both remain visible unresolved choices. Additional detail spot checks encountered HTTP 429 and stopped. No bulk catalog/media download is implemented in the app. See [mapping audit](RECOMMENDED_ROUTINES.md).
+- Normal and Local Only unsigned iOS Simulator builds **passed**, including the embedded Watch app. Repository verification **passed 29 core checks**, Swift parsing and project/plist validation. All 12 existing project/phone/Watch build configuration dictionaries remain identical; project changes only register two new Swift files. Signing, schemes and bundle IDs are unchanged.
+- **Native visual/tap-through validation is pending for this feature.** Computer Use reported the Mac locked; an unlock request was sent. No real-device/simulator interaction or user-data mutation is claimed in this revision. Earlier Studio native checks do not validate these new screens. Physical Health/Watch acceptance is still pending separately.
+- Before device acceptance: create one routine and all remaining routines; resolve or omit the two missing Lower slots; include optional shrug; change name/scheduling; re-open to confirm duplicate prevention; add exercises to an existing routine and active session; verify original search/filter/selection retention; view guides and cancel replacement selection; inspect light/dark and accessibility text.
+
+Local logs: `/tmp/gymlog-recommendations-tests.log`, `/tmp/gymlog-recommendations-verify.log`, `/tmp/gymlog-recommendations-build.log`, `/tmp/gymlog-recommendations-local-build.log`. Test data, downloaded audit responses and logs are not committed.
+
+
 ## October 11, 2026 — Studio native design and user-controlled workouts
 
 - Full Swift core suite: **70 tests passed**, including nine new regressions for optional theme/appearance preferences, unknown/legacy fallback, backup round-trip, stable draft baselines, reorder preservation/rejection, session additions/limits/history fill, deleted routine handling, and explicit lineup save preserving routine metadata changed during a workout.

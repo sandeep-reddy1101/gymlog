@@ -5,6 +5,26 @@
 	"objectVersion" = "56";
 	"archiveVersion" = "1";
 	"objects" = {
+		"6A90330ED65B9DDE80E3CF96" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "66087728F1B65A6511FBEE72";
+		};
+		"66087728F1B65A6511FBEE72" = {
+			"path" = "LiftLog/Views/RecommendedRoutinesView.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"01264D7E7DF01D16E2F78614" = {
+			"path" = "LiftLog/Core/RecommendedRoutines.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"7F6F087F4F210BC369AF6843" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "01264D7E7DF01D16E2F78614";
+		};
 		"59E1BEE911F66DA37FEBACDC" = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
@@ -269,6 +289,8 @@
 				"DDB458183C92B5E504AED2FC",
 				"593886B74A60C83E7EEC6E11",
 				"7F924FE2490DF303C58D60D1",
+				"01264D7E7DF01D16E2F78614",
+				"66087728F1B65A6511FBEE72",
 			);
 		};
 		"95172A69F0EE285E4989EB3D" = {
@@ -1047,6 +1069,8 @@
 				"05E275A7DF2AD1ED88C7D015",
 				"F7EAFA50934866AFCE67AFFB",
 				"73BE63E2A2971F224CFF64D3",
+				"7F6F087F4F210BC369AF6843",
+				"6A90330ED65B9DDE80E3CF96",
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};

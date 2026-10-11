@@ -72,6 +72,10 @@ struct ExerciseCatalogBrowser: View {
     var unavailable: Set<UUID>
     var selected: Set<UUID>
     var selectionFull = false
+    var showsRecommendations = false
+    var recommendationDayID: UUID? = nil
+    var recommendationSessionID: UUID? = nil
+    var apiOnly = false
     var onSelect: (ExerciseRecord) -> Void
     @State private var model = CatalogBrowserModel()
     @State private var search = ""
@@ -113,10 +117,10 @@ struct ExerciseCatalogBrowser: View {
                 }.padding(.leading, 14).padding(.trailing, 4).frame(minHeight: 52)
                     .background(theme.surface, in: RoundedRectangle(cornerRadius: 14))
                 HStack(spacing: 12) {
-                    Picker("Browse", selection: $savedOnly) {
+                    if !apiOnly { Picker("Browse", selection: $savedOnly) {
                         Text("All exercises").tag(false)
                         Text("Saved").tag(true)
-                    }.pickerStyle(.segmented)
+                    }.pickerStyle(.segmented) }
                     if !savedOnly {
                         Button { searching = false; showingFilters = true } label: {
                             Label(filterCount == 0 ? "Filters" : "Filters (\(filterCount))", systemImage: "line.3.horizontal.decrease")
@@ -134,6 +138,18 @@ struct ExerciseCatalogBrowser: View {
                 }
             }.padding(.horizontal, 16).padding(.top, 12).padding(.bottom, 4)
             List {
+                if showsRecommendations {
+                    Section("Recommended") {
+                        NavigationLink {
+                            RecommendedRoutineList(dayID: recommendationDayID, sessionID: recommendationSessionID)
+                        } label: {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Label("Ready-made routines", systemImage: "calendar.badge.plus").font(.headline)
+                                Text("Push · Pull · Legs · Upper · Lower").font(.caption).foregroundStyle(theme.secondary)
+                            }.padding(.vertical, 4)
+                        }
+                    }.listRowBackground(theme.surface)
+                }
                 if savedOnly {
                     Section("Your saved exercises") {
                         ForEach(savedRecords) { row($0) }

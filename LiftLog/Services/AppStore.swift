@@ -93,6 +93,12 @@ import Observation
             return commit { $0 = next }
         } catch { errorMessage = error.localizedDescription; return false }
     }
+    @discardableResult func addRecommendedRoutines(_ drafts: [RecommendedRoutineDraft]) -> Bool {
+        do {
+            let next = try RecommendedRoutineImport.adding(drafts, to: data)
+            return commit { $0 = next }
+        } catch { errorMessage = error.localizedDescription; return false }
+    }
     func start(_ day: DayRecord) {
         guard active == nil else { return }
         let logs = day.exerciseIDs.compactMap { id -> ExerciseLog? in

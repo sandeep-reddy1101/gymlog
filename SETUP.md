@@ -15,6 +15,16 @@ The iPhone app now includes a Gym Log Watch companion. The combined device build
 
 Deployment targets: iOS 17.0 and watchOS 10.0. The project has an iPhone target, **LiftLog**, and its embedded Watch target, **GymLogWatch**. There are no package dependencies.
 
+## Add a recommended routine
+
+1. Open **Routines → Recommended routines**, or **Add exercises → Recommended → Ready-made routines**. The first-routine screen also has **Browse recommended routines**.
+2. Choose Push, Pull, Legs, Upper or Lower, or **Preview all 5 routines**. After adding some, the full-plan action offers only the remaining ones.
+3. Review the API exercise under each planned movement. Names are editable; **Use suggested weekdays** schedules Mon/Tue/Wed/Fri/Sat, or turn it off to leave the routines on demand. The Pull-day shrug is optional and starts excluded.
+4. For an unavailable exact match, tap **Choose exercise** to select a real API exercise, or turn off **Include** to omit that movement. DB hip thrust and DB walking lunges currently need this explicit choice. A different movement is never silently substituted.
+5. Tap **Create … routine(s)**. You can open each created routine immediately, edit its days/order, then return to Train and start it. Existing routines/workouts are kept. If opened from Add exercises, a single-routine preview also offers **Add … exercises to [current routine/workout]**.
+
+The first preview needs the network unless its details are still in the one-hour cache. Retry respects provider rate limits. Already saved routines work offline; preview/guide fetching still follows cache policy.
+
 ## 2. HealthKit capability and keys
 
 The normal scheme already uses `LiftLog/Resources/LiftLog.entitlements` with `com.apple.developer.healthkit = true`. In **LiftLog → Signing & Capabilities**, confirm **HealthKit** appears. If it does not, select **+ Capability → HealthKit**. Leave Clinical Health Records and Background Delivery unchecked; neither is needed.

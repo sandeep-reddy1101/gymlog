@@ -30,6 +30,9 @@ struct PlanEditor: View {
                         }
                 }
                 .onMove { offsets, target in _ = store.commit { $0.days.move(fromOffsets: offsets, toOffset: target) } }
+                NavigationLink { RecommendedRoutineList() } label: {
+                    Label("Recommended routines", systemImage: "calendar.badge.plus")
+                }.listRowBackground(theme.surface)
                 Button("Create routine", systemImage: "plus") { creating = true }.disabled(store.days.count >= 100)
             }.studioScreen().navigationTitle("Your routines")
                 .toolbar {
@@ -190,11 +193,13 @@ struct AddExerciseView: View {
     var body: some View {
         NavigationStack {
             ExerciseCatalogBrowser(unavailable: Set(existingIDs), selected: Set(selection.map(\.id)),
-                                   selectionFull: selection.count + existingIDs.count >= 100) { exercise in
+                                   selectionFull: selection.count + existingIDs.count >= 100,
+                                   showsRecommendations: true, recommendationDayID: dayID, recommendationSessionID: sessionID) { exercise in
                 addConfirmation = nil
                 if selection.contains(where: { $0.id == exercise.id }) { selection.removeAll { $0.id == exercise.id } }
                 else { selection.append(exercise) }
             }
+            .onChange(of: existingIDs) { _, ids in selection.removeAll { ids.contains($0.id) } }
             .studioScreen().navigationTitle("Exercise library").navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 8) {
