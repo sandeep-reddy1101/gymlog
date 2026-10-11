@@ -1,5 +1,21 @@
 # Validation log
 
+## October 11, 2026 — Studio native design and user-controlled workouts
+
+- Full Swift core suite: **70 tests passed**, including nine new regressions for optional theme/appearance preferences, unknown/legacy fallback, backup round-trip, stable draft baselines, reorder preservation/rejection, session additions/limits/history fill, deleted routine handling, and explicit lineup save preserving routine metadata changed during a workout.
+- Repository verification: **29 core checks passed**, all Swift app/Watch sources parsed, project and all app/Watch plists/entitlements valid. `git diff --check` clean.
+- Unsigned **Lift Log / Debug** and **Lift Log Local Only / DebugLocal** generic iOS Simulator builds passed, each including the Watch companion. All 12 existing project/phone/Watch build-setting dictionaries compare exactly equal with the original values. Original shared schemes, icon, bundle IDs and signing team preserved.
+- Semantic text contrast calculation: seven foreground/background combinations in each of four theme/appearance combinations all exceed 4.5:1. Minimums: Studio light 4.75:1, Studio dark 7.14:1, Velocity light 5.35:1, Velocity dark 7.98:1. This checks palette values, not a full accessibility audit of every native control.
+- After the user unlocked the Mac, installed into a newly created **Gym Log Studio QA** iPhone 17e simulator on iOS 27.0. Existing simulators and physical phone data were not modified. Created only synthetic test workout data through the UI.
+- Native smoke test passed: create routine; search the live API for “dumbbell row”; select/add twice without leaving search; start workout; choose the second exercise first; enter 25 lb × 8 and complete; stay in that logger; rest appears and Skip works; return to the full lineup with the correct count.
+- Native input/navigation test passed: type invalid reps using the on-screen keyboard, dismiss keyboard, leave and return. Invalid draft remains, both completion controls are disabled, and the saved completed set remains 25 × 8. Switching tabs, Studio/Velocity and light/dark preserves the focused exercise and draft.
+- Native session/routine test passed: accessible Move up and native drag change session order; add Cable Crossover to the active session without closing search; Plan still shows the original two exercises/order; explicit Save lineup to routine updates it to three exercises in the session order. The session's completed count stays intact.
+- Persistence and completion: update the simulator installation without deleting it and cold launch; saved theme, order, membership and completed values survive, and Train opens fresh. Finish with 1 of 9 completed sets prompts; the saved summary shows 25 lb × 8 and **200 lb volume**, with unchecked sets excluded. History's Edit sets opens correctly. Progress shows 1 workout and 200 lb volume, and the next session displays previous values.
+- Visual checks: Studio light/dark and Velocity light/dark, routine overview, search, lineup, logger, reorder, summary, settings and Progress inspected. Accessibility-large text correctly switches numeric inputs to vertical layout. Fixed and rechecked narrow ordinal columns at large sizes, low-contrast secondary text, oversized system secondary buttons and cached system-menu tint after theme changes.
+- Remaining: exhaustive VoiceOver/keyboard/small-device combinations, every retained ancillary feature's touch path, real locked-phone notification delivery, physical paired Watch/Health recording/metrics and App Store acceptance. These are not established by simulator builds or this focused smoke test. See [broader checklist](STUDIO_IMPLEMENTATION.md).
+
+Local verification logs: `/tmp/gymlog-studio-tests.log`, `/tmp/gymlog-studio-verify.log`, `/tmp/gymlog-studio-build.log`, `/tmp/gymlog-studio-local-build.log`. Logs and simulator data are not committed.
+
 ## October 7, 2026 — easier add-exercise and workout-entry UI
 
 - Replaced bottom system search with a persistent top search field; added All exercises/Saved tabs, a staged filter sheet with active count/summary, reset/cancel/apply actions, and a loading state. API search, matching, debounce, cache and pagination remain in place.

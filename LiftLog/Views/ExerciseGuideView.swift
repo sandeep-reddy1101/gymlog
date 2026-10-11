@@ -2,6 +2,7 @@ import SwiftUI
 import ImageIO
 
 struct ExerciseGuideView: View {
+    @Environment(\.appTheme) private var theme
     @Environment(\.dismiss) private var dismiss
     let exercise: ExerciseRecord
     var body: some View {
@@ -13,6 +14,7 @@ struct ExerciseGuideView: View {
 }
 
 struct ExerciseGuideContent: View {
+    @Environment(\.appTheme) private var theme
     let exercise: ExerciseRecord
     @State private var detail: CatalogExercise?
     @State private var animation: ExerciseAnimation?
@@ -28,22 +30,22 @@ struct ExerciseGuideContent: View {
                     ExerciseMotionPlayer(animation: animation, name: exercise.name)
                 }
                 if let mediaError {
-                    Text(mediaError).font(.callout).foregroundStyle(.secondary)
+                    Text(mediaError).font(.callout).foregroundStyle(theme.secondary)
                     Button("Retry animation") { Task { await loadAnimation() } }.disabled(loading)
                 }
                 if let detail {
-                    Text("\(detail.targetMuscles.joined(separator: ", ").capitalized) · \(detail.equipments.joined(separator: ", ").capitalized)").foregroundStyle(.secondary)
+                    Text("\(detail.targetMuscles.joined(separator: ", ").capitalized) · \(detail.equipments.joined(separator: ", ").capitalized)").foregroundStyle(theme.secondary)
                     if !detail.secondaryMuscles.isEmpty { Text("Also works: \(detail.secondaryMuscles.joined(separator: ", "))").font(.subheadline) }
                     Text("How to do it").font(.headline)
                     ForEach(Array(detail.instructions.enumerated()), id: \.offset) { _, step in Text(step).frame(maxWidth: .infinity, alignment: .leading) }
                 }
                 if let error {
-                    Text(error).foregroundStyle(.secondary)
+                    Text(error).foregroundStyle(theme.secondary)
                     Button("Retry guide") { Task { await load() } }.disabled(loading)
                 }
                 Link("Exercise data & animations by AscendAPI", destination: URL(string: "https://ascendapi.com")!).font(.footnote)
             }.padding()
-        }.navigationTitle("Exercise guide").navigationBarTitleDisplayMode(.inline)
+        }.studioScreen().navigationTitle("Exercise guide").navigationBarTitleDisplayMode(.inline)
             .task(id: exercise.exerciseDBID) { await load() }
     }
     private func load() async {
@@ -69,6 +71,7 @@ struct ExerciseGuideContent: View {
 }
 
 private struct ExerciseMotionPlayer: View {
+    @Environment(\.appTheme) private var theme
     let animation: ExerciseAnimation
     let name: String
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -89,7 +92,7 @@ private struct ExerciseMotionPlayer: View {
                 .background(.white).clipShape(RoundedRectangle(cornerRadius: 18))
                 .accessibilityLabel("\(name), frame \(playback.frame + 1) of \(animation.frames.count)")
             Text("Watch slowly, or move through the frames yourself.")
-                .font(.subheadline).foregroundStyle(.secondary)
+                .font(.subheadline).foregroundStyle(theme.secondary)
             if animation.frames.count > 1 {
                 Picker("Playback speed", selection: $playback.speed) {
                     Text("¼×").tag(0.25)
@@ -99,7 +102,7 @@ private struct ExerciseMotionPlayer: View {
                 Button { playback.toggle(count: animation.frames.count) } label: {
                     Label(playback.playing ? "Pause" : playback.frame == animation.frames.count - 1 ? "Replay demonstration" : "Play demonstration",
                           systemImage: playback.playing ? "pause.fill" : "play.fill")
-                        .foregroundStyle(AppColors.buttonInk)
+                        .foregroundStyle(theme.onAction)
                 }.buttonStyle(ActionButtonStyle())
                 Slider(value: Binding(get: { Double(playback.frame) }, set: {
                     playback.playing = false; playback.frame = Int($0)
@@ -119,7 +122,7 @@ private struct ExerciseMotionPlayer: View {
                 }
             }
             Text("Source preview: \(animation.width) × \(animation.height). Playback controls cannot add missing image detail.")
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.caption).foregroundStyle(theme.secondary)
         }
         .task(id: Tick(frame: playback.frame, speed: playback.speed, playing: playback.playing)) {
             guard playback.playing, scenePhase == .active else { return }

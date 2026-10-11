@@ -1,12 +1,19 @@
 import SwiftUI
 
 struct WorkoutDock: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dynamicTypeSize) private var typeSize
+    var exerciseID: UUID? = nil
+    private func invalidDraft(_ set: LoggedSet) -> Bool {
+        guard let draft = store.entryDrafts[set.id], draft.applies(to: set, unit: store.unit) else { return false }
+        return !draft.isValid
+    }
     private var next: (ExerciseLog, Int, LoggedSet)? {
         guard let session = store.active else { return nil }
-        if let position = WorkoutLogic.nextSet(in: session), let log = session.logs.first(where: { $0.id == position.exerciseID }) {
-            return (log, position.index, log.sets[position.index])
+        if let exerciseID, let log = session.logs.first(where: { $0.id == exerciseID }),
+           let index = log.sets.firstIndex(where: { !$0.completed }) {
+            return (log, index, log.sets[index])
         }
         return nil
     }
@@ -33,7 +40,7 @@ struct WorkoutDock: View {
                                 }.disabled(seconds == 0).frame(minHeight: 44)
                                 Button("+30 sec") { store.changeRest { $0?.extend(at: .now) } }.frame(minHeight: 44)
                                 Button(seconds == 0 ? "Dismiss" : "Skip rest") { store.changeRest { $0 = nil } }.frame(minHeight: 44)
-                            }.font(.subheadline.weight(.semibold)).buttonStyle(.bordered)
+                            }.font(.subheadline.weight(.semibold)).buttonStyle(SecondaryButtonStyle())
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
@@ -41,7 +48,7 @@ struct WorkoutDock: View {
                 if let (log, index, set) = next {
                     if let pair = session.supersets?.first(where: { $0.contains(log.id) }),
                        let partner = session.logs.first(where: { $0.id == pair.partner(of: log.id) }) {
-                        Text("Superset with \(partner.exercise.name) · Rest after the pair").font(.caption).foregroundStyle(.secondary)
+                        Text("Superset with \(partner.exercise.name) · Rest after the pair").font(.caption).foregroundStyle(theme.secondary)
                     }
                     Button {
                         var completed = set
@@ -49,16 +56,16 @@ struct WorkoutDock: View {
                         store.updateSet(sessionID: session.id, exerciseID: log.id, set: completed)
                     } label: {
                         VStack(spacing: 3) {
-                            Label("Complete set \(index + 1) · \(log.exercise.name)", systemImage: "checkmark.circle.fill").font(.headline)
+                            Label("Complete set \(index + 1)", systemImage: "checkmark.circle.fill").font(.headline)
                             Text("\(store.unit.text(set.weightKg)) \(store.unit.rawValue) × \(set.reps) reps").font(.subheadline.monospacedDigit())
                         }
                     }.buttonStyle(ActionButtonStyle())
-                        .disabled(!store.editingSets.isEmpty || set.reps < 1)
-                    if !store.editingSets.isEmpty { Text("Tap Done on the keyboard to finish editing.").font(.caption).foregroundStyle(.secondary) }
-                } else {
-                    Button { store.finish(session.id) } label: {
-                        Label("Finish workout", systemImage: "checkmark.flag.fill").font(.headline)
-                    }.buttonStyle(ActionButtonStyle()).disabled(session.completedSets == 0 || !store.editingSets.isEmpty)
+                        .disabled(!store.editingSets.isEmpty || set.reps < 1 || invalidDraft(set))
+                    if invalidDraft(set) { Text("Finish the weight and reps above before completing this set.").font(.caption).foregroundStyle(theme.secondary) }
+                    if !store.editingSets.isEmpty { Text("Tap Done on the keyboard to finish editing.").font(.caption).foregroundStyle(theme.secondary) }
+                } else if let exerciseID, session.logs.contains(where: { $0.id == exerciseID }) {
+                    Label("Exercise complete · Choose your next exercise above", systemImage: "checkmark.circle")
+                        .font(.subheadline).frame(minHeight: 44)
                 }
             }.padding(.horizontal, 18).padding(.vertical, 12).background(.regularMaterial)
                 .overlay(alignment: .top) { Divider() }
@@ -67,6 +74,7 @@ struct WorkoutDock: View {
 }
 
 struct SwapExerciseView: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
     var sessionID: UUID
@@ -76,7 +84,7 @@ struct SwapExerciseView: View {
     var body: some View {
         NavigationStack {
             ExerciseCatalogBrowser(unavailable: Set(session?.logs.map(\.id) ?? []), selected: []) { selected = $0 }
-                .navigationTitle("Swap exercise").navigationBarTitleDisplayMode(.inline)
+                .studioScreen().navigationTitle("Swap exercise").navigationBarTitleDisplayMode(.inline)
                 .toolbar { Button("Cancel") { dismiss() } }
                 .confirmationDialog("Use \(selected?.name ?? "replacement") for this workout?", isPresented: Binding(get: { selected != nil }, set: { if !$0 { selected = nil } }), titleVisibility: .visible) {
                     Button("Swap for this workout") {

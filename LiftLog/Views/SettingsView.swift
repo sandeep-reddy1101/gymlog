@@ -2,6 +2,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct SettingsView: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @State private var importPicker = false
     @State private var pendingImport: Backup?
@@ -15,6 +16,21 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
+                Section("Appearance") {
+                    // Recreate only these system menus to refresh UIKit's cached tint.
+                    // The surrounding form, navigation and workout drafts keep their identity.
+                    Picker("Design", selection: Binding(get: { store.data.preferences.resolvedTheme }, set: { new in
+                        _ = store.commit { $0.preferences.designTheme = new.rawValue }
+                    })) {
+                        ForEach(DesignTheme.allCases) { Text($0.title).tag($0) }
+                    }.tint(theme.action).id("design-menu-" + theme.design.rawValue)
+                    Picker("Appearance", selection: Binding(get: { store.data.preferences.resolvedAppearance }, set: { new in
+                        _ = store.commit { $0.preferences.appearance = new.rawValue }
+                    })) {
+                        ForEach(AppAppearance.allCases) { Text($0.title).tag($0) }
+                    }.tint(theme.action).id("appearance-menu-" + theme.design.rawValue)
+                    Text("Studio brings warm stone and olive. Velocity uses cool blue. Both follow the same layout and keep your workout in place.").font(.caption).foregroundStyle(theme.secondary)
+                }.listRowBackground(theme.surface)
                 Section("Workout preferences") {
                     Picker("Weight unit", selection: Binding(get: { store.unit }, set: { new in _ = store.commit { $0.preferences.unit = new } })) {
                         ForEach(WeightUnit.allCases) { Text($0.rawValue).tag($0) }
@@ -22,8 +38,8 @@ struct SettingsView: View {
                     Stepper("Default sets: \(store.data.preferences.defaultSets)", value: Binding(get: { store.data.preferences.defaultSets }, set: { new in _ = store.commit { $0.preferences.defaultSets = new } }), in: 1...10)
                     Button("Manage routines") { editPlan = true }
                     Text("Log one dumbbell’s weight consistently. For bodyweight exercises, log only added weight. Volume is entered weight × reps.")
-                        .font(.caption).foregroundStyle(.secondary)
-                }
+                        .font(.caption).foregroundStyle(theme.secondary)
+                }.listRowBackground(theme.surface)
                 Section {
                     Toggle("Start rest after completing a set", isOn: Binding(get: { store.data.preferences.resolvedAutomaticRest }, set: { new in _ = store.commit { $0.preferences.automaticRest = new } }))
                     Stepper("Rest time: \(store.data.preferences.resolvedRestSeconds) seconds", value: Binding(get: { store.data.preferences.resolvedRestSeconds }, set: { new in _ = store.commit { $0.preferences.restSeconds = new } }), in: 15...600, step: 15)
@@ -31,15 +47,15 @@ struct SettingsView: View {
                         if enabled { Task { await store.enableRestAlerts() } }
                         else { _ = store.commit { $0.preferences.restAlerts = false } }
                     })).disabled(store.isDemo || store.restNotifications.isRequesting)
-                    Text(store.isDemo ? "Notification permission is requested only outside sample mode." : store.restNotifications.status).font(.caption).foregroundStyle(.secondary)
+                    Text(store.isDemo ? "Notification permission is requested only outside sample mode." : store.restNotifications.status).font(.caption).foregroundStyle(theme.secondary)
                     Stepper("Weekly goal: \(store.data.preferences.resolvedWeeklyGoal) workouts", value: Binding(get: { store.data.preferences.resolvedWeeklyGoal }, set: { new in _ = store.commit { $0.preferences.weeklyGoal = new } }), in: 1...7)
                 } header: { Text("Rest & consistency") } footer: {
                     Text("Rest alerts use local notifications after you grant permission. Pause, skip, finish or undo updates the scheduled alert. Your weekly goal is independent of scheduled days.")
-                }
+                }.listRowBackground(theme.surface)
                 Section("Workout tools") {
                     Button("Plate calculator", systemImage: "equal.circle") { calculator = true }
-                    Text("Reps left means how many more reps you think you could have done with good form. It is optional for each completed set; 0 means none, and 10 means 10 or more.").font(.caption).foregroundStyle(.secondary)
-                }
+                    Text("Reps left means how many more reps you think you could have done with good form. It is optional for each completed set; 0 means none, and 10 means 10 or more.").font(.caption).foregroundStyle(theme.secondary)
+                }.listRowBackground(theme.surface)
                 Section("Apple Health & Watch") {
                     HealthConnectionStatus()
                     Button(store.health.isBusy ? "Reading Health…" : "Connect / refresh Apple Health") {
@@ -55,30 +71,30 @@ struct SettingsView: View {
                         Text("A Watch workout is still waiting to finish. Keep the devices nearby, or end recording in Gym Log on your Watch.").font(.caption).foregroundStyle(.orange)
                         Button("Retry Watch connection") { store.watch.refresh() }
                     }
-                }
+                }.listRowBackground(theme.surface)
                 Section {
                     Button("Export JSON backup", systemImage: "square.and.arrow.up") { export() }
                     Button("Import JSON backup", systemImage: "square.and.arrow.down") { importPicker = true }
                 } header: { Text("Backup & restore") } footer: {
                     Text("Exports include your plan, preferences, unfinished workout, history and attached health summaries. Save a copy outside this app, such as Files on your iPhone or AirDrop to your Mac. Import replaces current data after confirmation. Deleting the app deletes its local database.")
-                }
+                }.listRowBackground(theme.surface)
                 Section("Exercise library") {
                     Link("ExerciseDB · powered by AscendAPI", destination: URL(string: "https://ascendapi.com")!)
-                    Text("Search, filters, instructions and animations come from ExerciseDB. Downloads are cached for one hour. Saved routines and history work offline.").font(.caption).foregroundStyle(.secondary)
-                    Text("Exercise searches are sent to ExerciseDB. Your workout history and Apple Health data are not sent.").font(.caption).foregroundStyle(.secondary)
+                    Text("Search, filters, instructions and animations come from ExerciseDB. Downloads are cached for one hour. Saved routines and history work offline.").font(.caption).foregroundStyle(theme.secondary)
+                    Text("Exercise searches are sent to ExerciseDB. Your workout history and Apple Health data are not sent.").font(.caption).foregroundStyle(theme.secondary)
                     Button("Clear downloaded exercises") { Task { await ExerciseCatalog.shared.clearCache() } }
-                    Text("Clearing downloads keeps your routines and workout history.").font(.caption).foregroundStyle(.secondary)
-                }
+                    Text("Clearing downloads keeps your routines and workout history.").font(.caption).foregroundStyle(theme.secondary)
+                }.listRowBackground(theme.surface)
                 Section("Try Gym Log") {
                     Button("Open temporary sample mode") { demo = true }.disabled(store.isDemo)
-                    Text("Eight weeks of sample workouts and Watch charts. Real data stays separate.").font(.caption).foregroundStyle(.secondary)
-                }
+                    Text("Eight weeks of sample workouts and Watch charts. Real data stays separate.").font(.caption).foregroundStyle(theme.secondary)
+                }.listRowBackground(theme.surface)
                 Section {
                     Button("Reset all local data", role: .destructive) { resetConfirmation = true }
                 } footer: {
                     Text("Free signing typically expires after seven days. Rebuild using the same bundle identifier and team without deleting the installed app. Keep an external JSON backup.")
-                }
-            }.navigationTitle("Settings")
+                }.listRowBackground(theme.surface)
+            }.studioScreen().navigationTitle("Settings")
                 .sheet(isPresented: $calculator) { PlateCalculatorView(unit: store.unit) }
                 .sheet(isPresented: $editPlan) { PlanEditor() }
                 .sheet(isPresented: $sharing, onDismiss: cleanExport) { if let shareURL { ShareSheet(file: shareURL) } }
@@ -131,6 +147,7 @@ struct SettingsView: View {
 }
 
 struct DemoSheet: View {
+    @Environment(\.appTheme) private var theme
     @Environment(\.dismiss) private var dismiss
     @State private var store: AppStore?
     @State private var error: String?

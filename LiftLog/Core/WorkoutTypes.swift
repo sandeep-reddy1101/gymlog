@@ -125,6 +125,8 @@ struct Preferences: Codable, Equatable {
     var routineOrder: [UUID]? = nil
     var restAlerts: Bool? = nil
     var automaticWatchTracking: Bool? = nil
+    var designTheme: String? = nil
+    var appearance: String? = nil
     var resolvedRestSeconds: Int { restSeconds ?? 90 }
     var resolvedAutomaticRest: Bool { automaticRest ?? true }
     var resolvedWeeklyGoal: Int { weeklyGoal ?? 3 }

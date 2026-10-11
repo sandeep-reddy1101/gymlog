@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct PlanEditor: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
     @State private var creating = false
@@ -19,10 +20,10 @@ struct PlanEditor: View {
                             Circle().fill(day.type.color).frame(width: 10, height: 10)
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(day.title).font(.headline)
-                                Text("\(day.scheduleDescription) · \(day.exerciseIDs.count) exercises").font(.caption).foregroundStyle(.secondary)
+                                Text("\(day.scheduleDescription) · \(day.exerciseIDs.count) exercises").font(.caption).foregroundStyle(theme.secondary)
                             }
                         }.padding(.vertical, 5)
-                    }.swipeActions { Button("Delete", role: .destructive) { deleting = day } }
+                    }.listRowBackground(theme.surface).swipeActions { Button("Delete", role: .destructive) { deleting = day } }
                         .swipeActions(edge: .leading) {
                             Button("Duplicate", systemImage: "plus.square.on.square") { duplicate = WorkoutLogic.duplicate(day) }
                                 .tint(.blue).disabled(store.days.count >= 100)
@@ -30,7 +31,7 @@ struct PlanEditor: View {
                 }
                 .onMove { offsets, target in _ = store.commit { $0.days.move(fromOffsets: offsets, toOffset: target) } }
                 Button("Create routine", systemImage: "plus") { creating = true }.disabled(store.days.count >= 100)
-            }.navigationTitle("Your routines")
+            }.studioScreen().navigationTitle("Your routines")
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) { Button("Done") { dismiss() } }
                     ToolbarItem(placement: .topBarTrailing) { EditButton() }
@@ -49,6 +50,7 @@ struct PlanEditor: View {
 }
 
 struct RoutineDetail: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     var dayID: UUID
     @State private var adding = false
@@ -65,40 +67,47 @@ struct RoutineDetail: View {
                         Button("Edit name, days & color") { editingRoutine = true }
                         Button("Duplicate routine", systemImage: "plus.square.on.square") { duplicate = WorkoutLogic.duplicate(day) }
                             .disabled(store.days.count >= 100)
-                    } footer: { Text("Changes apply to future workouts. Saved sessions keep their original names and sets.") }
+                    } footer: { Text("Changes apply to future workouts. Saved sessions keep their original names and sets.") }.listRowBackground(theme.surface)
                     Section {
-                        Text("Tap an exercise for rep targets and supersets. Tap Edit to reorder.").font(.caption).foregroundStyle(.secondary)
-                    }
+                        Text("Tap an exercise for rep targets and supersets. Tap Edit to reorder.").font(.caption).foregroundStyle(theme.secondary)
+                    }.listRowBackground(theme.surface)
                     Section("Exercises · \(day.exerciseIDs.count)") {
-                        if day.exerciseIDs.isEmpty { Text("No exercises assigned yet.").foregroundStyle(.secondary) }
+                        if day.exerciseIDs.isEmpty { Text("No exercises assigned yet.").foregroundStyle(theme.secondary) }
                         ForEach(day.exerciseIDs, id: \.self) { id in
                             if let exercise = store.exercises.first(where: { $0.id == id }) {
                                 Button { editingExercise = exercise } label: {
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text(exercise.name).foregroundStyle(.primary)
                                         if let range = day.targets?.first(where: { $0.exerciseID == id })?.range {
-                                            Text("Target: \(range.text)").font(.caption).foregroundStyle(.secondary)
+                                            Text("Target: \(range.text)").font(.caption).foregroundStyle(theme.secondary)
                                         }
                                         if let partner = day.supersets?.first(where: { $0.contains(id) })?.partner(of: id),
                                            let name = store.exercises.first(where: { $0.id == partner })?.name {
                                             Label("Paired with \(name)", systemImage: "link").font(.caption).foregroundStyle(.teal)
                                         }
-                                        Text("\(exercise.muscle) · \(exercise.equipmentLabel)").font(.caption).foregroundStyle(.secondary)
+                                        Text("\(exercise.muscle) · \(exercise.equipmentLabel)").font(.caption).foregroundStyle(theme.secondary)
                                     }.padding(.vertical, 4)
                                 }
+                                .accessibilityAction(named: "Move up") { moveExercise(id, by: -1) }
+                                .accessibilityAction(named: "Move down") { moveExercise(id, by: 1) }
                             }
                         }
                         .onDelete { offsets in var next = day; next.exerciseIDs.remove(atOffsets: offsets); save(next) }
                         .onMove { offsets, target in var next = day; next.exerciseIDs.move(fromOffsets: offsets, toOffset: target); save(next) }
                         Button("Browse exercise library", systemImage: "magnifyingglass") { adding = true }
-                    }
-                }.navigationTitle(day.title).toolbar { EditButton() }
+                    }.listRowBackground(theme.surface)
+                }.studioScreen().navigationTitle(day.title).toolbar { EditButton() }
                     .sheet(item: $duplicate) { RoutineForm(day: $0) }
                     .sheet(isPresented: $adding) { AddExerciseView(dayID: dayID) }
                     .sheet(isPresented: $editingRoutine) { RoutineForm(day: day) }
                     .sheet(item: $editingExercise) { RoutineExerciseOptions(dayID: dayID, exercise: $0) }
             } else { ContentUnavailableView("Routine removed", systemImage: "calendar") }
         }
+    }
+    private func moveExercise(_ id: UUID, by offset: Int) {
+        guard var day, let index = day.exerciseIDs.firstIndex(of: id), day.exerciseIDs.indices.contains(index + offset) else { return }
+        day.exerciseIDs.swapAt(index, index + offset)
+        save(day)
     }
     private func save(_ day: DayRecord) {
         var day = day
@@ -111,6 +120,7 @@ struct RoutineDetail: View {
 }
 
 struct RoutineForm: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
     @State var day: DayRecord
@@ -131,7 +141,7 @@ struct RoutineForm: View {
                             Label { Text(type.colorName) } icon: { Circle().fill(type.color) }.tag(type)
                         }
                     }
-                }
+                }.listRowBackground(theme.surface)
                 Section {
                     ForEach([2,3,4,5,6,7,1], id: \.self) { weekday in
                         Toggle(Calendar.current.weekdaySymbols[weekday - 1], isOn: Binding(get: {
@@ -143,8 +153,8 @@ struct RoutineForm: View {
                             day.weekdays = days
                         }))
                     }
-                } header: { Text("Weekly schedule") } footer: { Text("Choose any days, or leave all off for an on-demand routine. Multiple routines can share a day.") }
-            }.navigationTitle(store.days.contains { $0.id == day.id } ? "Edit routine" : "New routine")
+                } header: { Text("Weekly schedule") } footer: { Text("Choose any days, or leave all off for an on-demand routine. Multiple routines can share a day.") }.listRowBackground(theme.surface)
+            }.studioScreen().navigationTitle(store.days.contains { $0.id == day.id } ? "Edit routine" : "New routine")
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
                     ToolbarItem(placement: .confirmationAction) {
@@ -163,27 +173,33 @@ struct RoutineForm: View {
 }
 
 struct AddExerciseView: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
-    var dayID: UUID
+    var dayID: UUID? = nil
+    var sessionID: UUID? = nil
     @State private var selection: [ExerciseRecord] = []
     @State private var creating = false
     @State private var addConfirmation: String?
     @State private var reviewingSelection = false
     private var day: DayRecord? { store.days.first { $0.id == dayID } }
+    private var session: SessionRecord? { sessionID.flatMap { store.session($0) } }
+    private var existingIDs: [UUID] { session?.logs.map(\.id) ?? day?.exerciseIDs ?? [] }
+    private var targetTitle: String { session?.title ?? day?.title ?? "your workout" }
+    private var targetAvailable: Bool { sessionID != nil ? session != nil && session?.end == nil : day != nil }
     var body: some View {
         NavigationStack {
-            ExerciseCatalogBrowser(unavailable: Set(day?.exerciseIDs ?? []), selected: Set(selection.map(\.id)),
-                                   selectionFull: selection.count + (day?.exerciseIDs.count ?? 0) >= 100) { exercise in
+            ExerciseCatalogBrowser(unavailable: Set(existingIDs), selected: Set(selection.map(\.id)),
+                                   selectionFull: selection.count + existingIDs.count >= 100) { exercise in
                 addConfirmation = nil
                 if selection.contains(where: { $0.id == exercise.id }) { selection.removeAll { $0.id == exercise.id } }
                 else { selection.append(exercise) }
             }
-            .navigationTitle("Exercise library").navigationBarTitleDisplayMode(.inline)
+            .studioScreen().navigationTitle("Exercise library").navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 8) {
                     HStack(alignment: .firstTextBaseline) {
-                        Text(addConfirmation ?? (selection.isEmpty ? "Select exercises for \(day?.title ?? "your routine")" : "\(selection.count) selected · \(day?.title ?? "Your routine")"))
+                        Text(addConfirmation ?? (selection.isEmpty ? "Select exercises for \(targetTitle)" : "\(selection.count) selected · \(targetTitle)"))
                             .font(.subheadline.weight(.medium)).foregroundStyle(Color(uiColor: .label))
                             .frame(maxWidth: .infinity, alignment: .leading)
                         if !selection.isEmpty {
@@ -191,27 +207,20 @@ struct AddExerciseView: View {
                         }
                     }
                     Button {
-                        guard let day else { return }
                         let addedCount = selection.count
-                        if store.commit({ backup in
-                            if let index = backup.days.firstIndex(where: { $0.id == dayID }) {
-                                let known = Set(backup.exercises.map(\.id))
-                                backup.exercises += selection.filter { !known.contains($0.id) }
-                                backup.days[index] = ExerciseLibrary.adding(selection.map(\.id), to: backup.days[index])
-                            }
-                        }) {
+                        if store.addExercises(selection, dayID: dayID, sessionID: sessionID) {
                             selection.removeAll()
-                            addConfirmation = "Added \(addedCount) \(addedCount == 1 ? "exercise" : "exercises") to \(day.title)."
+                            addConfirmation = "Added \(addedCount) \(addedCount == 1 ? "exercise" : "exercises") to \(targetTitle)."
                             UIAccessibility.post(notification: .announcement, argument: addConfirmation)
                         }
                     } label: { Label(selection.isEmpty ? "Select exercises above" : "Add \(selection.count) \(selection.count == 1 ? "exercise" : "exercises")", systemImage: "plus").font(.headline) }
                         .buttonStyle(ActionButtonStyle())
-                        .disabled(selection.isEmpty || day == nil || selection.count + (day?.exerciseIDs.count ?? 0) > 100)
+                        .disabled(selection.isEmpty || !targetAvailable || selection.count + existingIDs.count > 100)
                 }.padding().background(.regularMaterial)
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Done") { dismiss() } }
-                ToolbarItem(placement: .topBarTrailing) { Button("Custom", systemImage: "plus") { creating = true }.disabled((day?.exerciseIDs.count ?? 0) >= 100) }
+                ToolbarItem(placement: .topBarTrailing) { Button("Custom", systemImage: "plus") { creating = true }.disabled(existingIDs.count >= 100) }
             }
             .sheet(isPresented: $reviewingSelection) {
                 NavigationStack {
@@ -226,22 +235,24 @@ struct AddExerciseView: View {
                                     }.accessibilityLabel("Remove \(exercise.name) from selection")
                                 }
                             }
-                            if selection.isEmpty { Text("No exercises selected.").foregroundStyle(.secondary) }
-                        } footer: { Text("These exercises will be added in this order when you tap Add.") }
-                    }.navigationTitle("Your selection").navigationBarTitleDisplayMode(.inline)
+                            if selection.isEmpty { Text("No exercises selected.").foregroundStyle(theme.secondary) }
+                        } footer: { Text("These exercises will be added in this order when you tap Add.") }.listRowBackground(theme.surface)
+                    }.studioScreen().navigationTitle("Your selection").navigationBarTitleDisplayMode(.inline)
                         .toolbar { Button("Done") { reviewingSelection = false } }
                 }
             }
-            .sheet(isPresented: $creating) { ExerciseForm(exercise: ExerciseRecord(name: "", muscle: "", equipment: .other), addToDay: dayID) }
+            .sheet(isPresented: $creating) { ExerciseForm(exercise: ExerciseRecord(name: "", muscle: "", equipment: .other), addToDay: dayID, addToSession: sessionID) }
         }
     }
 }
 
 struct ExerciseForm: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
     @State var exercise: ExerciseRecord
     var addToDay: UUID?
+    var addToSession: UUID? = nil
     @State private var duplicate = false
     var body: some View {
         NavigationStack {
@@ -256,19 +267,21 @@ struct ExerciseForm: View {
                 }
                 Toggle("Bodyweight exercise", isOn: $exercise.isBodyweight)
                 Text("Edits update this shared exercise across your routines. Saved workouts keep their original labels. For dumbbells, enter one dumbbell’s weight consistently; for barbells and machines, enter the total indicated load.")
-                    .font(.caption).foregroundStyle(.secondary)
-            }.navigationTitle(addToDay == nil ? "Edit exercise" : "New exercise")
+                    .font(.caption).foregroundStyle(theme.secondary)
+            }.studioScreen().navigationTitle(addToDay == nil && addToSession == nil ? "Edit exercise" : "New exercise")
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
                     ToolbarItem(placement: .confirmationAction) {
                         Button("Save") {
                             exercise.name = exercise.name.trimmingCharacters(in: .whitespacesAndNewlines)
                             guard !store.exercises.contains(where: { $0.id != exercise.id && ExerciseLibrary.normalized($0.name) == ExerciseLibrary.normalized(exercise.name) }) else { duplicate = true; return }
-                            let saved = store.commit { backup in
-                                if let index = backup.exercises.firstIndex(where: { $0.id == exercise.id }) { backup.exercises[index] = exercise }
-                                else { backup.exercises.append(exercise) }
-                                if let addToDay, let index = backup.days.firstIndex(where: { $0.id == addToDay }) {
-                                    backup.days[index] = ExerciseLibrary.adding([exercise.id], to: backup.days[index])
+                            let saved: Bool
+                            if addToSession != nil || addToDay != nil {
+                                saved = store.addExercises([exercise], dayID: addToDay, sessionID: addToSession)
+                            } else {
+                                saved = store.commit { backup in
+                                    if let index = backup.exercises.firstIndex(where: { $0.id == exercise.id }) { backup.exercises[index] = exercise }
+                                    else { backup.exercises.append(exercise) }
                                 }
                             }
                             if saved { dismiss() }

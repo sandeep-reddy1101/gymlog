@@ -2,19 +2,20 @@ import SwiftUI
 import Charts
 
 struct WatchWorkoutCard: View {
+    @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
     let session: SessionRecord
     var body: some View {
         Panel {
             Label("Apple Watch", systemImage: "applewatch").font(.title3.bold())
             if session.watchTracking?.isImported == true {
-                Text("Imported workout · Saved measurements only").font(.subheadline).foregroundStyle(.secondary)
+                Text("Imported workout · Saved measurements only").font(.subheadline).foregroundStyle(theme.secondary)
             }
             if let report = session.watchTracking?.report {
                 Text(session.watchTracking?.isImported == true && !report.phase.isTerminal ? "Recording snapshot" : title(report)).font(.headline)
-                if let message = report.message { Text(message).font(.subheadline).foregroundStyle(.secondary) }
+                if let message = report.message { Text(message).font(.subheadline).foregroundStyle(theme.secondary) }
                 if session.end != nil && session.watchTracking?.isImported != true && !report.phase.isTerminal {
-                    Text("Your sets are saved. Waiting for your Watch to stop and save the measurements. If it stays disconnected, open Gym Log on the Watch and tap End recording.").font(.subheadline).foregroundStyle(.secondary)
+                    Text("Your sets are saved. Waiting for your Watch to stop and save the measurements. If it stays disconnected, open Gym Log on the Watch and tap End recording.").font(.subheadline).foregroundStyle(theme.secondary)
                 }
                 if let start = report.start {
                     TimelineView(.periodic(from: .now, by: 1)) { context in
@@ -26,28 +27,28 @@ struct WatchWorkoutCard: View {
                             Text(recent ? "Heart rate: \(number(report.heartRate)) bpm" : "Waiting for a fresh heart-rate reading…")
                                 .foregroundStyle(.pink)
                             if context.date.timeIntervalSince(report.updatedAt) > 20 {
-                                Text("Watch updates are delayed. Recording may still be running on your Watch.").font(.caption).foregroundStyle(.secondary)
+                                Text("Watch updates are delayed. Recording may still be running on your Watch.").font(.caption).foregroundStyle(theme.secondary)
                             }
                         }
                     }
                     Text("Average \(number(report.averageHeartRate)) · Highest \(number(report.maximumHeartRate)) bpm")
-                        .font(.subheadline).foregroundStyle(.secondary)
+                        .font(.subheadline).foregroundStyle(theme.secondary)
                     if !report.points.isEmpty {
                         Chart(Array(report.points.enumerated()), id: \.offset) { _, point in
                             LineMark(x: .value("Time", point.date), y: .value("Heart rate", point.value)).foregroundStyle(.pink)
                         }.frame(height: 130)
-                        Text("Chart shows available Watch readings. Average and highest heart rate come from HealthKit.").font(.caption2).foregroundStyle(.secondary)
+                        Text("Chart shows available Watch readings. Average and highest heart rate come from HealthKit.").font(.caption2).foregroundStyle(theme.secondary)
                     }
-                    Text("— means no readable measurement. Calories are Apple's estimate.").font(.caption).foregroundStyle(.secondary)
+                    Text("— means no readable measurement. Calories are Apple's estimate.").font(.caption).foregroundStyle(theme.secondary)
                 }
                 if report.phase == .saved {
                     Label("Saved to Apple Health", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
                 }
             } else if session.watchTracking?.isImported != true {
                 Text(session.end == nil ? (store.watch.lastProblem == nil ? "Connecting to your Watch…" : "Watch recording unavailable") : "Waiting for your Watch to confirm the end").font(.headline)
-                Text("Wear and unlock your Watch. Allow Health access in Gym Log on the Watch when asked.").font(.subheadline).foregroundStyle(.secondary)
+                Text("Wear and unlock your Watch. Allow Health access in Gym Log on the Watch when asked.").font(.subheadline).foregroundStyle(theme.secondary)
                 if let problem = store.watch.lastProblem { Text(problem).font(.subheadline).foregroundStyle(.orange) }
-                else { Text(store.watch.connectionMessage).font(.caption).foregroundStyle(.secondary) }
+                else { Text(store.watch.connectionMessage).font(.caption).foregroundStyle(theme.secondary) }
             }
             if session.end == nil && session.watchTracking?.isImported != true && session.watchTracking?.report == nil {
                 Button("Retry Watch connection") { store.startWatch(session.id) }.frame(minHeight: 44)

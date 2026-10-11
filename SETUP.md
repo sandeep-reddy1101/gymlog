@@ -103,7 +103,7 @@ Existing installations retain their previous routines and history. Delete unwant
 
 ## Workout tools and exercise guides
 
-- During a workout, the bottom action shows the next unchecked set and its values. Tap to complete it; keyboard editing temporarily disables the action. Previous completed performance still prefills the exercise rows.
+- Inside a chosen exercise, the bottom action shows its next unchecked set and values. Tap to complete it; keyboard editing temporarily disables the action. Previous completed performance still prefills the exercise rows.
 - Completing a set starts rest automatically unless all sets are complete. Pause/resume, +30 seconds and skip are available in the bottom panel. Set duration or turn off automatic rest in Settings → Rest & consistency. Deadlines survive leaving/reopening the app in a persistent build; optional local alerts can be enabled in Settings after granting notification permission.
 - Routines → a routine → Duplicate routine opens an editable copy. Tap Edit to reorder exercises. In the active workout, an exercise’s options menu offers Swap for this workout before any of its sets are completed.
 - Progress shows a weekly goal and streak, exercise weight/reps/strength trends, recent sets and record values. Set the weekly target in Settings.
@@ -115,7 +115,7 @@ Visual/touch checks for this follow-up were explicitly deferred by the user whil
 ## Notes, targets, pairs, undo and plates
 
 1. Open Routines → your routine → an exercise. Set its optional rep range and superset partner, then Save. Start a new workout to use these changes.
-2. Use the bottom completion button to alternate paired sets. Complete both exercises in a round before rest begins. Individual set buttons still work.
+2. Choose each paired exercise from the lineup and complete its set. Complete both exercises in a round before rest begins. The app does not force your next exercise; pairing labels and individual set buttons remain available.
 3. Add workout notes above the set cards, or exercise notes through its options menu. Record optional Reps left after checking a set. In History, Edit sets exposes the same notes/effort controls.
 4. Undo appears at the top after a completion, swap or deletion. It is the most recent undoable action only, lasts during this app run, and does not replace backups.
 5. History search accepts names and notes. Filters combine routine name, exercise and dates; Through includes the whole selected day.
@@ -137,3 +137,14 @@ Finish/discard an owned Watch workout and wait for confirmation before importing
 - Filters: change options and tap Show exercises to apply together. Cancel keeps the previous filters.
 - Workout: enter Weight and Reps in the larger fields, then tap Complete. Undo reverses completion; the More menu offers confirmed removal. Keyboard controls move between weight and reps.
 - Optional effort: after completing a set, expand Add effort · optional to record how many reps you had left. Leaving it Not set does not mean the workout entry failed to save.
+
+## Studio design (October 11)
+
+1. Run the usual **Lift Log** scheme. Studio applies automatically, including to existing data. Settings → Appearance changes Design (Studio / Velocity) and Appearance (System / Light / Dark).
+2. Train → pick a routine → Start workout. The full lineup opens. Tap any exercise, enter its weight/reps and Complete. Use All exercises or Choose another exercise to return; completion keeps you on the chosen exercise.
+3. Reorder opens drag handles and an arrow menu with Move up/down. This changes only this session. Workout options (ellipsis beside its title) → Save lineup to routine asks before applying the lineup to future sessions.
+4. Add exercises on the lineup adds to this workout; Routines → your routine → Browse exercise library adds to that routine. Adding stays in search. Use Done when finished selecting.
+5. Workout options also contains workout notes. Exercise options retains notes, form guide, plate calculator and swap. Progress, History editing/filtering, backups, rest settings and Health/Watch controls remain in their existing tabs.
+6. During an active workout, Plan lets you browse other routines; Resume workout returns to the active lineup. Theme changes and backgrounding keep navigation state. A fresh process opens Train while loading your persisted unfinished workout.
+
+Use the [Studio acceptance checklist](docs/STUDIO_IMPLEMENTATION.md) for device testing. Simulator visual/touch checks and physical Watch/Health verification are not implied by a successful build.
