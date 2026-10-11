@@ -2,6 +2,17 @@
 
 Last updated: October 10, 2026. This is the current product agreement. [Original build requirements](docs/ORIGINAL_REQUIREMENTS.md) are preserved verbatim for context. Later confirmed changes in this document take precedence.
 
+## October 10 — Studio selected; compact screens and user-controlled lineup
+
+The user selected **Studio** and requested four refinements: easily switchable themes, smaller headings, full control of workout exercise order, and space-efficient buttons/bubbles. This supersedes the earlier Velocity recommendation and large introductory slogans. The direction is approved; this iteration updates the preview and implementation contract, not the native app screens.
+
+- Centralize colors, typography, spacing and component styling into a shared theme system. Default to Studio; separate palette choice from System / Light / Dark appearance. Switching themes must preserve navigation, drafts and workout state.
+- Use short, compact functional headings; reduce excess container padding and pill decoration while retaining readable text and at least 44 pt native touch targets. Preserve Dynamic Type reflow.
+- Start/resume into a full workout lineup with every exercise and progress. Users choose any exercise and can reorder the lineup; never force a training sequence or advance to another exercise without user action. Keep All exercises accessible from focused logging.
+- Session reordering is for that workout by default. Save lineup to routine is an explicit action for future sessions. Routine edits do not silently modify an active session. Store drafts, completed sets and exercise metadata by stable identity, not position.
+- Support native drag reordering plus accessible move actions. The review preview uses Move up / Move down controls. Additions target the routine or session from which search was opened, and adding keeps search open.
+- Keep the rejected colored side stripes and card-top borders excluded. See [Studio refinement and theme contract](docs/STUDIO_REFINEMENT.md).
+
 ## October 10 — GitHub source control and maintenance
 
 The user created [sandeep-reddy1101/gymlog](https://github.com/sandeep-reddy1101/gymlog) and authorized pushing and maintaining project changes there. Initialize the project history, preserve existing app identity, include source/tests/documentation/design proposals, and exclude credentials, personal device diagnostics, workout/Health exports and build artifacts. Commit and push completed work in future project sessions; use reviewable branches for substantial app work. Add automated core checks and an unsigned app build. Do not infer authorization to change visibility, publish an App Store build, merge future PRs or schedule background work. See [workflow](docs/GITHUB_WORKFLOW.md).

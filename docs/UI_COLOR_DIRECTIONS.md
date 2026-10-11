@@ -1,6 +1,6 @@
 # Gym Log — fresh UI directions
 
-October 10, 2026. **Design proposal only; app implementation pending review.**
+October 10, 2026. **Studio is now the user-selected direction.** The initial comparison below is retained as design history. See [Studio refinement](STUDIO_REFINEMENT.md) for compact headings, user-controlled lineups and theme architecture; native implementation remains pending.
 
 ## User direction
 
@@ -8,7 +8,7 @@ The user explicitly asked to leave the current UI behind and develop a richer, e
 
 The user also asked for deliberate color theory and the strongest possible palette. Color choice is contextual, not objectively universal. The recommendation below is a design judgment supported by contrast measurements, not a claim that a hue improves exercise performance or is scientifically the best.
 
-## Recommended: Velocity
+## Original recommendation: Velocity (superseded by user selection)
 
 An editorial training interface with open sections, large editable numbers, fine neutral separators and a dominant pill-shaped completion action. Previous performance sits on a plain line rather than a callout card. The active set has no enclosing outlined card. Weight and reps have separate large fields and labeled decrement/increment controls. Completed sets appear beneath the primary action with Undo.
 
@@ -29,7 +29,7 @@ Navigation is proposed as Train / Plan / Progress, with Watch/settings in the he
 
 Color reasoning: a blue-biased neutral family creates coherence without coloring every element. Saturated blue in light appearance and a lighter glacier tint in dark appearance preserve a strong action hierarchy. Dark-mode accents are lighter because their contrast requirements and surrounding luminance differ; the palette is not a mechanical inversion. Most screen area stays neutral. Accent is reserved for key actions and progress marks, not decoration around containers.
 
-## Alternative: Studio
+## Selected direction: Studio
 
 A warmer interpretation using stone, olive and citron. Serif display typography, a solid tonal session tile and grouped set entry create a different composition and tone. Small functional text and numeric entry remain sans serif. The session tile is a solid fill with no accent outline or top stroke. The set sequence uses labeled pills, not color alone.
 
