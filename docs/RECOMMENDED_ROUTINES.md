@@ -1,6 +1,6 @@
 # Recommended routines
 
-Implemented October 11, 2026 on `feature/recommended-routines`. The user requested the original five-day dumbbell plan as optional recommendations. This is not automatic personalization or training advice inferred from Health data. Nothing is seeded on install.
+Implemented October 11, 2026 on `feature/recommended-routines`. The user requested the original five-day dumbbell plan as optional recommendations. This is not automatic personalization or training advice inferred from Health data. Nothing is seeded on install. The user explicitly confirmed that the two unmatched movements must remain choices in the preview: select an API exercise or omit them, with no automatic custom fallback.
 
 ## Provider mapping audit
 
