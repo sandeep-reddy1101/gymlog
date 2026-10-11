@@ -1,5 +1,12 @@
 # Validation log
 
+## October 11, 2026 — visible routine deletion
+
+- Added Delete routine beside the routine editing/duplication actions. Both this action and the existing swipe shortcut show the selected routine name in the confirmation. The detail screen returns only after the existing persistence transaction succeeds; sessions and shared exercises are not removed.
+- Native test on the isolated Gym Log Studio QA simulator (iPhone 17e / iOS 27.0): opened the synthetic Push routine, verified the visible button and named confirmation, cancelled and confirmed its six exercises remained, then deleted it. Returned to the list with other routines intact; Recommended displayed Push as available again. Cold launch retained the deletion and the active nine-exercise / 27-set workout. No physical-phone data was changed.
+- All **82 core tests**, **29 repository checks**, source parsing and project/plist validation passed. Normal unsigned iOS Simulator build, including the Watch companion, passed. Existing regression coverage includes recommendation deletion/re-import and use of deleted routines; no new tests were added for this UI-only entry point.
+- Logs: `/tmp/gymlog-routine-delete-tests.log`, `/tmp/gymlog-routine-delete-verify.log`, `/tmp/gymlog-routine-delete-build.log`.
+
 ## October 11, 2026 — recommended routines
 
 - Core suite: **82 tests passed**, including 12 new tests for the original five-day plan, exact provider matching, shared provider identities, historical quick-fill, transactional batch rejection, duplicate/re-add behavior, legacy backups, explicit preview omissions/replacements, optional shrug, cached detail reuse and rate-limit cooldown. Preview readiness is tested directly; unresolved, changed or repeated movements cannot be silently saved.

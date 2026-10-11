@@ -23,6 +23,8 @@ Deployment targets: iOS 17.0 and watchOS 10.0. The project has an iPhone target,
 4. For an unavailable exact match, tap **Choose exercise** to select a real API exercise, or turn off **Include** to omit that movement. DB hip thrust and DB walking lunges currently need this explicit choice. A different movement is never silently substituted.
 5. Tap **Create … routine(s)**. You can open each created routine immediately, edit its days/order, then return to Train and start it. Existing routines/workouts are kept. If opened from Add exercises, a single-routine preview also offers **Add … exercises to [current routine/workout]**.
 
+To remove a saved routine, open **Routines → [routine] → Delete routine**, then confirm its name. You can also swipe left on a routine in the list. Saved workouts, any active workout and the exercise library stay available. A deleted recommendation can be added again from Recommended routines.
+
 The first preview needs the network unless its details are still in the one-hour cache. Retry respects provider rate limits. Already saved routines work offline; preview/guide fetching still follows cache policy.
 
 ## 2. HealthKit capability and keys
