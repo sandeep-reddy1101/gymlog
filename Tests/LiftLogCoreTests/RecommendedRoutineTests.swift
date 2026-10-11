@@ -120,6 +120,16 @@ private actor RecommendationTransport {
     var calls = 0
     var status = 200
     var changedID: String?
+    private var pauseNext = false
+    private var paused = false
+    private var requestGate: CheckedContinuation<Void, Never>?
+    private var pauseObserver: CheckedContinuation<Void, Never>?
+    func pauseNextRequest() { pauseNext = true }
+    func waitUntilPaused() async {
+        if paused { return }
+        await withCheckedContinuation { pauseObserver = $0 }
+    }
+    func releaseRequest() { requestGate?.resume(); requestGate = nil; paused = false }
     let entries: [String: CatalogExercise]
     init() {
         var rows: [String: CatalogExercise] = [:]
@@ -132,8 +142,13 @@ private actor RecommendationTransport {
     }
     func configure(status: Int = 200, changedID: String? = nil) { self.status = status; self.changedID = changedID }
     func count() -> Int { calls }
-    func fetch(_ url: URL) throws -> (Data, HTTPURLResponse) {
+    func fetch(_ url: URL) async throws -> (Data, HTTPURLResponse) {
         calls += 1
+        if pauseNext {
+            pauseNext = false; paused = true
+            pauseObserver?.resume(); pauseObserver = nil
+            await withCheckedContinuation { requestGate = $0 }
+        }
         var value = entries[url.lastPathComponent]!
         if changedID == value.id {
             value = CatalogExercise(exerciseId: value.id, name: "wrong movement", gifUrl: value.gifUrl, bodyParts: value.bodyParts,
@@ -211,5 +226,29 @@ extension RecommendedRoutineTests {
         await model.refresh(catalog: catalog)
         let after = await stub.count()
         XCTAssertEqual(after, before + 1, "Cooldown prevents repeated requests, including Retry")
+    }
+}
+
+
+extension RecommendedRoutineTests {
+    @MainActor func testRefreshKeepsVisibleMatchesButBlocksSavingUntilRevalidated() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let stub = RecommendationTransport()
+        let catalog = ExerciseCatalog(directory: directory, spacing: 0, transport: { try await stub.fetch($0) })
+        let model = RecommendedPreviewModel([RecommendedRoutine.all[0]])
+        await model.refresh(catalog: catalog)
+        let displayed = model.resolved
+        await catalog.clearCache()
+        await stub.pauseNextRequest()
+        let refresh = Task { await model.refresh(catalog: catalog) }
+        await stub.waitUntilPaused()
+        XCTAssertTrue(model.loading)
+        XCTAssertFalse(model.ready)
+        XCTAssertEqual(model.resolved, displayed, "Refreshing must not collapse visible rows and jump the scroll position")
+        await stub.releaseRequest()
+        await refresh.value
+        XCTAssertTrue(model.ready)
+        XCTAssertEqual(model.resolved, displayed)
     }
 }

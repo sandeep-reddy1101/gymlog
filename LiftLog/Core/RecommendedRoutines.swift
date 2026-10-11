@@ -137,8 +137,12 @@ enum RecommendedRoutineImport {
     }
     func refresh(catalog: ExerciseCatalog = .shared) async {
         guard !loading else { return }
-        loading = true; error = nil; issues = [:]; resolved = [:]
-        defer { loading = false }
+        loading = true; error = nil
+        // Keep visible row geometry stable while awaiting cached/network details.
+        // Publish only the newly validated snapshot when the refresh finishes.
+        var nextResolved: [String: CatalogExercise] = [:]
+        var nextIssues: [String: String] = [:]
+        defer { resolved = nextResolved; issues = nextIssues; loading = false }
         do {
             for template in templates {
                 for move in template.moves {
@@ -146,7 +150,7 @@ enum RecommendedRoutineImport {
                     let key = Self.key(template, move)
                     guard !excluded.contains(key) else { continue }
                     guard let id = replacements[key]?.id ?? move.providerID else {
-                        issues[key] = "No verified exact match in the library. Choose an exercise or switch off this movement."
+                        nextIssues[key] = "No verified exact match in the library. Choose an exercise or switch off this movement."
                         continue
                     }
                     do {
@@ -157,9 +161,9 @@ enum RecommendedRoutineImport {
                                 throw BackupError.invalid("This listing changed. Choose the exercise again to review it.")
                             }
                         } else { try move.validate(exercise) }
-                        resolved[key] = exercise
-                    } catch let failure as BackupError { issues[key] = failure.localizedDescription }
-                    catch CatalogError.missing { issues[key] = "This exercise is unavailable. Choose another or switch off this movement." }
+                        nextResolved[key] = exercise
+                    } catch let failure as BackupError { nextIssues[key] = failure.localizedDescription }
+                    catch CatalogError.missing { nextIssues[key] = "This exercise is unavailable. Choose another or switch off this movement." }
                 }
             }
         } catch is CancellationError { error = "Loading paused. Tap Retry to continue." }

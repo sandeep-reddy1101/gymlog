@@ -51,6 +51,7 @@ struct RecommendedRoutineList: View {
 }
 
 struct RecommendedRoutinePreview: View {
+    @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(AppStore.self) private var store
     @Environment(\.appTheme) private var theme
     @State private var model: RecommendedPreviewModel
@@ -145,10 +146,13 @@ struct RecommendedRoutinePreview: View {
                     if model.replacements[key] != nil { Text("Your chosen replacement").font(.caption).foregroundStyle(theme.secondary) }
                     else if let note = move.note { Text(note).font(.caption).foregroundStyle(theme.secondary) }
                 } else if let issue = model.issues[key] { Text(issue).font(.caption).foregroundStyle(theme.secondary) }
-                HStack {
+                let actionsLayout = typeSize.isAccessibilitySize
+                    ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
+                    : AnyLayout(HStackLayout())
+                actionsLayout {
                     Button("Choose exercise") { choosing = Choice(id: key, title: move.title) }.buttonStyle(.borderless).frame(minHeight: 44)
                         .accessibilityLabel("Choose exercise for \(move.title)")
-                    Spacer()
+                    if !typeSize.isAccessibilitySize { Spacer() }
                     if let entry = model.resolved[key] {
                         Button("Guide") { guide = entry.record }.buttonStyle(.borderless).frame(minHeight: 44)
                             .accessibilityLabel("Guide for \(move.title)")
