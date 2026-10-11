@@ -38,6 +38,9 @@ struct TodayView: View {
                                 Text("Build your first routine").font(.title2.bold())
                                 Text("Choose your exercises, give your routine a name, and set the days that work for you.")
                                     .foregroundStyle(theme.secondary)
+                                NavigationLink { RecommendedRoutineList() } label: {
+                                    Label("Browse recommended routines", systemImage: "calendar.badge.plus")
+                                }.buttonStyle(SecondaryButtonStyle())
                                 Button("Create routine") { creatingRoutine = true }
                                     .buttonStyle(ActionButtonStyle()).padding(.top, 8)
                             }

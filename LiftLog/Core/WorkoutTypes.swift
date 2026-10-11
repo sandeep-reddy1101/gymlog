@@ -45,6 +45,7 @@ struct DayRecord: Codable, Identifiable, Equatable {
     var weekdays: [Int]? = nil
     var targets: [RepTarget]? = nil
     var supersets: [SupersetPair]? = nil
+    var recommendedTemplateID: String? = nil
     var title: String { name ?? type.title }
     var scheduledWeekdays: [Int] { weekdays ?? [type.weekday] }
     func isScheduled(on date: Date = .now, calendar: Calendar = .current) -> Bool {

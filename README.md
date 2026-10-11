@@ -1,5 +1,7 @@
 # Gym Log
 
+Recommended routines now offer the original five-day dumbbell plan through **Add exercises → Recommended → Ready-made routines**, **Routines → Recommended routines**, and the first-routine screen. Preview one or all remaining routines, resolve any missing API matches, and create them together. See [mapping and behavior](docs/RECOMMENDED_ROUTINES.md).
+
 Native iPhone workout tracker with offline logging and ExerciseDB discovery with your own routines, names and weekly schedule. Previously named Lift Log. The coral kettlebell mascot is the approved icon. The Xcode project and schemes retain their original Lift Log names. Real-device Health acceptance is still pending. No user accounts or analytics. ExerciseDB supplies the exercise catalog and GIFs; no third-party SDK is required.
 
 Source and ongoing development: [GitHub repository](https://github.com/sandeep-reddy1101/gymlog). See [repository workflow](docs/GITHUB_WORKFLOW.md) and [design previews](docs/designs/README.md).

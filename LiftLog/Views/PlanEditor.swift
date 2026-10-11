@@ -30,6 +30,9 @@ struct PlanEditor: View {
                         }
                 }
                 .onMove { offsets, target in _ = store.commit { $0.days.move(fromOffsets: offsets, toOffset: target) } }
+                NavigationLink { RecommendedRoutineList() } label: {
+                    Label("Recommended routines", systemImage: "calendar.badge.plus")
+                }.listRowBackground(theme.surface)
                 Button("Create routine", systemImage: "plus") { creating = true }.disabled(store.days.count >= 100)
             }.studioScreen().navigationTitle("Your routines")
                 .toolbar {
@@ -38,7 +41,7 @@ struct PlanEditor: View {
                 }
                 .sheet(item: $duplicate) { RoutineForm(day: $0) }
                 .sheet(isPresented: $creating) { RoutineForm(day: DayRecord(type: .push, exerciseIDs: [], name: "", weekdays: [])) }
-                .alert("Delete routine?", isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } })) {
+                .alert("Delete \(deleting?.title ?? "routine")?", isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } })) {
                     Button("Delete", role: .destructive) {
                         if let deleting { _ = store.commit { $0.days.removeAll { $0.id == deleting.id } } }
                         deleting = nil
@@ -52,8 +55,10 @@ struct PlanEditor: View {
 struct RoutineDetail: View {
     @Environment(\.appTheme) private var theme
     @Environment(AppStore.self) private var store
+    @Environment(\.dismiss) private var dismiss
     var dayID: UUID
     @State private var adding = false
+    @State private var deleting = false
     @State private var editingRoutine = false
     @State private var editingExercise: ExerciseRecord?
     @State private var duplicate: DayRecord?
@@ -67,6 +72,7 @@ struct RoutineDetail: View {
                         Button("Edit name, days & color") { editingRoutine = true }
                         Button("Duplicate routine", systemImage: "plus.square.on.square") { duplicate = WorkoutLogic.duplicate(day) }
                             .disabled(store.days.count >= 100)
+                        Button("Delete routine", systemImage: "trash", role: .destructive) { deleting = true }
                     } footer: { Text("Changes apply to future workouts. Saved sessions keep their original names and sets.") }.listRowBackground(theme.surface)
                     Section {
                         Text("Tap an exercise for rep targets and supersets. Tap Edit to reorder.").font(.caption).foregroundStyle(theme.secondary)
@@ -101,6 +107,14 @@ struct RoutineDetail: View {
                     .sheet(isPresented: $adding) { AddExerciseView(dayID: dayID) }
                     .sheet(isPresented: $editingRoutine) { RoutineForm(day: day) }
                     .sheet(item: $editingExercise) { RoutineExerciseOptions(dayID: dayID, exercise: $0) }
+                    .alert("Delete \(day.title)?", isPresented: $deleting) {
+                        Button("Delete", role: .destructive) {
+                            if store.commit({ $0.days.removeAll { $0.id == dayID } }) { dismiss() }
+                        }
+                        Button("Cancel", role: .cancel) {}
+                    } message: {
+                        Text("Saved workouts and any workout in progress are kept. The exercise library is unchanged.")
+                    }
             } else { ContentUnavailableView("Routine removed", systemImage: "calendar") }
         }
     }
@@ -190,11 +204,13 @@ struct AddExerciseView: View {
     var body: some View {
         NavigationStack {
             ExerciseCatalogBrowser(unavailable: Set(existingIDs), selected: Set(selection.map(\.id)),
-                                   selectionFull: selection.count + existingIDs.count >= 100) { exercise in
+                                   selectionFull: selection.count + existingIDs.count >= 100,
+                                   showsRecommendations: true, recommendationDayID: dayID, recommendationSessionID: sessionID) { exercise in
                 addConfirmation = nil
                 if selection.contains(where: { $0.id == exercise.id }) { selection.removeAll { $0.id == exercise.id } }
                 else { selection.append(exercise) }
             }
+            .onChange(of: existingIDs) { _, ids in selection.removeAll { ids.contains($0.id) } }
             .studioScreen().navigationTitle("Exercise library").navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 8) {
