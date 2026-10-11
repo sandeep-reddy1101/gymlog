@@ -1,0 +1,169 @@
+<div id="gym-log-ux">
+<style>
+#gym-log-ux{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color-scheme:light dark}
+#gym-log-ux .gl-stage{min-height:970px;padding:24px 10px 36px;box-sizing:border-box}
+#gym-log-ux .gl-preview{max-width:390px;margin:auto;color:light-dark(#25272a,#f6f2ee);font-size:13px;line-height:1.45}
+#gym-log-ux .gl-review{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px;flex-wrap:wrap}
+#gym-log-ux .gl-review select{max-width:175px;min-height:44px;border:1px solid light-dark(#c7c7c7,#555);border-radius:10px;padding:8px;background:light-dark(#fff,#242424);color:inherit;font:inherit}
+#gym-log-ux .gl-phone{--paper:light-dark(#faf9f6,#17191c);--panel:light-dark(#fff,#23262b);--ink:light-dark(#23262b,#faf6f0);--sub:light-dark(#5b6269,#b8bec6);--line:light-dark(#dcdedc,#41454d);--soft:light-dark(#eeefec,#2d3137);--coral:light-dark(#ffd5cf,#6d3932);background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:28px;padding:0;min-height:825px;display:flex;flex-direction:column;overflow-wrap:anywhere;font-size:15px;line-height:1.45;box-shadow:0 12px 30px #00000012}
+#gym-log-ux .gl-status{padding:17px 22px 10px;display:flex;justify-content:space-between;font-size:12px;font-weight:600}
+#gym-log-ux .gl-status span:last-child{font-size:11px;letter-spacing:1.2px;color:var(--sub)}
+#gym-log-ux .gl-content{padding:12px 20px 20px;flex:1}
+#gym-log-ux .gl-phone h1{font-size:29px;letter-spacing:-1px;line-height:1.15;margin:5px 0 20px;font-weight:700}
+#gym-log-ux .gl-phone h2{font-size:20px;letter-spacing:-.4px;line-height:1.25;margin:0 0 7px;font-weight:650}
+#gym-log-ux .gl-phone h3{font-size:16px;margin:20px 0 10px;font-weight:650}
+#gym-log-ux .gl-phone p{margin:6px 0 12px}
+#gym-log-ux .gl-muted{color:var(--sub);font-size:13px}
+#gym-log-ux .gl-eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;font-weight:600;color:var(--sub);margin-bottom:7px}
+#gym-log-ux .gl-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+#gym-log-ux .gl-panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:17px;margin:14px 0}
+#gym-log-ux .gl-hero{border-top:4px solid #ff6b5e}
+#gym-log-ux button{font:inherit}
+#gym-log-ux .gl-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:10px 13px;background:var(--soft);color:var(--ink);border:0;border-radius:12px;font-size:14px;font-weight:600;box-sizing:border-box;text-align:center}
+#gym-log-ux .gl-button:disabled{opacity:.45;cursor:default}
+#gym-log-ux .gl-primary{background:#ff6b5e;color:#25120e}
+#gym-log-ux .gl-plain{background:transparent;padding:9px 7px}
+#gym-log-ux .gl-full{width:100%;margin-top:9px}
+#gym-log-ux .gl-phone input,#gym-log-ux .gl-phone select{font:inherit;font-size:16px;min-height:46px;box-sizing:border-box;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--ink);width:100%;padding:10px;min-width:0}
+#gym-log-ux .gl-phone label{display:block;font-size:12px;font-weight:600;color:var(--sub);margin:12px 0 5px}
+#gym-log-ux .gl-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;margin:14px 0}
+#gym-log-ux .gl-day{min-width:0;padding:7px 0;flex-direction:column;gap:3px;border:1px solid transparent;font-size:12px}
+#gym-log-ux .gl-day[aria-pressed=true]{background:var(--coral);border-color:#e97769}
+#gym-log-ux .gl-day small{font-size:10px}
+#gym-log-ux .gl-listrow{padding:13px 0;border-bottom:1px solid var(--line)}
+#gym-log-ux .gl-name{font-weight:600;font-size:15px}
+#gym-log-ux .gl-listrow .gl-name{max-width:100%}
+#gym-log-ux .gl-number{color:var(--sub);font-size:12px;letter-spacing:.6px;margin-right:8px}
+#gym-log-ux .gl-bottom{padding:14px 20px 20px;border-top:1px solid var(--line);background:var(--panel);border-radius:0 0 28px 28px}
+#gym-log-ux .gl-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:9px 8px 17px;border-top:1px solid var(--line);gap:1px}
+#gym-log-ux .gl-nav button{flex-direction:column;padding:8px 0;gap:5px;font-size:11px;background:transparent;color:var(--sub)}
+#gym-log-ux .gl-nav .gl-active{color:var(--ink);background:var(--coral)}
+#gym-log-ux .gl-segments{display:flex;gap:5px;margin:13px 0}
+#gym-log-ux .gl-segments button{flex:1}
+#gym-log-ux .gl-segments button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+#gym-log-ux .gl-note{border-left:3px solid #ff6b5e;padding:9px 11px;background:var(--soft);font-size:13px;margin:12px 0}
+#gym-log-ux .gl-banner{font-size:13px;min-height:22px;color:var(--ink);margin-top:9px}
+#gym-log-ux .gl-entry{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#gym-log-ux .gl-entry input{font-size:32px;font-weight:650;min-height:76px;text-align:center}
+#gym-log-ux .gl-setrow{display:grid;grid-template-columns:25px minmax(0,1fr) minmax(0,1fr) 70px;gap:6px;align-items:center;margin:10px 0}
+#gym-log-ux .gl-setrow input{text-align:center;padding:8px 2px}
+#gym-log-ux .gl-setrow .gl-button{font-size:12px;padding:8px 3px}
+#gym-log-ux .gl-sethead{font-size:11px;color:var(--sub);text-align:center}
+#gym-log-ux .gl-logged{background:var(--soft);border-radius:10px;padding:5px}
+#gym-log-ux .gl-rest{background:var(--ink);color:var(--paper);padding:13px;border-radius:14px;margin:14px 0}
+#gym-log-ux .gl-rest .gl-button{background:var(--paper);color:var(--ink)}
+#gym-log-ux .gl-metric{font-size:30px;font-weight:650;letter-spacing:-.7px}
+#gym-log-ux .gl-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#gym-log-ux .gl-placeholder{border:1px dashed var(--line);background:var(--soft);min-height:145px;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:10px;color:var(--sub)}
+#gym-log-ux .gl-check{color:light-dark(#246343,#a7e2bd)}
+#gym-log-ux details{margin:12px 0;font-size:13px}
+#gym-log-ux summary{min-height:44px;display:flex;align-items:center;cursor:default}
+#gym-log-ux .gl-trendrow{display:grid;grid-template-columns:55px 1fr 62px;gap:10px;align-items:center;font-size:12px;margin:14px 0}
+#gym-log-ux .gl-track{height:9px;background:var(--soft);border-radius:6px}
+#gym-log-ux .gl-track span{display:block;height:100%;background:#ff6b5e;border-radius:6px}
+#gym-log-ux .gl-error{color:light-dark(#ac2020,#ffb1b1);font-size:13px}
+@media(max-width:370px){#gym-log-ux .gl-content{padding:12px 12px 18px}#gym-log-ux .gl-week:has(button){grid-template-columns:repeat(4,minmax(0,1fr))}#gym-log-ux .gl-bottom{padding:12px}#gym-log-ux .gl-stage{padding:18px 2px 36px;min-height:1060px}#gym-log-ux .gl-panel{padding:12px}#gym-log-ux .gl-phone h1{font-size:26px}}
+</style>
+<div class="viz-carousel viz-dotted-background" aria-label="Gym Log workout logging options">
+<section data-variant="Focused set" class="gl-stage"><div class="gl-preview" data-mode="focused" aria-label="Focused set wireframe"></div></section>
+<section data-variant="Compact table" class="gl-stage" hidden><div class="gl-preview" data-mode="compact" aria-label="Compact table wireframe"></div></section>
+</div>
+<script>
+(()=>{
+const root=document.getElementById('gym-log-ux');
+const catalog=[
+{id:1,name:'Dumbbell bench press',equipment:'Dumbbell',muscle:'Chest'},
+{id:2,name:'Lat pulldown',equipment:'Cable',muscle:'Back'},
+{id:3,name:'Dumbbell shoulder press',equipment:'Dumbbell',muscle:'Shoulders'},
+{id:4,name:'Dumbbell bent-over row',equipment:'Dumbbell',muscle:'Back'},
+{id:5,name:'Dumbbell one-arm row',equipment:'Dumbbell',muscle:'Back'},
+{id:6,name:'Dumbbell incline row',equipment:'Dumbbell',muscle:'Back'},
+{id:7,name:'Barbell bent-over row',equipment:'Barbell',muscle:'Back'},
+{id:8,name:'Dumbbell biceps curl',equipment:'Dumbbell',muscle:'Arms'}];
+const screens={today:'Today',routine:'Routine builder',search:'Find exercises',workout:'Log a workout',summary:'Workout summary',progress:'Progress',history:'History',settings:'Settings'};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fresh=()=>({screen:'today',name:'Upper body',days:[0,3],routine:[1,2,3],selected:[],query:'',equipment:'All',muscle:'All',tab:'all',browserState:'ready',active:false,finished:false,exercise:1,sets:{},rest:0,notice:'',filter:false,review:false,guide:null,effort:'',error:'',returnTo:'routine',draftFilter:{}});
+let saved=window.openai?.widgetState?.privateContent;const states={};const configs={};
+function persist(){if(window.openai?.setWidgetState)window.openai.setWidgetState({modelContent:{proposal:'Gym Log UX wireframes',layouts:['Focused set','Compact table'],screens:Object.fromEntries(Object.entries(states).map(([k,v])=>[k,v.screen]))},privateContent:{version:1,states}}).catch(()=>{});}
+function button(text,action,extra='',cls=''){return `<button type="button" class="gl-button cursor-interaction ${cls}" data-action="${action}" ${extra}>${text}</button>`;}
+function getSets(s,id=s.exercise){return s.sets[id]||(s.sets[id]=[{weight:'30',reps:'10',done:false},{weight:'30',reps:'10',done:false},{weight:'30',reps:'10',done:false}]);}
+function allSets(s){return Object.values(s.sets).flat();}
+function completeCount(s){return allSets(s).filter(x=>x.done).length;}
+function footerNav(s){return `<nav class="gl-nav" aria-label="Main navigation">${[['today','house','Today'],['progress','chart-no-axes-combined','Progress'],['history','clock-3','History'],['settings','settings-2','Settings']].map(([key,icon,label])=>button(`<i data-lucide="${icon}" aria-hidden="true"></i>${label}`,'nav',`data-screen="${key}" ${s.screen===key?'aria-current="page"':''}`,s.screen===key?'gl-active':'')).join('')}</nav>`;}
+function searchRows(s){const q=s.query.toLowerCase().replace(/\bdb\b/g,'dumbbell').replace(/\bbb\b/g,'barbell').replace(/rows\b/g,'row').split(/[^a-z0-9]+/).filter(Boolean);return catalog.filter(x=>q.every(w=>x.name.toLowerCase().includes(w))&&(s.equipment==='All'||x.equipment===s.equipment)&&(s.muscle==='All'||x.muscle===s.muscle)&&(s.tab==='all'||s.routine.includes(x.id)));}
+function results(s){if(s.browserState==='offline')return `<div class="gl-panel"><h2>You're offline</h2><p class="gl-muted">Your saved exercises are available. Online discovery will return when you reconnect.</p>${button('Browse saved exercises','offline-saved','','gl-full')}</div>`;
+if(s.browserState==='limited')return `<div class="gl-panel"><h2>Search is taking a break</h2><p class="gl-muted">The exercise service needs a moment. Your routine and selections are safe.</p>${button('Browse saved exercises','offline-saved','','gl-full')}</div>`;
+if(s.browserState==='loading')return '<div class="gl-panel" role="status">Finding matching exercises…</div>';
+const rows=searchRows(s);return `<div class="gl-muted" role="status">${rows.length} matches in this sample</div>${rows.map(x=>`<div class="gl-listrow"><div class="gl-name">${esc(x.name)}</div><div class="gl-muted">${x.equipment} · ${x.muscle}</div><div class="gl-row" style="margin-top:7px">${button('Details','guide',`data-id="${x.id}"`,'gl-plain')}${button(s.routine.includes(x.id)?'✓ Added':s.selected.includes(x.id)?'✓ Selected':'+ Select','select',`data-id="${x.id}" ${s.routine.includes(x.id)?'disabled':''} aria-pressed="${s.selected.includes(x.id)}"`,s.selected.includes(x.id)?'gl-primary':'')}</div></div>`).join('')}${!rows.length?'<div class="gl-panel"><h2>No matching exercises</h2><p class="gl-muted">Try a shorter name or remove a filter.</p>'+button('Clear filters','clear-filters','','gl-full')+'</div>':''}`;}
+function render(container){const mode=container.dataset.mode,s=states[mode],config=configs[mode];let body='',bottom='',nav=false;
+const title=(small,big)=>`<div class="gl-eyebrow">${small}</div><h1>${big}</h1>`;
+const notice=`<div class="gl-banner" role="status">${esc(s.notice)}</div>`;
+if(s.screen==='today'){
+nav=true;body=title('GYM LOG · SATURDAY, OCT 10','Make it your session.');body+=`<div class="gl-week">${['M','T','W','T','F','S','S'].map((d,i)=>`<div style="text-align:center;padding:8px 0;background:${i===5?'var(--coral)':'transparent'};border-radius:12px"><span class="gl-muted">${d}</span><div style="margin-top:5px">${5+i}</div></div>`).join('')}</div>`;
+body+=`<div class="gl-panel gl-hero"><div class="gl-eyebrow">${s.active?'WORKOUT IN PROGRESS':'YOUR ROUTINE'}</div><h2>${esc(s.name)}</h2><p class="gl-muted">${s.routine.length} exercises · ${s.active?completeCount(s)+' sets completed':'Your choice, your pace'}</p>${button(s.active?'Resume workout':'Start workout','start','','gl-primary gl-full')}${button('Edit routine','nav','data-screen="routine"','gl-plain gl-full')}</div><h3>Your plan</h3><div class="gl-listrow gl-row"><div><div class="gl-name">${esc(s.name)}</div><div class="gl-muted">${s.days.map(i=>['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i]).join(' · ')||'No scheduled days'}</div></div>${button('Manage','nav','data-screen="routine"','gl-plain')}</div><div class="gl-note">${s.finished?'Last session saved. Review it in History.':'Start with your own exercises. Change the schedule anytime.'}</div>`;
+} else if(s.screen==='routine'){
+body=`<div class="gl-row">${button('‹ Today','nav','data-screen="today"','gl-plain')}<span class="gl-muted">Routine draft</span></div>`+title('PLAN YOUR TRAINING','Your routine');
+body+=`<label>Routine name<input data-field="name" value="${esc(s.name)}" maxlength="45"></label><label>Repeat on</label><div class="gl-week">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d,i)=>button(d,'day',`data-id="${i}" aria-pressed="${s.days.includes(i)}"`,'gl-day')).join('')}</div><h3>Exercises <span class="gl-muted">${s.routine.length}</span></h3>${s.routine.map((id,i)=>`<div class="gl-listrow"><div class="gl-name"><span class="gl-number">${String(i+1).padStart(2,'0')}</span>${esc(catalog.find(x=>x.id===id).name)}</div><div class="gl-row"><span class="gl-muted">3 working sets</span>${button('Remove','remove-exercise',`data-id="${id}"`,'gl-plain')}</div></div>`).join('')}${!s.routine.length?'<p class="gl-muted">Choose your first exercise to get started.</p>':''}${button('+ Add exercises','open-search','','gl-full')}`;bottom=button('Save routine','save-routine','','gl-primary gl-full');
+} else if(s.screen==='search'){
+body=`<div class="gl-row"><span class="gl-muted">Adding to ${esc(s.name)}</span>${button('Done','search-done','','gl-plain')}</div><h1>Find your next lift.</h1><label>Search exercises<input data-field="query" type="search" placeholder="Try dumbbell row" value="${esc(s.query)}" autocomplete="off"></label><div class="gl-row">${button('Filters'+(s.equipment!=='All'||s.muscle!=='All'?' · applied':''),'filters','','gl-plain')}<span class="gl-muted">${esc([s.equipment,s.muscle].filter(x=>x!=='All').join(' · '))}</span></div><div class="gl-segments">${button('All exercises','search-tab','data-tab="all" aria-pressed="'+(s.tab==='all')+'"')}${button('Saved','search-tab','data-tab="saved" aria-pressed="'+(s.tab==='saved')+'"')}</div><div data-results>${results(s)}</div><p class="gl-muted">Sample catalog · production: ExerciseDB / AscendAPI</p>`;
+bottom=`<div class="gl-row"><strong>${s.selected.length} selected</strong>${button('Review','review',s.selected.length?'':'disabled','gl-plain')}</div>${button(s.selected.length?'Add '+s.selected.length+' to routine':'Select exercises above','add',s.selected.length?'':'disabled','gl-primary gl-full')}${notice}`;
+if(s.filter){body=`${button('Cancel','filter-cancel','','gl-plain')}<h1>Find the right fit.</h1><label>Equipment<select data-field="draftEquipment">${['All','Dumbbell','Barbell','Cable'].map(v=>`<option ${s.draftFilter.equipment===v?'selected':''}>${v}</option>`).join('')}</select></label><label>Muscle group<select data-field="draftMuscle">${['All','Back','Chest','Shoulders','Arms'].map(v=>`<option ${s.draftFilter.muscle===v?'selected':''}>${v}</option>`).join('')}</select></label><div class="gl-note">Filters combine with your exercise name.</div>`;bottom=button('Show exercises','filter-apply','','gl-primary gl-full');}
+if(s.review){body=`${button('‹ Keep browsing','review-close','','gl-plain')}<h1>Your selection</h1>${s.selected.map(id=>`<div class="gl-listrow"><div class="gl-name">${esc(catalog.find(x=>x.id===id).name)}</div>${button('Remove','select',`data-id="${id}"`,'gl-plain')}</div>`).join('')}`;bottom=button('Add '+s.selected.length+' to routine','add',s.selected.length?'':'disabled','gl-primary gl-full');}
+} else if(s.screen==='workout'){
+getSets(s);const list=getSets(s),idx=list.findIndex(x=>!x.done),current=idx<0?list.length-1:idx,ex=catalog.find(x=>x.id===s.exercise);
+body=`<div class="gl-row">${button('‹ Minimize','nav','data-screen="today"','gl-plain')}${button('Finish','finish','','gl-plain')}</div><div class="gl-eyebrow">${esc(s.name)} · ${completeCount(s)} SETS COMPLETED</div><label>Current exercise<select data-field="exercise">${s.routine.map(id=>`<option value="${id}" ${id===s.exercise?'selected':''}>${esc(catalog.find(x=>x.id===id).name)}</option>`).join('')}</select></label><div class="gl-row" style="margin-top:12px"><span class="gl-muted">${ex.equipment} · ${ex.muscle}</span>${button('Form guide','guide',`data-id="${ex.id}"`,'gl-plain')}</div>`;
+if(config.showPrevious)body+='<div class="gl-note">Last time · <strong>30 lb × 10 reps</strong><br><span class="gl-muted">Previous session · sample values</span></div>';
+if(mode==='focused'){
+body+=`<div class="gl-panel gl-hero"><div class="gl-row"><strong>${idx<0?'All sets complete':'Set '+(current+1)+' of '+list.length}</strong><span class="gl-muted">${idx<0?'✓ Done':'Not completed'}</span></div>${idx<0?'<p>You can add a set or choose another exercise.</p>':`<div class="gl-entry"><label>Weight · lb<input type="number" min="0" step="0.5" inputmode="decimal" data-set="${current}" data-key="weight" value="${esc(list[current].weight)}" aria-label="Weight in pounds, set ${current+1}"></label><label>Reps<input type="number" min="1" step="1" inputmode="numeric" data-set="${current}" data-key="reps" value="${esc(list[current].reps)}" aria-label="Reps, set ${current+1}"></label></div><p class="gl-muted" data-draft>Values entered · tap Complete set to log.</p>${button('Complete set '+(current+1),'complete',`data-id="${current}"`,'gl-primary gl-full')}`}</div><h3>Completed sets</h3>${list.map((v,i)=>v.done?`<div class="gl-row gl-listrow"><span>✓ Set ${i+1} · <strong>${v.weight} lb × ${v.reps}</strong></span>${button('Undo','undo',`data-id="${i}"`,'gl-plain')}</div>`:'').join('')}${!list.some(x=>x.done)?'<p class="gl-muted">Your completed sets will appear here.</p>':''}`;
+}else body+=`<div class="gl-setrow gl-sethead"><span>SET</span><span>LB</span><span>REPS</span><span>STATUS</span></div>${list.map((v,i)=>`<div class="gl-setrow ${v.done?'gl-logged':''}"><strong>${i+1}</strong><input type="number" min="0" step="0.5" data-set="${i}" data-key="weight" value="${esc(v.weight)}" aria-label="Weight in pounds, set ${i+1}" ${v.done?'disabled':''}><input type="number" min="1" step="1" data-set="${i}" data-key="reps" value="${esc(v.reps)}" aria-label="Reps, set ${i+1}" ${v.done?'disabled':''}>${button(v.done?'✓ Undo':'Log set',v.done?'undo':'complete',`data-id="${i}"`,v.done?'':'gl-primary')}</div>`).join('')}<p class="gl-muted">Typing saves a draft. Log set marks it completed.</p>`;
+body+=`<div class="gl-error" role="alert">${esc(s.error)}</div>${s.rest?`<div class="gl-rest"><div class="gl-row"><strong>Rest ${Math.floor(s.rest/60)}:${String(s.rest%60).padStart(2,'0')}</strong><span style="font-size:11px">Timer preview</span></div><div class="gl-row" style="margin-top:9px">${button('+30 sec','rest-more')}${button('Skip rest','rest-skip')}</div></div>`:''}${button('+ Add a set','add-set','','gl-full')}<details><summary>Effort · optional</summary><label>Reps left at the end<select data-field="effort"><option>Not set</option>${['0','1','2','3','4+'].map(v=>`<option ${s.effort===v?'selected':''}>${v}</option>`).join('')}</select></label><p class="gl-muted">An optional workout note; weight and reps are logged separately.</p></details>`;
+bottom=`<div class="gl-row"><span class="gl-muted">Watch · not connected</span>${button('Help','nav','data-screen="settings"','gl-plain')}</div>${button('Next exercise','next','','gl-full')}${notice}`;
+} else if(s.screen==='finish'){
+body=title('REVIEW WORKOUT','Ready to finish?')+`<div class="gl-panel"><h2>${completeCount(s)} completed sets</h2><p class="gl-muted">Only completed sets will appear in your workout history. Unfinished draft sets are excluded.</p></div><div class="gl-note">Watch data is unavailable. Your lifting log can still be saved.</div>${button('Keep training','nav','data-screen="workout"','gl-full')}`;bottom=button('Save & finish workout','save-finish',completeCount(s)?'':'disabled','gl-primary gl-full');
+} else if(s.screen==='summary'){
+const done=allSets(s).filter(x=>x.done),vol=done.reduce((n,x)=>n+Number(x.weight)*Number(x.reps),0);body=title('WORKOUT SUMMARY',s.finished?'Session saved.':'Your session, clearly.')+`<div class="gl-panel gl-hero"><h2>${esc(s.name)}</h2><div class="gl-two"><div><div class="gl-metric">${done.length}</div><div class="gl-muted">Completed sets</div></div><div><div class="gl-metric">${vol.toLocaleString()}</div><div class="gl-muted">Volume · lb</div></div></div></div><h3>Apple Health</h3><div class="gl-listrow gl-row"><span>Active calories</span><span class="gl-muted">Unavailable</span></div><div class="gl-listrow gl-row"><span>Average heart rate</span><span class="gl-muted">Unavailable</span></div><div class="gl-note">No Watch measurements for this session. Missing data is never shown as zero.</div>${button('Review completed sets','nav','data-screen="history"','gl-full')}`;bottom=button('Back to Today','nav','data-screen="today"','gl-primary gl-full');
+} else if(s.screen==='progress'){
+nav=true;body=title('PROGRESS','See your strength grow.')+`<label>Exercise<select data-field="progressExercise"><option>Dumbbell bench press</option><option>Lat pulldown</option></select></label><div class="gl-panel gl-hero"><div class="gl-eyebrow">HEAVIEST COMPLETED SET · SAMPLE</div><div class="gl-metric" data-progress-value>30 lb</div><p class="gl-muted">Same exercise, last four sessions</p><div data-progress-chart>${[20,25,25,30].map((w,i)=>`<div class="gl-trendrow"><span>Sep ${19+i*3}</span><div class="gl-track"><span style="width:${w/30*100}%"></span></div><span>${w} lb</span></div>`).join('')}</div></div><h3>Training consistency</h3><p>3 sessions last week · sample</p>${button('View workout history','nav','data-screen="history"','gl-full')}`;
+} else if(s.screen==='history'){
+nav=true;body=title('HISTORY','Your training record.')+(s.finished?`<div class="gl-panel"><div class="gl-eyebrow">THIS PREVIEW SESSION</div><h2>${esc(s.name)}</h2><p class="gl-muted">${completeCount(s)} completed sets</p>${button('View summary','nav','data-screen="summary"','gl-full')}</div>${Object.entries(s.sets).filter(([,list])=>list.some(x=>x.done)).map(([id,list])=>`<h3>${esc(catalog.find(x=>x.id===Number(id)).name)}</h3>${list.filter(x=>x.done).map(x=>`<div class="gl-listrow">${x.weight} lb × ${x.reps} reps</div>`).join('')}`).join('')}`:'<div class="gl-panel"><h2>Your first session starts here.</h2><p class="gl-muted">Finish a workout in this preview to see its completed sets.</p>'+button('Start training','start','','gl-primary gl-full')+'</div>');
+} else if(s.screen==='settings'){
+nav=true;body=title('SETTINGS','Ready when you are.')+`<h3>Apple Watch & Health</h3><div class="gl-panel"><div class="gl-row"><strong>Watch connection</strong><span class="gl-muted">Not connected</span></div><p class="gl-muted">Set logging works without your Watch. Heart rate and active calories require a recording session and permissions.</p><details><summary>Connection checklist</summary><ol><li>Install Gym Log on your paired Watch.</li><li>Allow Health access in the Watch app.</li><li>Enable Watch workouts on your iPhone.</li></ol><p>This preview does not connect to devices.</p></details></div><h3>Your data</h3><p class="gl-muted">All names, numbers and selections here are sample data. This preview does not change your app.</p>`;
+}
+if(s.guide){const x=catalog.find(x=>x.id===s.guide);body=`${button('‹ Back','guide-close','','gl-plain')}<h1>${esc(x.name)}</h1><div class="gl-placeholder"><i data-lucide="play" aria-hidden="true"></i><strong>Exercise demonstration</strong><span class="gl-muted">Media placement only · source quality under review</span></div><h3>Setup & movement</h3><p class="gl-muted">Provider instructions appear here in the app.</p><div class="gl-listrow">Equipment <strong>${x.equipment}</strong></div><div class="gl-listrow">Target <strong>${x.muscle}</strong></div>`;bottom=button('Back to '+(s.screen==='search'?'results':'workout'),'guide-close','','gl-primary gl-full');nav=false;}
+container.innerHTML=`<div class="gl-review"><span>WIREFRAME · SAMPLE DATA</span><label>Screen <select data-field="jump" aria-label="Preview screen">${Object.entries(screens).map(([k,v])=>`<option value="${k}" ${s.screen===k?'selected':''}>${v}</option>`).join('')}</select></label></div><div class="gl-phone"><div class="gl-status"><span>9:41</span><span>GYM LOG</span></div><main class="gl-content">${body}</main>${bottom?'<div class="gl-bottom">'+bottom+'</div>':''}${nav?footerNav(s):''}</div>`;
+if(globalThis.lucide)lucide.createIcons({attrs:{width:17,height:17}});
+}
+root.querySelectorAll('[data-mode]').forEach(container=>{
+const mode=container.dataset.mode;states[mode]=saved?.version===1&&saved.states?.[mode]?{...fresh(),...saved.states[mode]}:fresh();configs[mode]={showPrevious:true};render(container);
+container.addEventListener('input',e=>{const s=states[mode],el=e.target;if(el.dataset.key){getSets(s)[Number(el.dataset.set)][el.dataset.key]=el.value;const d=container.querySelector('[data-draft]');if(d)d.textContent='Draft updated · tap Complete set to log.';persist();return;}const f=el.dataset.field;if(f==='name'){s.name=el.value;persist();}if(f==='query'){s.query=el.value;container.querySelector('[data-results]').innerHTML=results(s);persist();}});
+container.addEventListener('change',e=>{const s=states[mode],f=e.target.dataset.field,v=e.target.value;if(f==='jump'){s.screen=v;s.guide=null;s.filter=false;s.review=false;if(v==='workout'&&!s.routine.length){s.screen='routine';} }if(f==='exercise')s.exercise=Number(v);if(f==='draftEquipment')s.draftFilter.equipment=v;if(f==='draftMuscle')s.draftFilter.muscle=v;if(f==='effort')s.effort=v;if(f==='progressExercise'){const vals=v==='Lat pulldown'?[60,65,65,70]:[20,25,25,30];container.querySelector('[data-progress-value]').textContent=vals[3]+' lb';container.querySelector('[data-progress-chart]').innerHTML=vals.map((w,i)=>`<div class="gl-trendrow"><span>Sep ${19+i*3}</span><div class="gl-track"><span style="width:${w/vals[3]*100}%"></span></div><span>${w} lb</span></div>`).join('');return;}if(['jump','exercise'].includes(f))render(container);persist();});
+container.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b||b.disabled)return;const s=states[mode],a=b.dataset.action,id=Number(b.dataset.id);s.error='';
+if(a==='nav')s.screen=b.dataset.screen;
+if(a==='start'){if(!s.routine.length){s.screen='routine';}else{if(!s.active){s.sets={};s.rest=0;s.finished=false;s.exercise=s.routine[0];}s.active=true;s.screen='workout';}}
+if(a==='day')s.days=s.days.includes(id)?s.days.filter(x=>x!==id):[...s.days,id].sort();
+if(a==='save-routine'){s.name=s.name.trim()||'My routine';s.screen='today';}
+if(a==='remove-exercise'){s.routine=s.routine.filter(x=>x!==id);if(s.exercise===id)s.exercise=s.routine[0]||1;}
+if(a==='open-search'){s.returnTo=s.screen;s.screen='search';s.notice='';}
+if(a==='search-done')s.screen=s.returnTo;
+if(a==='search-tab'){s.tab=b.dataset.tab;s.browserState='ready';}
+if(a==='select')s.selected=s.selected.includes(id)?s.selected.filter(x=>x!==id):[...s.selected,id];
+if(a==='add'){s.routine=[...new Set([...s.routine,...s.selected])];s.notice='✓ Added '+s.selected.length+' exercises. Keep browsing.';s.selected=[];s.review=false;}
+if(a==='review')s.review=true;if(a==='review-close')s.review=false;
+if(a==='filters'){s.filter=true;s.draftFilter={equipment:s.equipment,muscle:s.muscle};}
+if(a==='filter-cancel')s.filter=false;if(a==='filter-apply'){s.equipment=s.draftFilter.equipment;s.muscle=s.draftFilter.muscle;s.filter=false;}
+if(a==='clear-filters'){s.equipment='All';s.muscle='All';}
+if(a==='offline-saved'){s.tab='saved';s.browserState='ready';s.query='';}
+if(a==='guide')s.guide=id;if(a==='guide-close')s.guide=null;
+if(a==='complete'){const v=getSets(s)[id];if(v.weight.trim()===''||!Number.isFinite(Number(v.weight))||Number(v.weight)<0||!Number.isInteger(Number(v.reps))||Number(v.reps)<=0){s.error='Enter a weight of 0 or more and a whole number of reps above 0.';}else{v.done=true;s.rest=90;s.notice='✓ Set '+(id+1)+' completed. You can undo it.';}}
+if(a==='undo'){getSets(s)[id].done=false;s.rest=0;s.notice='Set '+(id+1)+' returned to draft.';}
+if(a==='add-set'){const last=getSets(s).at(-1);getSets(s).push({weight:last.weight,reps:last.reps,done:false});}
+if(a==='rest-more')s.rest+=30;if(a==='rest-skip')s.rest=0;
+if(a==='next'){const i=s.routine.indexOf(s.exercise);s.exercise=s.routine[(i+1)%s.routine.length];s.notice='';}
+if(a==='finish')s.screen='finish';if(a==='save-finish'){s.active=false;s.finished=true;s.rest=0;s.screen='summary';}
+render(container);persist();});
+if(globalThis.Tweak){const config=configs[mode];const tweak=new Tweak({container,onChange:()=>render(container)});tweak.addToggle(config,'showPrevious',{label:'Show previous performance'});tweak.addSelect(states[mode],'browserState',{label:'Exercise search state',options:[{label:'Results',value:'ready'},{label:'Loading',value:'loading'},{label:'Offline',value:'offline'},{label:'Rate limited',value:'limited'}]});}
+});
+window.addEventListener('openai:set_globals',e=>{const p=e.detail?.globals?.widgetState?.privateContent;if(p?.version!==1)return;root.querySelectorAll('[data-mode]').forEach(c=>{if(p.states?.[c.dataset.mode]){states[c.dataset.mode]={...fresh(),...p.states[c.dataset.mode]};render(c);}});});
+})();
+</script>
+</div>

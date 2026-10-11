@@ -1,0 +1,1057 @@
+// !$*UTF8*$!
+{
+	"classes" = {
+	};
+	"objectVersion" = "56";
+	"archiveVersion" = "1";
+	"objects" = {
+		"59E1BEE911F66DA37FEBACDC" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"DEVELOPMENT_TEAM" = "Y365GMJYQD";
+				"MARKETING_VERSION" = "1.0";
+				"INFOPLIST_FILE" = "LiftLog/Resources/Info.plist";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"ENABLE_PREVIEWS" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"CODE_SIGN_ENTITLEMENTS" = "LiftLog/Resources/LiftLog.entitlements";
+				"PRODUCT_NAME" = "LiftLog";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"SUPPORTS_MACCATALYST" = "NO";
+			};
+			"name" = "Debug";
+		};
+		"9BE77BE1582E6C109188DFF6" = {
+			"isa" = "PBXNativeTarget";
+			"name" = "GymLogWatch";
+			"productName" = "GymLogWatch";
+			"productType" = "com.apple.product-type.application";
+			"productReference" = "CD63ED82644260857ED874C0";
+			"buildConfigurationList" = "E0BF677D3104B5FB396F2B3A";
+			"buildPhases" = (
+				"7DC11FC0A7B982FDA8CA0FBC",
+				"62620FBFE5B8B85B0922C1A5",
+				"F7103446BED7F17449CB5B73",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+		};
+		"4F44A48DA5333F3CA808D663" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "705282777CE3E2CCB148D21B";
+		};
+		"0E0F3FE2FD4EF835077C715E" = {
+			"path" = "LiftLog/Views/WorkoutDock.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"8AE5B39CABF5F89A869D5EC7" = {
+			"path" = "LiftLog/Services/HealthService.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"62620FBFE5B8B85B0922C1A5" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"EBCDAA58C31179BB7B6917C6" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "90E36386322792E79321B15C";
+		};
+		"7A40DAC50FF4365BF263A1DA" = {
+			"path" = "GymLogWatch/Resources/Assets.xcassets";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "folder.assetcatalog";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"D5B39C818ECAA32CAE1D01A7" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "B642823BEA57B7EAB0E2CB14";
+		};
+		"403A053ABC0A6B43986F972E" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "ReleaseLocal";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "GymLogWatch";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog.watchkitapp";
+				"GYMLOG_COMPANION_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"DEVELOPMENT_TEAM" = "Y365GMJYQD";
+				"CODE_SIGN_ENTITLEMENTS" = "LiftLog/Resources/LocalOnly.entitlements";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "GymLogWatch/Resources/Info.plist";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"MARKETING_VERSION" = "1.0";
+				"SDKROOT" = "watchos";
+				"WATCHOS_DEPLOYMENT_TARGET" = "10.0";
+				"TARGETED_DEVICE_FAMILY" = "4";
+				"SUPPORTED_PLATFORMS" = "watchos watchsimulator";
+				"SKIP_INSTALL" = "YES";
+				"SWIFT_VERSION" = "5.0";
+				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks";
+			};
+		};
+		"B29687CEC316D569FFDD0B6B" = {
+			"path" = "LiftLog/Core/WorkoutEnhancements.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"BA8AD4854F617D930E8C1348" = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "98F54143AB4E86B28C3AFEE0";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "9BE77BE1582E6C109188DFF6";
+			"remoteInfo" = "GymLogWatch";
+		};
+		"8EC9A00BFD09B3190AC6B222" = {
+			"path" = "README.md";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "net.daringfireball.markdown";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"664098A55DD4620495171B9E" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "608A643A4413E94785CB4EE2";
+		};
+		"DE28EBBF5EDFA9F56FFC8CBF" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "DebugLocal";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "GymLogWatch";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog.watchkitapp";
+				"GYMLOG_COMPANION_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"DEVELOPMENT_TEAM" = "Y365GMJYQD";
+				"CODE_SIGN_ENTITLEMENTS" = "LiftLog/Resources/LocalOnly.entitlements";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "GymLogWatch/Resources/Info.plist";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"MARKETING_VERSION" = "1.0";
+				"SDKROOT" = "watchos";
+				"WATCHOS_DEPLOYMENT_TARGET" = "10.0";
+				"TARGETED_DEVICE_FAMILY" = "4";
+				"SUPPORTED_PLATFORMS" = "watchos watchsimulator";
+				"SKIP_INSTALL" = "YES";
+				"SWIFT_VERSION" = "5.0";
+				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks";
+			};
+		};
+		"608A643A4413E94785CB4EE2" = {
+			"path" = "GymLogWatch/WatchWorkoutManager.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"9E96F235D3F9B9388060B8AC" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "07E753CB5072AB1F6DC94EA4";
+		};
+		"BFC783409C0A557E72F2992D" = {
+			"path" = "LiftLog/Core/ExerciseLibrary.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"90E36386322792E79321B15C" = {
+			"path" = "GymLogWatch/GymLogWatchApp.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"A577DC99C24CE66EE56F505E" = {
+			"path" = "LiftLog/Core/WatchWorkout.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"8B11E4A81A597A74E3B70B77" = {
+			"path" = "LiftLog/Views/TodayView.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"3F96C87C9777CAA5A9207138" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "EC5AE56F4A1662DE0E4776EF";
+		};
+		"07E753CB5072AB1F6DC94EA4" = {
+			"path" = "LiftLog/Core/SeedData.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"F27EA44B25C1FA6C3E634B7F" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "0E0F3FE2FD4EF835077C715E";
+		};
+		"705282777CE3E2CCB148D21B" = {
+			"path" = "LiftLog/Views/ProgressScreen.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"FD9C8F54FB6A72CDDF3AD3CA" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "D0BB3DC8424B163302E5A182";
+		};
+		"64292B1C2B2E13EAD8788FC8" = {
+			"isa" = "PBXGroup";
+			"sourceTree" = "<group>";
+			"children" = (
+				"C196B5BC0C67B66A474A130F",
+				"D0BB3DC8424B163302E5A182",
+				"E0A465D4090B2F2611CAC866",
+				"0E0F3FE2FD4EF835077C715E",
+				"2BEB4B887A1779DA01ACA4D4",
+				"27BC80B8622A0BC61CAB753D",
+				"B29687CEC316D569FFDD0B6B",
+				"4F1A9279E7FD019A1F1B753E",
+				"BFC783409C0A557E72F2992D",
+				"07E753CB5072AB1F6DC94EA4",
+				"13BC3E20D6521246EDD8B68E",
+				"E8B7BA13E04FCE4A4B57667D",
+				"5416E339F25F97357984ED93",
+				"9BA59D7CFA6CAA3200731D85",
+				"C3F24642CAC407925B62E405",
+				"63EC19BFC157008CC7248494",
+				"8AE5B39CABF5F89A869D5EC7",
+				"C30D424DDA21A36EF8B864AC",
+				"CD18DCB502010F8F089D6A61",
+				"8F8AB7DBD9CB37F5B09D087C",
+				"705282777CE3E2CCB148D21B",
+				"EC4671A1F5E0712DDC0809F4",
+				"8B11E4A81A597A74E3B70B77",
+				"F881AA5989E6F7E95E5A2E5B",
+				"FC40990CAF352E42DDA5341A",
+				"17488152F08DA553C18E7495",
+				"775CB0A722CA79947CEE82B6",
+				"8EC9A00BFD09B3190AC6B222",
+				"E71CDE797A3ED0FE163C050E",
+				"FBDC4F23F93125BBEEAE800C",
+				"A577DC99C24CE66EE56F505E",
+				"C2E0C2DACE7E9EFF68BEC4F7",
+				"B642823BEA57B7EAB0E2CB14",
+				"9C9C6A88B7F3547BE24ACB7D",
+				"90E36386322792E79321B15C",
+				"608A643A4413E94785CB4EE2",
+				"8C2DD15561BCCB053B22B9C3",
+				"1F5AE7AFEBE7FC4769E81E59",
+				"7A40DAC50FF4365BF263A1DA",
+				"588667CFE8C0C55FD99FD277",
+				"EC5AE56F4A1662DE0E4776EF",
+				"DA218D9573BF22863527A3E7",
+				"BB501BE30A7DE25F323A56F5",
+			);
+		};
+		"95172A69F0EE285E4989EB3D" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "EC4671A1F5E0712DDC0809F4";
+		};
+		"BEA040BEBC8E9A637B3F30D1" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"DEVELOPMENT_TEAM" = "Y365GMJYQD";
+				"MARKETING_VERSION" = "1.0";
+				"INFOPLIST_FILE" = "LiftLog/Resources/Info.plist";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"ENABLE_PREVIEWS" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"CODE_SIGN_ENTITLEMENTS" = "LiftLog/Resources/LocalOnly.entitlements";
+				"PRODUCT_NAME" = "LiftLog";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"SUPPORTS_MACCATALYST" = "NO";
+			};
+			"name" = "DebugLocal";
+		};
+		"588667CFE8C0C55FD99FD277" = {
+			"path" = "LiftLog/Core/ExerciseCatalog.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"8F8AB7DBD9CB37F5B09D087C" = {
+			"path" = "LiftLog/Views/PlanEditor.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"A0964F2C0BE193B402176C68" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "7A40DAC50FF4365BF263A1DA";
+		};
+		"7D75E77C92549389275229BD" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "C30D424DDA21A36EF8B864AC";
+		};
+		"3DCD6556442E7E4FF7372B47" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
+				"CLANG_WARN_INFINITE_RECURSION" = "YES";
+				"SDKROOT" = "iphoneos";
+				"ENABLE_TESTABILITY" = "YES";
+				"CLANG_WARN_BOOL_CONVERSION" = "YES";
+				"CLANG_WARN_UNREACHABLE_CODE" = "YES";
+				"ENABLE_STRICT_OBJC_MSGSEND" = "YES";
+				"CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" = "YES";
+				"CLANG_WARN_STRICT_PROTOTYPES" = "YES";
+				"CLANG_WARN_ENUM_CONVERSION" = "YES";
+				"GCC_WARN_64_TO_32_BIT_CONVERSION" = "YES";
+				"CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER" = "YES";
+				"STRING_CATALOG_GENERATE_SYMBOLS" = "YES";
+				"SWIFT_VERSION" = "5.0";
+				"GCC_WARN_UNINITIALIZED_AUTOS" = "YES";
+				"CLANG_WARN_EMPTY_BODY" = "YES";
+				"GCC_WARN_ABOUT_RETURN_TYPE" = "YES";
+				"CLANG_WARN_COMMA" = "YES";
+				"GCC_WARN_UNUSED_VARIABLE" = "YES";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
+				"CLANG_WARN_RANGE_LOOP_ANALYSIS" = "YES";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"GCC_NO_COMMON_BLOCKS" = "YES";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "YES";
+				"CLANG_WARN_INT_CONVERSION" = "YES";
+				"CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" = "YES";
+				"CLANG_WARN_CONSTANT_CONVERSION" = "YES";
+				"ONLY_ACTIVE_ARCH" = "YES";
+				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
+				"GCC_WARN_UNUSED_FUNCTION" = "YES";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "$(inherited) DEBUG";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+			};
+			"name" = "DebugLocal";
+		};
+		"98F54143AB4E86B28C3AFEE0" = {
+			"buildConfigurationList" = "49EA05A46B1A86EA7E413B43";
+			"targets" = (
+				"0E8A3AD980EC179856012B7E",
+				"9BE77BE1582E6C109188DFF6",
+			);
+			"developmentRegion" = "en";
+			"knownRegions" = (
+				"en",
+				"Base",
+			);
+			"isa" = "PBXProject";
+			"compatibilityVersion" = "Xcode 14.0";
+			"productRefGroup" = "FBDC4F23F93125BBEEAE800C";
+			"projectDirPath" = "";
+			"attributes" = {
+				"LastSwiftUpdateCheck" = "1600";
+				"BuildIndependentTargetsInParallel" = "YES";
+				"LastUpgradeCheck" = "2700";
+				"TargetAttributes" = {
+					"9BE77BE1582E6C109188DFF6" = {
+						"CreatedOnToolsVersion" = "27.0";
+					};
+					"0E8A3AD980EC179856012B7E" = {
+						"CreatedOnToolsVersion" = "16.0";
+					};
+				};
+			};
+			"hasScannedForEncodings" = "0";
+			"projectRoot" = "";
+			"mainGroup" = "64292B1C2B2E13EAD8788FC8";
+		};
+		"C30D424DDA21A36EF8B864AC" = {
+			"path" = "LiftLog/Views/Components.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"F881AA5989E6F7E95E5A2E5B" = {
+			"path" = "LiftLog/Resources/Info.plist";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.plist.xml";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"FBDC4F23F93125BBEEAE800C" = {
+			"isa" = "PBXGroup";
+			"name" = "Products";
+			"children" = (
+				"38A007151ABE87CC01A5B6E9",
+				"CD63ED82644260857ED874C0",
+			);
+			"sourceTree" = "<group>";
+		};
+		"7561BFB015D8F536760CB671" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"CD63ED82644260857ED874C0" = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.application";
+			"includeInIndex" = "0";
+			"path" = "GymLogWatch.app";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"0B23F3D1308D3DAFDA22CF19" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "588667CFE8C0C55FD99FD277";
+		};
+		"E71CDE797A3ED0FE163C050E" = {
+			"path" = "SETUP.md";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "net.daringfireball.markdown";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"8B732CCB99FD51E06026DECC" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A577DC99C24CE66EE56F505E";
+		};
+		"567C1F3B1C23B3EB35568C9F" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "9BA59D7CFA6CAA3200731D85";
+		};
+		"C08401B376DBB968C10921D2" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A577DC99C24CE66EE56F505E";
+		};
+		"0E8A3AD980EC179856012B7E" = {
+			"productType" = "com.apple.product-type.application";
+			"productReference" = "38A007151ABE87CC01A5B6E9";
+			"buildConfigurationList" = "F497FD0CF9CA1625C4A860DE";
+			"productName" = "LiftLog";
+			"isa" = "PBXNativeTarget";
+			"buildPhases" = (
+				"BCE16DD0260827ECF338C787",
+				"7561BFB015D8F536760CB671",
+				"0189424A5A60FED329FA868E",
+				"5843027A7397BD5904988DEE",
+			);
+			"dependencies" = (
+				"5F32708B868A36D44BF2E86A",
+			);
+			"name" = "LiftLog";
+			"buildRules" = (
+			);
+		};
+		"B642823BEA57B7EAB0E2CB14" = {
+			"path" = "LiftLog/Services/WatchWorkoutService.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"8DB1838B48A37CC1645B5C4A" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "13BC3E20D6521246EDD8B68E";
+		};
+		"51395D337E3A1703F7D148E2" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "C2E0C2DACE7E9EFF68BEC4F7";
+		};
+		"AB52CB08E0FDF02BF6C67C33" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
+				"CLANG_WARN_INFINITE_RECURSION" = "YES";
+				"SDKROOT" = "iphoneos";
+				"ENABLE_TESTABILITY" = "YES";
+				"CLANG_WARN_BOOL_CONVERSION" = "YES";
+				"CLANG_WARN_UNREACHABLE_CODE" = "YES";
+				"ENABLE_STRICT_OBJC_MSGSEND" = "YES";
+				"CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" = "YES";
+				"CLANG_WARN_STRICT_PROTOTYPES" = "YES";
+				"CLANG_WARN_ENUM_CONVERSION" = "YES";
+				"GCC_WARN_64_TO_32_BIT_CONVERSION" = "YES";
+				"CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER" = "YES";
+				"STRING_CATALOG_GENERATE_SYMBOLS" = "YES";
+				"SWIFT_VERSION" = "5.0";
+				"GCC_WARN_UNINITIALIZED_AUTOS" = "YES";
+				"CLANG_WARN_EMPTY_BODY" = "YES";
+				"GCC_WARN_ABOUT_RETURN_TYPE" = "YES";
+				"CLANG_WARN_COMMA" = "YES";
+				"GCC_WARN_UNUSED_VARIABLE" = "YES";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
+				"CLANG_WARN_RANGE_LOOP_ANALYSIS" = "YES";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"GCC_NO_COMMON_BLOCKS" = "YES";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "YES";
+				"CLANG_WARN_INT_CONVERSION" = "YES";
+				"CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" = "YES";
+				"CLANG_WARN_CONSTANT_CONVERSION" = "YES";
+				"ONLY_ACTIVE_ARCH" = "YES";
+				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
+				"GCC_WARN_UNUSED_FUNCTION" = "YES";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "$(inherited) DEBUG HEALTHKIT_ENABLED";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+			};
+			"name" = "Debug";
+		};
+		"FE003756B644C34A8834B299" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "C196B5BC0C67B66A474A130F";
+		};
+		"E8B7BA13E04FCE4A4B57667D" = {
+			"path" = "LiftLog/Core/WorkoutTypes.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"5600A06F351FD37526CA21F3" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "27BC80B8622A0BC61CAB753D";
+		};
+		"D1EBDB082BBDB334F2731CC7" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "2BEB4B887A1779DA01ACA4D4";
+		};
+		"5620BF03CC84019874A3D4EC" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "E0A465D4090B2F2611CAC866";
+		};
+		"8C2DD15561BCCB053B22B9C3" = {
+			"path" = "GymLogWatch/Resources/Info.plist";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.plist.xml";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"3459BE47E11AFC8B6537A92E" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "4F1A9279E7FD019A1F1B753E";
+		};
+		"2BEB4B887A1779DA01ACA4D4" = {
+			"path" = "LiftLog/Views/HealthStatusView.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"13BC3E20D6521246EDD8B68E" = {
+			"path" = "LiftLog/Core/WorkoutLogic.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"17488152F08DA553C18E7495" = {
+			"path" = "LiftLog/Resources/LiftLog.entitlements";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.plist.entitlements";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"D0BB3DC8424B163302E5A182" = {
+			"path" = "LiftLog/Services/RestNotifications.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"27BC80B8622A0BC61CAB753D" = {
+			"path" = "LiftLog/Views/ExerciseGuideView.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"CED8FD1462834F5C886A9F8D" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "B29687CEC316D569FFDD0B6B";
+		};
+		"E0BF677D3104B5FB396F2B3A" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"9ED0B0D595BF72F921E31A5C",
+				"A812E5A546A2865355FFE8E2",
+				"DE28EBBF5EDFA9F56FFC8CBF",
+				"403A053ABC0A6B43986F972E",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		"EC4C255C813F47BDD12ACF1E" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "FC40990CAF352E42DDA5341A";
+		};
+		"5416E339F25F97357984ED93" = {
+			"path" = "LiftLog/LiftLogApp.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"0189424A5A60FED329FA868E" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"EC4C255C813F47BDD12ACF1E",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"A812E5A546A2865355FFE8E2" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Release";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "GymLogWatch";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog.watchkitapp";
+				"GYMLOG_COMPANION_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"DEVELOPMENT_TEAM" = "Y365GMJYQD";
+				"CODE_SIGN_ENTITLEMENTS" = "GymLogWatch/Resources/GymLogWatch.entitlements";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "GymLogWatch/Resources/Info.plist";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"MARKETING_VERSION" = "1.0";
+				"SDKROOT" = "watchos";
+				"WATCHOS_DEPLOYMENT_TARGET" = "10.0";
+				"TARGETED_DEVICE_FAMILY" = "4";
+				"SUPPORTED_PLATFORMS" = "watchos watchsimulator";
+				"SKIP_INSTALL" = "YES";
+				"SWIFT_VERSION" = "5.0";
+				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks";
+			};
+		};
+		"222D87C61C8E033A301D3401" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "DA218D9573BF22863527A3E7";
+		};
+		"7DC11FC0A7B982FDA8CA0FBC" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"EBCDAA58C31179BB7B6917C6",
+				"664098A55DD4620495171B9E",
+				"8B732CCB99FD51E06026DECC",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"C3F24642CAC407925B62E405" = {
+			"path" = "LiftLog/Services/AppStore.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"4F1A9279E7FD019A1F1B753E" = {
+			"path" = "LiftLog/Core/ExerciseGuide.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"27B73C2A691A3CA7AB2129BA" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "8B11E4A81A597A74E3B70B77";
+		};
+		"1ABAFCD55E2802D25E6B9B92" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "9C9C6A88B7F3547BE24ACB7D";
+		};
+		"9ED0B0D595BF72F921E31A5C" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Debug";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "GymLogWatch";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog.watchkitapp";
+				"GYMLOG_COMPANION_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"DEVELOPMENT_TEAM" = "Y365GMJYQD";
+				"CODE_SIGN_ENTITLEMENTS" = "GymLogWatch/Resources/GymLogWatch.entitlements";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "GymLogWatch/Resources/Info.plist";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"MARKETING_VERSION" = "1.0";
+				"SDKROOT" = "watchos";
+				"WATCHOS_DEPLOYMENT_TARGET" = "10.0";
+				"TARGETED_DEVICE_FAMILY" = "4";
+				"SUPPORTED_PLATFORMS" = "watchos watchsimulator";
+				"SKIP_INSTALL" = "YES";
+				"SWIFT_VERSION" = "5.0";
+				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks";
+			};
+		};
+		"F9B95CEB929203BFB7699B9A" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "C3F24642CAC407925B62E405";
+		};
+		"9C9C6A88B7F3547BE24ACB7D" = {
+			"path" = "LiftLog/Views/WatchWorkoutCard.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"9BA59D7CFA6CAA3200731D85" = {
+			"path" = "LiftLog/Models/Persistence.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"5843027A7397BD5904988DEE" = {
+			"isa" = "PBXCopyFilesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"dstPath" = "$(CONTENTS_FOLDER_PATH)/Watch";
+			"dstSubfolderSpec" = "16";
+			"files" = (
+				"2D1B0FBB2322E217AD6AF562",
+			);
+			"name" = "Embed Watch Content";
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"F4C425279CD5DDD18FD6DC6D" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"DEVELOPMENT_TEAM" = "Y365GMJYQD";
+				"MARKETING_VERSION" = "1.0";
+				"INFOPLIST_FILE" = "LiftLog/Resources/Info.plist";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"ENABLE_PREVIEWS" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"CODE_SIGN_ENTITLEMENTS" = "LiftLog/Resources/LiftLog.entitlements";
+				"PRODUCT_NAME" = "LiftLog";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"SUPPORTS_MACCATALYST" = "NO";
+			};
+			"name" = "Release";
+		};
+		"F7103446BED7F17449CB5B73" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"A0964F2C0BE193B402176C68",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"C2E0C2DACE7E9EFF68BEC4F7" = {
+			"path" = "LiftLog/Core/WatchWorkoutLogic.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"EC4671A1F5E0712DDC0809F4" = {
+			"path" = "LiftLog/Views/SettingsView.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"49EA05A46B1A86EA7E413B43" = {
+			"isa" = "XCConfigurationList";
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+			"buildConfigurations" = (
+				"AB52CB08E0FDF02BF6C67C33",
+				"5283471FF90C511CFE244FFF",
+				"3DCD6556442E7E4FF7372B47",
+				"A69F0BE2B7B0A7518FEAF464",
+			);
+		};
+		"FC40990CAF352E42DDA5341A" = {
+			"path" = "LiftLog/Resources/Assets.xcassets";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "folder.assetcatalog";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"38A007151ABE87CC01A5B6E9" = {
+			"path" = "LiftLog.app";
+			"isa" = "PBXFileReference";
+			"includeInIndex" = "0";
+			"explicitFileType" = "wrapper.application";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"5C4C9EF89C1E77B597DDCB54" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "5416E339F25F97357984ED93";
+		};
+		"28881E8C3FA2EB662BB4BA4D" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "63EC19BFC157008CC7248494";
+		};
+		"015C9549E46657B66988FD22" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "8F8AB7DBD9CB37F5B09D087C";
+		};
+		"63EC19BFC157008CC7248494" = {
+			"path" = "LiftLog/Services/BackupDocument.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"A69F0BE2B7B0A7518FEAF464" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
+				"SWIFT_COMPILATION_MODE" = "wholemodule";
+				"CLANG_WARN_INFINITE_RECURSION" = "YES";
+				"SDKROOT" = "iphoneos";
+				"ENABLE_TESTABILITY" = "NO";
+				"CLANG_WARN_BOOL_CONVERSION" = "YES";
+				"CLANG_WARN_UNREACHABLE_CODE" = "YES";
+				"ENABLE_STRICT_OBJC_MSGSEND" = "YES";
+				"CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" = "YES";
+				"CLANG_WARN_STRICT_PROTOTYPES" = "YES";
+				"CLANG_WARN_ENUM_CONVERSION" = "YES";
+				"GCC_WARN_64_TO_32_BIT_CONVERSION" = "YES";
+				"CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER" = "YES";
+				"STRING_CATALOG_GENERATE_SYMBOLS" = "YES";
+				"SWIFT_VERSION" = "5.0";
+				"GCC_WARN_UNINITIALIZED_AUTOS" = "YES";
+				"CLANG_WARN_EMPTY_BODY" = "YES";
+				"GCC_WARN_ABOUT_RETURN_TYPE" = "YES";
+				"CLANG_WARN_COMMA" = "YES";
+				"GCC_WARN_UNUSED_VARIABLE" = "YES";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
+				"CLANG_WARN_RANGE_LOOP_ANALYSIS" = "YES";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"GCC_NO_COMMON_BLOCKS" = "YES";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "YES";
+				"CLANG_WARN_INT_CONVERSION" = "YES";
+				"CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" = "YES";
+				"CLANG_WARN_CONSTANT_CONVERSION" = "YES";
+				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
+				"GCC_WARN_UNUSED_FUNCTION" = "YES";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "$(inherited)";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+			};
+			"name" = "ReleaseLocal";
+		};
+		"A5747A043A1076FC7EE9B5DF" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "E8B7BA13E04FCE4A4B57667D";
+		};
+		"F497FD0CF9CA1625C4A860DE" = {
+			"isa" = "XCConfigurationList";
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+			"buildConfigurations" = (
+				"59E1BEE911F66DA37FEBACDC",
+				"F4C425279CD5DDD18FD6DC6D",
+				"BEA040BEBC8E9A637B3F30D1",
+				"5B29177856CF693AA1A9E440",
+			);
+		};
+		"C196B5BC0C67B66A474A130F" = {
+			"path" = "LiftLog/Views/TrainingToolsViews.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"5F32708B868A36D44BF2E86A" = {
+			"isa" = "PBXTargetDependency";
+			"target" = "9BE77BE1582E6C109188DFF6";
+			"targetProxy" = "BA8AD4854F617D930E8C1348";
+		};
+		"2D1B0FBB2322E217AD6AF562" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "CD63ED82644260857ED874C0";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		"DB2C2CEF23642AE176D9ADDA" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "BFC783409C0A557E72F2992D";
+		};
+		"3A6B3199DE3061841606D144" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "8AE5B39CABF5F89A869D5EC7";
+		};
+		"5283471FF90C511CFE244FFF" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
+				"SWIFT_COMPILATION_MODE" = "wholemodule";
+				"CLANG_WARN_INFINITE_RECURSION" = "YES";
+				"SDKROOT" = "iphoneos";
+				"ENABLE_TESTABILITY" = "NO";
+				"CLANG_WARN_BOOL_CONVERSION" = "YES";
+				"CLANG_WARN_UNREACHABLE_CODE" = "YES";
+				"ENABLE_STRICT_OBJC_MSGSEND" = "YES";
+				"CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" = "YES";
+				"CLANG_WARN_STRICT_PROTOTYPES" = "YES";
+				"CLANG_WARN_ENUM_CONVERSION" = "YES";
+				"GCC_WARN_64_TO_32_BIT_CONVERSION" = "YES";
+				"CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER" = "YES";
+				"STRING_CATALOG_GENERATE_SYMBOLS" = "YES";
+				"SWIFT_VERSION" = "5.0";
+				"GCC_WARN_UNINITIALIZED_AUTOS" = "YES";
+				"CLANG_WARN_EMPTY_BODY" = "YES";
+				"GCC_WARN_ABOUT_RETURN_TYPE" = "YES";
+				"CLANG_WARN_COMMA" = "YES";
+				"GCC_WARN_UNUSED_VARIABLE" = "YES";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
+				"CLANG_WARN_RANGE_LOOP_ANALYSIS" = "YES";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"GCC_NO_COMMON_BLOCKS" = "YES";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "YES";
+				"CLANG_WARN_INT_CONVERSION" = "YES";
+				"CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" = "YES";
+				"CLANG_WARN_CONSTANT_CONVERSION" = "YES";
+				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
+				"GCC_WARN_UNUSED_FUNCTION" = "YES";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "$(inherited) HEALTHKIT_ENABLED";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+			};
+			"name" = "Release";
+		};
+		"775CB0A722CA79947CEE82B6" = {
+			"path" = "LiftLog/Resources/LocalOnly.entitlements";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.plist.entitlements";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"1F5AE7AFEBE7FC4769E81E59" = {
+			"path" = "GymLogWatch/Resources/GymLogWatch.entitlements";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.plist.xml";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"E0A465D4090B2F2611CAC866" = {
+			"path" = "LiftLog/Core/TrainingTools.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"EC5AE56F4A1662DE0E4776EF" = {
+			"path" = "LiftLog/Views/ExerciseCatalogView.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"DA218D9573BF22863527A3E7" = {
+			"path" = "LiftLog/Core/ExerciseAnimation.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"5B29177856CF693AA1A9E440" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"DEVELOPMENT_TEAM" = "Y365GMJYQD";
+				"MARKETING_VERSION" = "1.0";
+				"INFOPLIST_FILE" = "LiftLog/Resources/Info.plist";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"ENABLE_PREVIEWS" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"CODE_SIGN_ENTITLEMENTS" = "LiftLog/Resources/LocalOnly.entitlements";
+				"PRODUCT_NAME" = "LiftLog";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.sandeep.gymlog";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"SUPPORTS_MACCATALYST" = "NO";
+			};
+			"name" = "ReleaseLocal";
+		};
+		"BCE16DD0260827ECF338C787" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"FE003756B644C34A8834B299",
+				"FD9C8F54FB6A72CDDF3AD3CA",
+				"5620BF03CC84019874A3D4EC",
+				"F27EA44B25C1FA6C3E634B7F",
+				"D1EBDB082BBDB334F2731CC7",
+				"5600A06F351FD37526CA21F3",
+				"CED8FD1462834F5C886A9F8D",
+				"3459BE47E11AFC8B6537A92E",
+				"DB2C2CEF23642AE176D9ADDA",
+				"9E96F235D3F9B9388060B8AC",
+				"8DB1838B48A37CC1645B5C4A",
+				"A5747A043A1076FC7EE9B5DF",
+				"5C4C9EF89C1E77B597DDCB54",
+				"567C1F3B1C23B3EB35568C9F",
+				"F9B95CEB929203BFB7699B9A",
+				"28881E8C3FA2EB662BB4BA4D",
+				"3A6B3199DE3061841606D144",
+				"7D75E77C92549389275229BD",
+				"F53985AB2725C2E8F73F1ABE",
+				"015C9549E46657B66988FD22",
+				"4F44A48DA5333F3CA808D663",
+				"95172A69F0EE285E4989EB3D",
+				"27B73C2A691A3CA7AB2129BA",
+				"C08401B376DBB968C10921D2",
+				"51395D337E3A1703F7D148E2",
+				"D5B39C818ECAA32CAE1D01A7",
+				"1ABAFCD55E2802D25E6B9B92",
+				"0B23F3D1308D3DAFDA22CF19",
+				"3F96C87C9777CAA5A9207138",
+				"222D87C61C8E033A301D3401",
+				"DEABAE2A71826972D67872EC",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"F53985AB2725C2E8F73F1ABE" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "CD18DCB502010F8F089D6A61";
+		};
+		"CD18DCB502010F8F089D6A61" = {
+			"path" = "LiftLog/Views/HistoryView.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"BB501BE30A7DE25F323A56F5" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "LiftLog/Core/ExerciseSearch.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"DEABAE2A71826972D67872EC" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "BB501BE30A7DE25F323A56F5";
+		};
+	};
+	"rootObject" = "98F54143AB4E86B28C3AFEE0";
+}

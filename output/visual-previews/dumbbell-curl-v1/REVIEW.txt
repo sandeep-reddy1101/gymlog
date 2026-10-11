@@ -1,0 +1,13 @@
+Gym Log — dumbbell curl motion study, October 5, 2026
+
+Approved: visual direction of approved-style.png (realistic fitness illustration, subtle shading, coral accents).
+Pending review: motion preview and any app integration.
+
+motion-poses.png: twelve generated intermediate poses in a 4 by 3 sheet.
+frames/: the twelve individual poses extracted from that sheet.
+curl-motion-preview.gif: repeating preview.
+curl-motion-preview.mp4: one 4.88-second cycle, 540 by 960 pixels.
+
+The cycle uses 12 distinct illustrated poses, sequenced up and back down (24 placements), endpoint holds and a slower lowering phase. The MP4 is encoded at 25 fps with repeated frames; this is not 25 distinct generated poses per second or a continuous captured video. No optical-flow interpolation was applied. It is a motion-style experiment, not a reviewed final exercise demonstration. Character/equipment consistency and form should be checked before release.
+
+Source sheet inspected visually for progression and complete figure framing. Both media files encoded successfully. MP4 reports 122 encoded frames and a 4.88-second duration. Head and shoe vertical bounds across extracted frames vary by no more than 2 pixels in the 540 by 960 previews. No app sources, project references, or bundled assets were changed.

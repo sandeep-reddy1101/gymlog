@@ -1,0 +1,171 @@
+<div id="gym-log-directions">
+<style>
+#gym-log-directions{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color-scheme:light dark}
+#gym-log-directions .gd-stage{padding:28px 8px 36px;min-height:1010px;box-sizing:border-box}
+#gym-log-directions .gd-preview{max-width:408px;margin:auto}
+#gym-log-directions .gd-review{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;color:light-dark(#4d5360,#c0c5ce);font-size:11px;letter-spacing:1.3px}
+#gym-log-directions .gd-review select{font:inherit;letter-spacing:0;color:inherit;background:light-dark(#f4f5f8,#20242b);padding:10px;border:0;border-radius:8px;min-height:44px;max-width:170px}
+#gym-log-directions .gd-app{--bg:light-dark(#f1f3f8,#10151f);--panel:light-dark(#e3e8f2,#1d2738);--ink:light-dark(#101b30,#edf2ff);--muted:light-dark(#515e72,#b0bed4);--rule:light-dark(#c6ccda,#354056);--accent:light-dark(#234bdb,#9bb8ff);--on-accent:light-dark(#fff,#101b30);--ok:light-dark(#176344,#a5dbc2);--error:light-dark(#ae253d,#ffadb9);--special:light-dark(#dce6ff,#273c65);background:var(--bg);color:var(--ink);min-height:850px;border-radius:32px;box-shadow:0 18px 54px #00000016;display:flex;flex-direction:column;overflow-wrap:anywhere;font-size:15px;line-height:1.45}
+#gym-log-directions [data-design="studio"] .gd-app{--bg:light-dark(#f5f2e9,#1c211b);--panel:light-dark(#e7e5d9,#2b3328);--ink:light-dark(#283529,#f1f3e6);--muted:light-dark(#5c6658,#b9c3ae);--rule:light-dark(#c8ccbc,#475140);--accent:light-dark(#354c27,#d6ef81);--on-accent:light-dark(#f6f8ed,#26331c);--ok:light-dark(#2e6241,#b3d4b4);--error:light-dark(#a62331,#ffb0b4);--special:light-dark(#e1edbb,#3a4629)}
+#gym-log-directions .gd-safe{padding:18px 24px 8px;display:flex;justify-content:space-between;font-size:11px;font-weight:650;letter-spacing:.6px}
+#gym-log-directions .gd-header{padding:12px 24px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+#gym-log-directions .gd-wordmark{font-size:19px;letter-spacing:-1px;font-weight:800}
+#gym-log-directions .gd-wordmark span{color:var(--accent)}
+#gym-log-directions .gd-content{padding:22px 24px;flex:1}
+#gym-log-directions .gd-eyebrow{font-family:ui-monospace,SFMono-Regular,monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted)}
+#gym-log-directions .gd-app h1{font-size:57px;line-height:1.02;font-weight:650;letter-spacing:-3px;margin:14px 0 24px}
+#gym-log-directions .gd-app h2{font-size:25px;line-height:1.15;letter-spacing:-.8px;font-weight:600;margin:12px 0}
+#gym-log-directions .gd-app h3{font-size:16px;font-weight:650;letter-spacing:-.3px;margin:20px 0 12px}
+#gym-log-directions .gd-app p{margin:8px 0 14px}
+#gym-log-directions .gd-muted{font-size:13px;color:var(--muted)}
+#gym-log-directions .gd-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+#gym-log-directions .gd-button{font:inherit;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;min-width:44px;padding:10px 14px;border:0;border-radius:100px;background:var(--panel);color:var(--ink);font-size:13px;font-weight:600;text-align:center;box-sizing:border-box}
+#gym-log-directions .gd-button:disabled{opacity:.45;cursor:default}
+#gym-log-directions .gd-main{background:var(--accent);color:var(--on-accent);min-height:58px;font-size:15px}
+#gym-log-directions .gd-wide{width:100%}
+#gym-log-directions .gd-plain{background:transparent;padding:9px 0}
+#gym-log-directions .gd-square{border-radius:15px}
+#gym-log-directions .gd-circle{padding:10px;border-radius:50%;width:46px}
+#gym-log-directions .gd-line{height:1px;background:var(--rule);margin:18px 0}
+#gym-log-directions .gd-lead{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:24px}
+#gym-log-directions .gd-count{font-size:82px;line-height:.9;letter-spacing:-5px;font-weight:350;font-variant-numeric:tabular-nums}
+#gym-log-directions .gd-countlabel{text-align:right;max-width:100px}
+#gym-log-directions .gd-index{font:12px ui-monospace,SFMono-Regular,monospace;color:var(--muted);min-width:22px}
+#gym-log-directions .gd-exrow{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:8px;padding:18px 0;align-items:center;border-bottom:1px solid var(--rule)}
+#gym-log-directions button.gd-exrow{font:inherit;background:transparent;color:var(--ink);border-top:0;border-left:0;border-right:0;width:100%;text-align:left;border-radius:0;min-height:74px}
+#gym-log-directions .gd-exname{font-size:15px;font-weight:550;letter-spacing:-.2px}
+#gym-log-directions .gd-nav{display:flex;justify-content:space-around;padding:12px 12px 22px;gap:6px}
+#gym-log-directions .gd-nav button{background:transparent;flex:1;gap:7px;font-size:12px;padding:11px 8px}
+#gym-log-directions .gd-nav .gd-selected{background:var(--ink);color:var(--bg)}
+#gym-log-directions .gd-foot{padding:0 24px 20px}
+#gym-log-directions .gd-pill{display:inline-flex;align-items:center;gap:7px;background:var(--panel);padding:8px 12px;border-radius:100px;font-size:11px;color:var(--muted)}
+#gym-log-directions .gd-summaryline{display:flex;align-items:center;gap:18px;margin:18px 0;color:var(--muted);font-size:12px}
+#gym-log-directions .gd-summaryline strong{color:var(--ink);font-size:16px}
+#gym-log-directions .gd-app label{display:block;color:var(--muted);font-size:12px;margin:12px 0 6px}
+#gym-log-directions .gd-app input,#gym-log-directions .gd-app select{font:inherit;font-size:16px;min-height:48px;min-width:0;width:100%;box-sizing:border-box;background:var(--panel);color:var(--ink);border:0;border-radius:14px;padding:12px}
+#gym-log-directions .gd-app input::placeholder{color:var(--muted);opacity:1}
+#gym-log-directions .gd-app .gd-search{border-radius:100px;padding:16px 19px}
+#gym-log-directions .gd-filters{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 20px}
+#gym-log-directions .gd-filters .gd-button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+#gym-log-directions .gd-filters .gd-button{font-size:12px}
+#gym-log-directions .gd-loghead{display:flex;align-items:center;justify-content:space-between;margin:14px 0 24px;gap:8px}
+#gym-log-directions .gd-logtitle{font-size:39px!important;line-height:1.08!important;letter-spacing:-1.9px!important;margin:16px 0!important}
+#gym-log-directions .gd-entry{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:30px 0 20px}
+#gym-log-directions .gd-entry label{text-transform:uppercase;letter-spacing:1.3px;font:11px ui-monospace,SFMono-Regular,monospace}
+#gym-log-directions .gd-entry input{background:transparent!important;border-radius:0!important;padding:8px 0!important;font-size:70px!important;letter-spacing:-4px;font-weight:450;line-height:1;width:100%;font-variant-numeric:tabular-nums;appearance:textfield;min-height:94px}
+#gym-log-directions .gd-entry input::-webkit-inner-spin-button{appearance:none}
+#gym-log-directions .gd-stepper{display:flex;gap:8px}
+#gym-log-directions .gd-stepper button{flex:1;min-height:44px;font-size:19px}
+#gym-log-directions .gd-previous{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;margin:18px 0}
+#gym-log-directions .gd-previous strong{color:var(--ink);font-weight:500}
+#gym-log-directions .gd-completed{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;font-size:13px}
+#gym-log-directions .gd-completed .gd-button{font-size:12px}
+#gym-log-directions .gd-status{font-size:12px;min-height:18px;margin:8px 0;color:var(--muted)}
+#gym-log-directions .gd-rest{background:var(--special);border-radius:22px;padding:17px;margin:14px 0}
+#gym-log-directions .gd-rest strong{font-size:23px;font-variant-numeric:tabular-nums;font-weight:500}
+#gym-log-directions .gd-rest .gd-button{background:var(--bg)}
+#gym-log-directions .gd-alert{color:var(--error);font-size:13px}
+#gym-log-directions .gd-days{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+#gym-log-directions .gd-days [aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
+#gym-log-directions .gd-result{padding:16px 0;border-bottom:1px solid var(--rule)}
+#gym-log-directions .gd-result-title{font-size:17px;letter-spacing:-.5px;font-weight:550}
+#gym-log-directions .gd-stat{font-size:45px;font-weight:450;line-height:1.1;letter-spacing:-2px}
+#gym-log-directions .gd-two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:25px 0}
+#gym-log-directions .gd-chart{height:155px;display:flex;align-items:flex-end;gap:18px;margin:25px 0 8px}
+#gym-log-directions .gd-barcol{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;flex:1;height:100%;font-size:11px;color:var(--muted)}
+#gym-log-directions .gd-bar{background:var(--accent);width:100%;max-width:36px;border-radius:8px}
+#gym-log-directions .gd-modal-title{font-size:37px!important;letter-spacing:-1.5px!important}
+#gym-log-directions .gd-tile{background:var(--panel);padding:24px;border-radius:26px;margin:22px 0}
+#gym-log-directions [data-design="studio"] .gd-app h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:51px;letter-spacing:-2.4px;line-height:1.05}
+#gym-log-directions [data-design="studio"] .gd-wordmark{font-family:Georgia,serif;font-weight:500;font-size:22px;letter-spacing:-1px}
+#gym-log-directions [data-design="studio"] .gd-studiohero{background:var(--ink);color:var(--bg);border-radius:26px;padding:25px;margin-top:22px}
+#gym-log-directions [data-design="studio"] .gd-studiohero .gd-muted{color:var(--bg)}
+#gym-log-directions [data-design="studio"] .gd-studiohero .gd-button{background:var(--bg);color:var(--ink);margin-top:15px}
+#gym-log-directions [data-design="studio"] .gd-entry{background:var(--panel);border-radius:24px;padding:20px;gap:18px;margin:24px 0 16px}
+#gym-log-directions [data-design="studio"] .gd-entry input{font-size:56px!important;min-height:80px}
+#gym-log-directions [data-design="studio"] .gd-stepper button{background:var(--bg)}
+#gym-log-directions [data-design="studio"] .gd-logtitle{font-family:Georgia,serif;font-weight:400;font-size:36px!important;letter-spacing:-1px!important}
+#gym-log-directions .gd-timeline{display:flex;gap:8px;margin:23px 0;align-items:center;flex-wrap:wrap}
+#gym-log-directions .gd-timeline button{border-radius:50%;background:var(--panel);min-width:46px}
+#gym-log-directions .gd-timeline button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
+@media(max-width:365px){#gym-log-directions .gd-stage{padding:22px 0 30px;min-height:1110px}#gym-log-directions .gd-content{padding:20px 18px}#gym-log-directions .gd-header{padding:12px 18px 0}#gym-log-directions .gd-foot{padding:0 18px 18px}#gym-log-directions .gd-app h1{font-size:49px}#gym-log-directions .gd-entry{gap:14px}#gym-log-directions .gd-entry input{font-size:60px!important}#gym-log-directions [data-design="studio"] .gd-entry{padding:14px;gap:12px}#gym-log-directions [data-design="studio"] .gd-entry input{font-size:48px!important}#gym-log-directions .gd-nav button{font-size:11px;padding:11px 5px}}
+</style>
+<div class="viz-carousel viz-dotted-background" aria-label="Fresh Gym Log design directions">
+<section data-variant="Velocity" class="gd-stage"><div class="gd-preview" data-design="velocity" aria-label="Velocity — ink and electric blue"></div></section>
+<section data-variant="Studio" class="gd-stage" hidden><div class="gd-preview" data-design="studio" aria-label="Studio — stone and olive"></div></section>
+</div>
+<script>
+(()=>{
+const root=document.getElementById('gym-log-directions');
+const exercises=[{id:1,name:'Dumbbell bench press',equipment:'Dumbbell',muscle:'Chest'},{id:2,name:'Lat pulldown',equipment:'Cable',muscle:'Back'},{id:3,name:'Dumbbell shoulder press',equipment:'Dumbbell',muscle:'Shoulders'},{id:4,name:'Dumbbell one-arm row',equipment:'Dumbbell',muscle:'Back'},{id:5,name:'Dumbbell bent-over row',equipment:'Dumbbell',muscle:'Back'},{id:6,name:'Dumbbell incline row',equipment:'Dumbbell',muscle:'Back'},{id:7,name:'Dumbbell biceps curl',equipment:'Dumbbell',muscle:'Arms'}];
+const screenNames={train:'Train',plan:'Your plan',search:'Find exercises',workout:'Workout',progress:'Progress',summary:'Summary',profile:'Watch & settings'};
+const fresh=()=>({screen:'train',name:'Upper body',routine:[1,2,3],days:[0,3],active:false,exercise:1,weight:'30',reps:'10',logged:[],query:'',filter:'All',selected:[],rest:0,notice:'',error:'',finished:false,detail:0});
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const state={},options={};const saved=window.openai?.widgetState?.privateContent;
+function persist(){if(window.openai?.setWidgetState)window.openai.setWidgetState({modelContent:{proposal:'Fresh Gym Log directions',concepts:['Velocity: ink / blue','Studio: stone / olive'],screens:Object.fromEntries(Object.entries(state).map(([k,v])=>[k,v.screen]))},privateContent:{version:2,state}}).catch(()=>{});}
+const icon=name=>`<i data-lucide="${name}" aria-hidden="true"></i>`;
+const btn=(text,action,attrs='',classes='')=>`<button type="button" class="gd-button cursor-interaction ${classes}" data-act="${action}" ${attrs}>${text}</button>`;
+const lookup=id=>exercises.find(x=>x.id===id);
+function matches(s){const words=s.query.toLowerCase().replace(/\bdb\b/g,'dumbbell').replace(/rows\b/g,'row').split(/[^a-z0-9]+/).filter(Boolean);return exercises.filter(e=>words.every(w=>e.name.toLowerCase().includes(w))&&(s.filter==='All'||e.equipment===s.filter));}
+function results(s){const list=matches(s);return `<div class="gd-eyebrow">${list.length} MATCHES · SAMPLE CATALOG</div>${list.map(e=>`<div class="gd-result"><div class="gd-result-title">${esc(e.name)}</div><div class="gd-muted">${e.equipment} · ${e.muscle}</div><div class="gd-row" style="margin-top:8px">${btn('View exercise','detail',`data-id="${e.id}"`,'gd-plain')}${btn(s.routine.includes(e.id)?'✓ Added':s.selected.includes(e.id)?'✓ Selected':'+ Select','select',`data-id="${e.id}" ${s.routine.includes(e.id)?'disabled':''} aria-pressed="${s.selected.includes(e.id)}"`,s.selected.includes(e.id)?'gd-main':'')}</div></div>`).join('')}${!list.length?'<h2>No matches yet.</h2><p class="gd-muted">Try a shorter name or choose All equipment.</p>':''}`;}
+function render(c){const design=c.dataset.design,s=state[design],studio=design==='studio';let body='',foot='',nav=false;const current=lookup(s.exercise),done=s.logged.filter(x=>x.exercise===s.exercise),n=done.length+1;
+if(s.screen==='train'){
+nav=true;body=`<div class="gd-eyebrow">SATURDAY, OCTOBER 10</div>`;
+if(studio)body+=`<h1>A little stronger.<br>Every session.</h1><div class="gd-row"><span class="gd-muted">Your week</span><span class="gd-pill">3 sessions · sample</span></div><div class="gd-studiohero"><div style="font-size:11px;letter-spacing:1.5px">${s.active?'IN PROGRESS':'READY WHEN YOU ARE'}</div><h2 style="font-family:Georgia,serif;font-size:37px;font-weight:400">${esc(s.name)}</h2><div class="gd-muted">${s.routine.length} exercises · your personal plan</div>${btn(s.active?'Continue session '+icon('arrow-up-right'):'Begin session '+icon('arrow-up-right'),'start','','gd-wide')}</div><h3>Your movement menu</h3>`;
+else body+=`<h1>${s.active?'Back to<br>your session.':'Today,<br>get stronger.'}</h1><div class="gd-lead"><div><div class="gd-eyebrow">${s.active?'IN PROGRESS':'YOUR NEXT SESSION'}</div><h2>${esc(s.name)}</h2><span class="gd-muted">${s.days.map(i=>['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i]).join(' · ')||'On your schedule'}</span></div><div class="gd-countlabel"><div class="gd-count">${String(s.routine.length).padStart(2,'0')}</div><span class="gd-eyebrow">EXERCISES</span></div></div>${btn((s.active?'Resume session':'Start session')+icon('arrow-up-right'),'start','','gd-main gd-wide')}<div class="gd-row" style="margin-top:22px"><span class="gd-eyebrow">THE LINEUP</span>${btn('Edit plan '+icon('arrow-right'),'nav','data-screen="plan"','gd-plain')}</div>`;
+body+=s.routine.slice(0,3).map((id,i)=>`<button type="button" class="gd-exrow cursor-interaction" data-act="detail" data-id="${id}"><span class="gd-index">0${i+1}</span><span><span class="gd-exname" style="display:block">${esc(lookup(id).name)}</span><span class="gd-muted">3 sets · ${lookup(id).muscle}</span></span>${icon('arrow-up-right')}</button>`).join('');
+if(studio)body+=btn('Make this plan yours '+icon('arrow-right'),'nav','data-screen="plan"','gd-plain gd-wide');
+}else if(s.screen==='plan'){
+body=`<div class="gd-eyebrow">BUILT BY YOU</div><h1>Your plan.<br>Your pace.</h1><label>Routine name<input data-field="name" value="${esc(s.name)}" maxlength="40"></label><label>Training days</label><div class="gd-days">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((v,i)=>btn(v,'day',`data-id="${i}" aria-pressed="${s.days.includes(i)}"`)).join('')}</div><div class="gd-row" style="margin-top:24px"><span class="gd-eyebrow">${s.routine.length} EXERCISES</span>${btn('Add '+icon('plus'),'nav','data-screen="search"','gd-plain')}</div>${s.routine.map((id,i)=>`<div class="gd-exrow"><span class="gd-index">0${i+1}</span><div><div class="gd-exname">${lookup(id).name}</div><span class="gd-muted">3 sets</span></div>${btn(icon('minus'),'remove',`data-id="${id}" aria-label="Remove ${lookup(id).name}"`,'gd-circle')}</div>`).join('')}${!s.routine.length?'<p class="gd-muted">Choose the exercises you want to train.</p>':''}`;
+foot=btn('Save plan '+icon('check'),'save-plan','','gd-main gd-wide');
+}else if(s.screen==='search'){
+body=`<div class="gd-row"><span class="gd-eyebrow">YOUR EXERCISE LIBRARY</span>${btn('Done','nav','data-screen="plan"','gd-plain')}</div><h1>Find your<br>next move.</h1><label>Search exercises<input type="search" class="gd-search" data-field="query" value="${esc(s.query)}" placeholder="Try dumbbell row" autocomplete="off"></label><div class="gd-filters">${['All','Dumbbell','Cable'].map(v=>btn(v,'filter',`data-value="${v}" aria-pressed="${s.filter===v}"`)).join('')}</div><div data-results>${results(s)}</div><p class="gd-muted">Production catalog: ExerciseDB / AscendAPI</p>`;foot=`<div class="gd-row"><span>${s.selected.length} selected</span><span class="gd-muted">${esc(s.name)}</span></div>${btn('Add to plan '+icon('plus'),'add',s.selected.length?'':'disabled','gd-main gd-wide')}<div class="gd-status" role="status">${esc(s.notice)}</div>`;
+}else if(s.screen==='workout'){
+body=`<div class="gd-row"><span class="gd-eyebrow">${esc(s.name)}</span>${btn('Finish '+icon('arrow-up-right'),'nav','data-screen="finish"','gd-plain')}</div><h1 class="gd-logtitle">${current.name}</h1><div class="gd-row"><span class="gd-muted">${current.equipment} · ${current.muscle}</span>${btn('Technique','detail',`data-id="${s.exercise}"`,'gd-plain')}</div>`;
+if(studio)body+=`<div class="gd-timeline" aria-label="Completed sets">${[1,2,3].map(i=>`<span class="gd-pill" style="${i===n?'background:var(--accent);color:var(--on-accent)':''}">${i<n?'✓':i} ${i===n?'Current set':''}</span>`).join('')}</div>`;
+else body+=`<div class="gd-line"></div><div class="gd-loghead"><span class="gd-eyebrow">SET ${String(n).padStart(2,'0')}</span><span class="gd-pill">${done.length} completed</span></div>`;
+if(options[design].previous)body+=`<div class="gd-previous"><span>LAST SESSION · SAMPLE</span><strong>30 lb × 10 reps</strong></div>`;
+body+=`<div class="gd-entry"><div><label>Weight · lb<input type="number" min="0" step="0.5" inputmode="decimal" value="${esc(s.weight)}" data-field="weight" aria-label="Weight in pounds"></label><div class="gd-stepper">${btn('−','adjust','data-key="weight" data-delta="-2.5" aria-label="Reduce weight by 2.5 pounds"')}${btn('+','adjust','data-key="weight" data-delta="2.5" aria-label="Increase weight by 2.5 pounds"')}</div></div><div><label>Reps<input type="number" min="1" step="1" inputmode="numeric" value="${esc(s.reps)}" data-field="reps" aria-label="Repetitions"></label><div class="gd-stepper">${btn('−','adjust','data-key="reps" data-delta="-1" aria-label="One fewer rep"')}${btn('+','adjust','data-key="reps" data-delta="1" aria-label="One more rep"')}</div></div></div><div class="gd-alert" role="alert">${esc(s.error)}</div>${btn('Complete set '+icon('check'),'complete','','gd-main gd-wide')}<div class="gd-status" role="status">${esc(s.notice||'Draft values · complete to record this set')}</div>`;
+if(s.rest)body+=`<div class="gd-rest"><div class="gd-row"><div><div class="gd-eyebrow">REST · TIMER PREVIEW</div><strong>${Math.floor(s.rest/60)}:${String(s.rest%60).padStart(2,'0')}</strong></div><div class="gd-row">${btn('+30s','rest-more')}${btn('Skip','rest-skip')}</div></div></div>`;
+if(done.length)body+=`<div class="gd-line"></div>${s.logged.map((v,i)=>v.exercise===s.exercise?`<div class="gd-completed"><span>✓ <strong>${v.weight} lb × ${v.reps}</strong></span>${btn('Undo','undo',`data-id="${i}"`,'gd-plain')}</div>`:'').join('')}`;
+foot=`<div class="gd-row"><span class="gd-muted">Watch unavailable</span>${btn('Next exercise '+icon('arrow-right'),'next','','gd-plain')}</div>`;
+}else if(s.screen==='finish'){
+body=`<div class="gd-eyebrow">END SESSION</div><h1>Good work.<br>Make it count.</h1><div class="gd-lead"><div class="gd-count">${String(s.logged.length).padStart(2,'0')}</div><span class="gd-muted">completed sets<br>ready to save</span></div><div class="gd-line"></div><p class="gd-muted">Only completed sets enter your history. Your current draft is not included.</p><p class="gd-muted">No Watch measurements were received for this preview session.</p>${btn('Keep training','nav','data-screen="workout"','gd-wide')}`;foot=btn('Save session '+icon('check'),'finish',s.logged.length?'':'disabled','gd-main gd-wide');
+}else if(s.screen==='summary'){
+const volume=s.logged.reduce((n,v)=>n+v.weight*v.reps,0);body=`<div class="gd-eyebrow">${s.finished?'SAVED TO YOUR HISTORY':'SESSION PREVIEW'}</div><h1>One session.<br>More progress.</h1><h2>${esc(s.name)}</h2><div class="gd-two"><div><div class="gd-stat">${s.logged.length}</div><div class="gd-muted">Completed sets</div></div><div><div class="gd-stat">${volume.toLocaleString()}</div><div class="gd-muted">Volume · lb</div></div></div><div class="gd-line"></div><div class="gd-row"><span>Heart rate</span><span class="gd-muted">Unavailable</span></div><div class="gd-row" style="margin-top:20px"><span>Active calories</span><span class="gd-muted">Unavailable</span></div><p class="gd-muted" style="margin-top:20px">Your lifting log is saved independently of Watch data.</p>${s.logged.length?'<h3>Your completed sets</h3>'+s.logged.map(v=>`<div class="gd-result"><div class="gd-muted">${lookup(v.exercise).name}</div><strong>${v.weight} lb × ${v.reps}</strong></div>`).join(''):''}`;foot=btn('Back to training '+icon('arrow-up-right'),'nav','data-screen="train"','gd-main gd-wide');
+}else if(s.screen==='progress'){
+nav=true;body=`<div class="gd-eyebrow">PROGRESS · SAMPLE HISTORY</div><h1>The work<br>adds up.</h1><label>Exercise<select data-field="progress"><option>Dumbbell bench press</option><option>Lat pulldown</option></select></label><div class="gd-row" style="margin-top:28px"><div><div class="gd-eyebrow">HEAVIEST SET</div><div class="gd-stat" data-best>30 <span style="font-size:18px">lb</span></div></div><span class="gd-pill">4 sessions</span></div><div data-chart>${chart([20,25,25,30])}</div><div class="gd-line"></div><div class="gd-row"><span class="gd-muted">Compared with Sep 19</span><strong data-gain>+10 lb</strong></div><h3>Latest session</h3>${s.finished?`<div class="gd-row"><div>${esc(s.name)}<div class="gd-muted">${s.logged.length} completed sets</div></div>${btn('View','nav','data-screen="summary"','gd-plain')}</div>`:'<p class="gd-muted">Finish a preview workout to see it here.</p>'}`;
+}else if(s.screen==='profile'){
+body=`<div class="gd-eyebrow">WATCH & SETTINGS</div><h1>Stay<br>connected.</h1><div class="gd-tile"><div class="gd-row">${icon('watch')}<span class="gd-pill">Not connected</span></div><h2>Log freely.<br>Connect when ready.</h2><p class="gd-muted">Your sets work without a Watch. Heart rate and active calories require a recorded Watch session.</p></div><details><summary style="min-height:44px">Apple Watch setup</summary><p class="gd-muted">Install Gym Log on your paired Watch, allow Health access, then enable Watch workouts on iPhone. This preview does not connect to devices.</p></details>`;foot=btn('Back to training','nav','data-screen="train"','gd-main gd-wide');
+}
+if(s.detail){const e=lookup(s.detail);body=`${btn('Back '+icon('arrow-left'),'close-detail','','gd-plain')}<h1 class="gd-modal-title">${e.name}</h1><div class="gd-tile"><span class="gd-eyebrow">EXERCISE GUIDE</span><h2>Clarity before motion.</h2><p class="gd-muted">Space reserved for a sharper demonstration. Media quality is a separate decision.</p></div><div class="gd-row"><span>Equipment</span><strong>${e.equipment}</strong></div><div class="gd-line"></div><div class="gd-row"><span>Target</span><strong>${e.muscle}</strong></div>`;foot=btn('Back to '+(s.screen==='search'?'results':s.screen==='train'?'training':'workout'),'close-detail','','gd-main gd-wide');nav=false;}
+const navHTML=nav?`<nav class="gd-nav" aria-label="Main navigation">${[['train','move-up-right','Train'],['plan','layers-2','Plan'],['progress','chart-no-axes-combined','Progress']].map(([k,i,l])=>btn(icon(i)+l,'nav',`data-screen="${k}" ${s.screen===k?'aria-current="page"':''}`,s.screen===k?'gd-selected':'')).join('')}</nav>`:'';
+c.innerHTML=`<div class="gd-review"><span>${studio?'STUDIO / STONE + OLIVE':'VELOCITY / INK + BLUE'}</span><select data-field="jump" aria-label="Preview screen">${Object.entries(screenNames).map(([k,v])=>`<option value="${k}" ${s.screen===k?'selected':''}>${v}</option>`).join('')}</select></div><div class="gd-app"><div class="gd-safe"><span>9:41</span><span>DESIGN PREVIEW</span></div><header class="gd-header"><div class="gd-wordmark">gym<span>log</span>.</div>${btn(icon(s.screen==='train'?'sliders-horizontal':'arrow-left'),s.screen==='train'?'settings':'back',`aria-label="${s.screen==='train'?'Settings':'Back to training'}"`,'gd-circle')}</header><main class="gd-content">${body}</main>${foot?'<div class="gd-foot">'+foot+'</div>':''}${navHTML}</div><div class="gd-review" style="margin-top:12px"><span>INTERACTIVE CONCEPT · SAMPLE DATA</span></div>`;
+if(globalThis.lucide)lucide.createIcons({attrs:{width:18,height:18}});
+}
+function chart(vals){return `<div class="gd-chart" role="img" aria-label="Heaviest weight in pounds across sample sessions: ${vals.map((v,i)=>'September '+(19+i*3)+', '+v+' pounds').join('; ')}">${vals.map((v,i)=>`<div class="gd-barcol"><strong>${v} lb</strong><div class="gd-bar" style="height:${v/Math.max(...vals)*95}px"></div><span>Sep ${19+i*3}</span></div>`).join('')}</div>`;}
+root.querySelectorAll('[data-design]').forEach(c=>{const d=c.dataset.design;state[d]=saved?.version===2&&saved.state?.[d]?{...fresh(),...saved.state[d]}:fresh();options[d]={previous:true,appearance:'System'};render(c);
+c.addEventListener('input',e=>{const f=e.target.dataset.field,s=state[d];if(['name','query','weight','reps'].includes(f)){s[f]=e.target.value;if(f==='query')c.querySelector('[data-results]').innerHTML=results(s);if(f==='weight'||f==='reps'){s.notice='Draft updated · complete to record this set';c.querySelector('.gd-status').textContent=s.notice;}persist();}});
+c.addEventListener('change',e=>{const f=e.target.dataset.field,s=state[d];if(f==='jump'){s.screen=e.target.value;s.detail=0;if(s.screen==='workout'&&!s.routine.length)s.screen='plan';render(c);persist();}if(f==='progress'){const vals=e.target.value==='Lat pulldown'?[60,65,65,70]:[20,25,25,30];c.querySelector('[data-chart]').innerHTML=chart(vals);c.querySelector('[data-best]').innerHTML=vals[3]+' <span style="font-size:18px">lb</span>';}});
+c.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el||el.disabled)return;const s=state[d],a=el.dataset.act,id=Number(el.dataset.id);s.error='';
+if(a==='nav')s.screen=el.dataset.screen;if(a==='settings')s.screen='profile';if(a==='back'){if(s.detail)s.detail=0;else s.screen='train';}
+if(a==='start'){if(!s.routine.length)s.screen='plan';else{if(!s.active){s.logged=[];s.finished=false;s.exercise=s.routine[0];s.rest=0;s.notice='';}s.active=true;s.screen='workout';}}
+if(a==='save-plan'){s.name=s.name.trim()||'My routine';s.screen='train';}
+if(a==='day')s.days=s.days.includes(id)?s.days.filter(i=>i!==id):[...s.days,id].sort();
+if(a==='remove'){s.routine=s.routine.filter(i=>i!==id);if(!s.routine.includes(s.exercise))s.exercise=s.routine[0]||1;}
+if(a==='filter')s.filter=el.dataset.value;if(a==='select')s.selected=s.selected.includes(id)?s.selected.filter(i=>i!==id):[...s.selected,id];
+if(a==='add'){s.routine=[...new Set([...s.routine,...s.selected])];s.notice='Added '+s.selected.length+' exercises. Keep exploring.';s.selected=[];}
+if(a==='detail')s.detail=id;if(a==='close-detail')s.detail=0;
+if(a==='adjust'){const key=el.dataset.key;s[key]=String(Math.max(key==='weight'?0:1,Number(s[key]||0)+Number(el.dataset.delta)));s.notice='Draft updated · complete to record this set';}
+if(a==='complete'){if(!s.weight.trim()||!Number.isFinite(Number(s.weight))||Number(s.weight)<0||!Number.isInteger(Number(s.reps))||Number(s.reps)<1)s.error='Enter a valid weight and at least one whole rep.';else{s.logged.push({exercise:s.exercise,weight:Number(s.weight),reps:Number(s.reps)});s.rest=90;s.notice='Set completed. Your next set is ready.';}}
+if(a==='undo'){const v=s.logged.splice(id,1)[0];s.weight=String(v.weight);s.reps=String(v.reps);s.rest=0;s.notice='Completion undone. Values kept as a draft.';}
+if(a==='rest-more')s.rest+=30;if(a==='rest-skip')s.rest=0;
+if(a==='next'){s.exercise=s.routine[(s.routine.indexOf(s.exercise)+1)%s.routine.length];s.notice='';}
+if(a==='finish'){s.active=false;s.finished=true;s.rest=0;s.screen='summary';}
+render(c);persist();});
+if(globalThis.Tweak){const t=new Tweak({container:c,onChange:()=>{c.style.colorScheme=options[d].appearance==='System'?'light dark':options[d].appearance.toLowerCase();render(c);}});t.addToggle(options[d],'previous',{label:'Show previous performance'});t.addSelect(options[d],'appearance',{label:'Appearance',options:['System','Light','Dark']});}
+});
+window.addEventListener('openai:set_globals',e=>{const p=e.detail?.globals?.widgetState?.privateContent;if(p?.version===2)root.querySelectorAll('[data-design]').forEach(c=>{if(p.state?.[c.dataset.design]){state[c.dataset.design]={...fresh(),...p.state[c.dataset.design]};render(c);}});});
+})();
+</script>
+</div>

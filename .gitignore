@@ -1,0 +1,23 @@
+.DS_Store
+.build/
+.swiftpm/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# Local diagnostics, credentials, signing exports and user data
+output/watch-diagnostics/
+.env
+.env.*
+!.env.example
+*.p12
+*.p8
+*.mobileprovision
+*.provisionprofile
+*.xcarchive/
+*.ipa
+*.dSYM/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.log

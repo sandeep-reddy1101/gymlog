@@ -1,0 +1,41 @@
+name: Build and test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Core tests and iPhone / Watch build
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+      - name: Run core tests
+        run: swift test
+      - name: Verify source and project files
+        run: zsh Scripts/verify.sh
+      - name: Build iPhone and embedded Watch app without signing
+        run: >-
+          xcodebuild
+          -project LiftLog.xcodeproj
+          -scheme 'Lift Log'
+          -configuration Debug
+          -destination 'generic/platform=iOS Simulator'
+          -derivedDataPath "$RUNNER_TEMP/GymLogDerivedData"
+          CODE_SIGNING_ALLOWED=NO
+          build
